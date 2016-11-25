@@ -1,0 +1,6 @@
+#ignore target
+target/*
+
+#ignore Intellij IDEA project files
+.idea
+Newsstand.iml
