@@ -15,6 +15,6 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		logger.info("LoginServlet");
-		response.sendRedirect("/index.jsp");
+		response.sendRedirect("main.jsp");
 	}
 }
