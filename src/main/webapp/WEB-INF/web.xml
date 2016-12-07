@@ -14,12 +14,12 @@
     </resource-ref>
 
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.newsstand.servlets.LoginServlet</servlet-class>
+        <servlet-name>Servlet</servlet-name>
+        <servlet-class>com.newsstand.servlets.Servlet</servlet-class>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>Servlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
