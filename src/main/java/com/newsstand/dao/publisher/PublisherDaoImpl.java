@@ -18,7 +18,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         connectionFactory = ConnectionFactory.getInstance();
     }
 
-    public PublisherDaoImpl getInstance() {
+    public static PublisherDaoImpl getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new PublisherDaoImpl();
         }
