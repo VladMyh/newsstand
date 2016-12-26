@@ -95,7 +95,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         }
     }
 
-    public Publisher getPublisherById(Long id) {
+    public Publisher findPublisherById(Long id) {
         LOGGER.info("Getting publisher with id " + id);
         Publisher publisher = new Publisher();
 

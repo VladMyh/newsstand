@@ -6,5 +6,5 @@ public interface PublisherDao {
     Publisher createPublisher(Publisher publisher);
     Publisher updatePublisher(Publisher publisher);
     void deleteById(Long id);
-    Publisher getPublisherById(Long id);
+    Publisher findPublisherById(Long id);
 }
