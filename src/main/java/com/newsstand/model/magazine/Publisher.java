@@ -1,6 +1,8 @@
 package com.newsstand.model.magazine;
 
-public class Publisher {
+import java.io.Serializable;
+
+public class Publisher implements Serializable{
     private long id;
     private String title;
 

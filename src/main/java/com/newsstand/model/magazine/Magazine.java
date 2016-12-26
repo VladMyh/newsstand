@@ -1,22 +1,22 @@
 package com.newsstand.model.magazine;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class Magazine {
+public class Magazine implements Serializable{
     private long id;
     private String title;
     private Publisher publisher;
-    private List<Tag> tags;
+    private String category;
     private Float price;
     private Long quantity;
 
     public Magazine() {}
 
-    public Magazine(long id, String title, Publisher publisher, List<Tag> tags, Float price, Long quantity) {
+    public Magazine(long id, String title, Publisher publisher, String category, Float price, Long quantity) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
-        this.tags = tags;
+        this.category = category;
         this.price = price;
         this.quantity = quantity;
     }
@@ -45,12 +45,12 @@ public class Magazine {
         this.publisher = publisher;
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public String getCategory() {
+        return category;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Float getPrice() {
@@ -78,10 +78,10 @@ public class Magazine {
 
         if (id != magazine.id) return false;
         if (!title.equals(magazine.title)) return false;
-        if (!publisher.equals(magazine.publisher)) return false;
-        if (!tags.equals(magazine.tags)) return false;
-        if (!price.equals(magazine.price)) return false;
-        return quantity.equals(magazine.quantity);
+        if (publisher != null ? !publisher.equals(magazine.publisher) : magazine.publisher != null) return false;
+        if (category != null ? !category.equals(magazine.category) : magazine.category != null) return false;
+        if (price != null ? !price.equals(magazine.price) : magazine.price != null) return false;
+        return quantity != null ? quantity.equals(magazine.quantity) : magazine.quantity == null;
 
     }
 
@@ -89,10 +89,10 @@ public class Magazine {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + title.hashCode();
-        result = 31 * result + publisher.hashCode();
-        result = 31 * result + tags.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + quantity.hashCode();
+        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
     }
 }

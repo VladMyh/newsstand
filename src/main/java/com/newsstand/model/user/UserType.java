@@ -1,5 +1,8 @@
 package com.newsstand.model.user;
 
-public enum UserType {
-    ADMIN, USER;
+import java.io.Serializable;
+
+public enum UserType implements Serializable{
+    ADMIN,
+    USER;
 }
