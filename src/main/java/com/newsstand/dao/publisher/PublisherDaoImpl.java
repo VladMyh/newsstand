@@ -12,6 +12,11 @@ public final class PublisherDaoImpl implements PublisherDao {
     private static PublisherDaoImpl INSTANCE;
     private static ConnectionFactory connectionFactory;
 
+    private static String createQuery = "INSERT INTO publisher (name) VALUES (?)";
+    private static String updateQuery = "UPDATE publisher SET name = ? WHERE id = ?";
+    private static String deleteQuery = "DELETE FROM publisher WHERE id = ?";
+    private static String getQuery = "SELECT * FROM publisher WHERE id = ?";
+
     private PublisherDaoImpl() {
         LOGGER.info("Initializing PublisherDao");
 
@@ -29,8 +34,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         LOGGER.info("Creating new publisher");
 
         try(Connection connection = connectionFactory.getConnection()) {
-            String query = "INSERT INTO publisher (name) VALUES (?)";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, publisher.getTitle());
 
             int affectedRows = statement.executeUpdate();
@@ -53,8 +57,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         LOGGER.info("Updating publisher");
 
         try(Connection connection = connectionFactory.getConnection()) {
-            String query = "UPDATE publisher SET name = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
             statement.setString(1, publisher.getTitle());
 
             boolean result = statement.execute();
@@ -76,8 +79,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         LOGGER.info("Deleting publisher");
 
         try(Connection connection = connectionFactory.getConnection()) {
-            String query = "DELETE FROM publisher WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(deleteQuery);
             statement.setLong(1, id);
 
             boolean result = statement.execute();
@@ -98,8 +100,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         Publisher publisher = new Publisher();
 
         try(Connection connection = connectionFactory.getConnection()) {
-            String query = "SELECT * FROM publisher WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(getQuery);
             statement.setLong(1, id);
 
             ResultSet result = statement.executeQuery();
