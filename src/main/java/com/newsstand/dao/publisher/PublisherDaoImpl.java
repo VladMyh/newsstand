@@ -2,6 +2,7 @@ package com.newsstand.dao.publisher;
 
 import com.newsstand.connection.ConnectionFactory;
 import com.newsstand.model.magazine.Publisher;
+import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -12,15 +13,23 @@ public final class PublisherDaoImpl implements PublisherDao {
     private static PublisherDaoImpl INSTANCE;
     private static ConnectionFactory connectionFactory;
 
-    private static String createQuery = "INSERT INTO publisher (name) VALUES (?)";
-    private static String updateQuery = "UPDATE publisher SET name = ? WHERE id = ?";
-    private static String deleteQuery = "DELETE FROM publisher WHERE id = ?";
-    private static String getQuery = "SELECT * FROM publisher WHERE id = ?";
+    private static String createQuery;
+    private static String updateQuery;
+    private static String deleteQuery;
+    private static String findQuery;
+
+    private MysqlQueryProperties properties;
 
     private PublisherDaoImpl() {
         LOGGER.info("Initializing PublisherDao");
 
         connectionFactory = ConnectionFactory.getInstance();
+        properties = MysqlQueryProperties.getInstance();
+
+        createQuery = properties.getProperty("createPublisher");
+        updateQuery = properties.getProperty("updatePublisherById");
+        deleteQuery = properties.getProperty("deletePublisherById");
+        findQuery = properties.getProperty("findPublisherById");
     }
 
     public static PublisherDaoImpl getInstance() {
@@ -44,7 +53,15 @@ public final class PublisherDaoImpl implements PublisherDao {
             }
             else {
                 LOGGER.info("Publisher creation successful");
-                publisher.setId(statement.getGeneratedKeys().getLong(1));
+
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        publisher.setId(generatedKeys.getLong(1));
+                    }
+                    else {
+                        LOGGER.error("Failed to create publisher, no ID obtained.");
+                    }
+                }
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -59,6 +76,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(updateQuery);
             statement.setString(1, publisher.getTitle());
+            statement.setLong(2, publisher.getId());
 
             boolean result = statement.execute();
 
@@ -75,7 +93,7 @@ public final class PublisherDaoImpl implements PublisherDao {
         return publisher;
     }
 
-    public void deleteById(Long id) {
+    public void deletePublisherById(Long id) {
         LOGGER.info("Deleting publisher");
 
         try(Connection connection = connectionFactory.getConnection()) {
@@ -100,13 +118,15 @@ public final class PublisherDaoImpl implements PublisherDao {
         Publisher publisher = new Publisher();
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(getQuery);
+            PreparedStatement statement = connection.prepareStatement(findQuery);
             statement.setLong(1, id);
 
             ResultSet result = statement.executeQuery();
 
-            publisher.setId(result.getLong("id"));
-            publisher.setTitle(result.getString("name"));
+            if(result.next()) {
+                publisher.setId(result.getLong("id"));
+                publisher.setTitle(result.getString("name"));
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }

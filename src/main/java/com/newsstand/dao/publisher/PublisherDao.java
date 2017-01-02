@@ -5,6 +5,6 @@ import com.newsstand.model.magazine.Publisher;
 public interface PublisherDao {
     Publisher createPublisher(Publisher publisher);
     Publisher updatePublisher(Publisher publisher);
-    void deleteById(Long id);
+    void deletePublisherById(Long id);
     Publisher findPublisherById(Long id);
 }
