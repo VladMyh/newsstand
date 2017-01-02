@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 
-public final class PublisherDaoImpl implements PublisherDao {
-    private static final Logger LOGGER = Logger.getLogger(PublisherDaoImpl.class);
+public final class MysqlPublisherDaoImpl implements PublisherDao {
+    private static final Logger LOGGER = Logger.getLogger(MysqlPublisherDaoImpl.class);
 
-    private static PublisherDaoImpl INSTANCE;
+    private static MysqlPublisherDaoImpl INSTANCE;
     private static ConnectionFactory connectionFactory;
 
     private static String createQuery;
@@ -20,8 +20,8 @@ public final class PublisherDaoImpl implements PublisherDao {
 
     private MysqlQueryProperties properties;
 
-    private PublisherDaoImpl() {
-        LOGGER.info("Initializing PublisherDao");
+    private MysqlPublisherDaoImpl() {
+        LOGGER.info("Initializing MysqlPublisherDaoImpl");
 
         connectionFactory = ConnectionFactory.getInstance();
         properties = MysqlQueryProperties.getInstance();
@@ -32,9 +32,9 @@ public final class PublisherDaoImpl implements PublisherDao {
         findQuery = properties.getProperty("findPublisherById");
     }
 
-    public static PublisherDaoImpl getInstance() {
+    public static MysqlPublisherDaoImpl getInstance() {
         if(INSTANCE == null) {
-            INSTANCE = new PublisherDaoImpl();
+            INSTANCE = new MysqlPublisherDaoImpl();
         }
         return INSTANCE;
     }
