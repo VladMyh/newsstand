@@ -4,7 +4,7 @@ import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.user.User;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class Subscription implements Serializable{
     private Long id;
