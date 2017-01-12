@@ -19,13 +19,11 @@ public class MysqlUserDaoImpl implements UserDao{
 	private static String deleteQuery;
 	private static String findByIdQuery;
 
-	private MysqlQueryProperties properties;
-
 	private MysqlUserDaoImpl() {
 		LOGGER.info("Initializing MysqlUserDaoImpl");
 
 		connectionFactory = ConnectionFactory.getInstance();
-		properties = MysqlQueryProperties.getInstance();
+		MysqlQueryProperties properties = MysqlQueryProperties.getInstance();
 
 		createQuery = properties.getProperty("createUser");
 		updateQuery = properties.getProperty("updateUserById");

@@ -1,16 +1,17 @@
-package com.newsstand.dao.publisher;
+package com.newsstand.dao.magazine;
 
 import com.newsstand.connection.ConnectionFactory;
-import com.newsstand.model.magazine.Publisher;
+import com.newsstand.model.magazine.Category;
 import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 
-public final class MysqlPublisherDaoImpl implements PublisherDao {
-    private static final Logger LOGGER = Logger.getLogger(MysqlPublisherDaoImpl.class);
+public class MysqlCategoryDaoImpl implements CategoryDao {
 
-    private static MysqlPublisherDaoImpl INSTANCE;
+    private static final Logger LOGGER = Logger.getLogger(MysqlCategoryDaoImpl.class);
+
+    private static MysqlCategoryDaoImpl INSTANCE;
     private static ConnectionFactory connectionFactory;
 
     private static String createQuery;
@@ -18,46 +19,47 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
     private static String deleteQuery;
     private static String findQuery;
 
-    private MysqlPublisherDaoImpl() {
-        LOGGER.info("Initializing MysqlPublisherDaoImpl");
+    private MysqlCategoryDaoImpl() {
+        LOGGER.info("Initializing MysqlCategoryDaoImpl");
 
         connectionFactory = ConnectionFactory.getInstance();
         MysqlQueryProperties properties = MysqlQueryProperties.getInstance();
 
-        createQuery = properties.getProperty("createPublisher");
-        updateQuery = properties.getProperty("updatePublisherById");
-        deleteQuery = properties.getProperty("deletePublisherById");
-        findQuery = properties.getProperty("findPublisherById");
+        createQuery = properties.getProperty("createCategory");
+        updateQuery = properties.getProperty("updateCategoryById");
+        deleteQuery = properties.getProperty("deleteCategoryById");
+        findQuery = properties.getProperty("findCategoryById");
     }
 
-    public static MysqlPublisherDaoImpl getInstance() {
+    public static MysqlCategoryDaoImpl getInstance() {
         if(INSTANCE == null) {
-            INSTANCE = new MysqlPublisherDaoImpl();
+            INSTANCE = new MysqlCategoryDaoImpl();
         }
         return INSTANCE;
     }
 
-    public Publisher createPublisher(Publisher publisher) {
-        LOGGER.info("Creating new publisher");
+    @Override
+    public Category createCategory(Category category) {
+        LOGGER.info("Creating new category");
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, publisher.getTitle());
+            statement.setString(1, category.getName());
 
             int affectedRows = statement.executeUpdate();
 
             if(affectedRows == 0) {
-                LOGGER.info("Publisher creation failed");
+                LOGGER.info("Category creation failed");
             }
             else {
-                LOGGER.info("Publisher creation successful");
+                LOGGER.info("Category creation successful");
 
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        publisher.setId(generatedKeys.getLong(1));
+                        category.setId(generatedKeys.getLong(1));
                     }
                     else {
-                        LOGGER.error("Failed to create publisher, no ID obtained.");
+                        LOGGER.error("Failed to create category, no ID obtained.");
                     }
                 }
             }
@@ -65,34 +67,36 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             LOGGER.error(e.getMessage());
         }
 
-        return publisher;
+        return category;
     }
 
-    public Publisher updatePublisher(Publisher publisher) {
-        LOGGER.info("Updating publisher");
+    @Override
+    public Category updateCategory(Category category) {
+        LOGGER.info("Updating category");
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(updateQuery);
-            statement.setString(1, publisher.getTitle());
-            statement.setLong(2, publisher.getId());
+            statement.setString(1, category.getName());
+            statement.setLong(2, category.getId());
 
             boolean result = statement.execute();
 
             if(result) {
-                LOGGER.info("Publisher update failed");
+                LOGGER.info("Category update failed");
             }
             else {
-                LOGGER.info("Publisher updated successfully");
+                LOGGER.info("Category updated successfully");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
 
-        return publisher;
+        return category;
     }
 
-    public void deletePublisherById(Long id) {
-        LOGGER.info("Deleting publisher");
+    @Override
+    public void deleteCategoryById(Long id) {
+        LOGGER.info("Deleting category");
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(deleteQuery);
@@ -101,19 +105,20 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             boolean result = statement.execute();
 
             if(result) {
-                LOGGER.info("Publisher deletion failed");
+                LOGGER.info("Category deletion failed");
             }
             else {
-                LOGGER.info("Publisher deleted successfully");
+                LOGGER.info("Category deleted successfully");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
     }
 
-    public Publisher findPublisherById(Long id) {
-        LOGGER.info("Getting publisher with id " + id);
-        Publisher publisher = new Publisher();
+    @Override
+    public Category findCategoryById(Long id) {
+        LOGGER.info("Getting category with id " + id);
+        Category category = new Category();
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findQuery);
@@ -122,13 +127,13 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
-                publisher.setId(result.getLong("id"));
-                publisher.setTitle(result.getString("name"));
+                category.setId(result.getLong("id"));
+                category.setName(result.getString("name"));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
 
-        return publisher;
+        return category;
     }
 }

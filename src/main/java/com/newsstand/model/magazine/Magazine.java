@@ -6,13 +6,13 @@ public class Magazine implements Serializable{
     private long id;
     private String title;
     private Publisher publisher;
-    private String category;
+    private Category category;
     private Float price;
     private Long quantity;
 
     public Magazine() {}
 
-    public Magazine(long id, String title, Publisher publisher, String category, Float price, Long quantity) {
+    public Magazine(long id, String title, Publisher publisher, Category category, Float price, Long quantity) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
@@ -45,11 +45,11 @@ public class Magazine implements Serializable{
         this.publisher = publisher;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
