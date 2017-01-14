@@ -24,17 +24,17 @@ public class Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		String command = request.getParameter("action");
+		String command = request.getRequestURI().substring(request.getContextPath().length());
 		LOGGER.info("Processing get request with command: " + command);
 
-		response.sendRedirect(commandManager.doGetCommand(command, request, response));
+		request.getRequestDispatcher(commandManager.doGetCommand(command, request, response)).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		String command = request.getParameter("action");
+		String command = request.getRequestURI().substring(request.getContextPath().length());
 		LOGGER.info("Processing post request with command: " + command);
 
-		response.sendRedirect(commandManager.doPostCommand(command, request, response));
+		request.getRequestDispatcher(commandManager.doPostCommand(command, request, response)).forward(request, response);
 	}
 }

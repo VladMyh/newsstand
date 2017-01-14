@@ -14,7 +14,7 @@
     </resource-ref>
     
     <welcome-file-list>
-        <welcome-file>/main.jsp</welcome-file>
+        <welcome-file>/WEB-INF/main.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -30,19 +30,19 @@
     <!--Missing resource-->
     <error-page>
         <error-code>404</error-code>
-        <location>/error/error404.jsp</location>
+        <location>/WEB-INF/error/error404.jsp</location>
     </error-page>
 
     <!--Unauthorized-->
     <error-page>
         <error-code>401</error-code>
-        <location>/error/error401.jsp</location>
+        <location>/WEB-INF/error/error401.jsp</location>
     </error-page>
 
     <!--Forbidden-->
     <error-page>
         <error-code>403</error-code>
-        <location>/error/error403.jsp</location>
+        <location>/WEB-INF/error/error403.jsp</location>
     </error-page>
 
 </web-app>

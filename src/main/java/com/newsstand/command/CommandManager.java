@@ -18,8 +18,9 @@ public class CommandManager {
         GetCommands = new HashMap<>();
         PostCommands = new HashMap<>();
 
-        GetCommands.put("mainPage", new MainPageCommand());
-        GetCommands.put("loginPage", new MainPageCommand());
+        GetCommands.put("", new MainPageCommand());
+        GetCommands.put("/login", new LoginCommand());
+        GetCommands.put("/register", new RegisterCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
