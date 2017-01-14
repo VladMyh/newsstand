@@ -25,7 +25,7 @@ public class MysqlQueryProperties {
 			if (inputStream != null) {
 				properties.load(inputStream);
 			} else {
-				LOGGER.error("Property file not found in the classpath");
+				LOGGER.error("Mysql queries property file not found on the classpath");
 			}
 
 		}

@@ -6,17 +6,16 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MainPageCommand implements ServletCommand {
-
-    private static final Logger LOGGER = Logger.getLogger(MainPageCommand.class);
+public class LoginCommand implements ServletCommand{
+    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 
     private static String url;
 
-    public MainPageCommand(){
-        LOGGER.info("Initializing MainPageCommand");
+    public LoginCommand(){
+        LOGGER.info("Initializing LoginCommand");
 
         MappingProperties properties = MappingProperties.getInstance();
-        url = properties.getProperty("mainPage");
+        url = properties.getProperty("loginPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
