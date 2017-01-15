@@ -48,4 +48,23 @@ public class UserServiceImpl implements UserService {
 
         return userDao.createUser(user).getId() != null;
     }
+
+    @Override
+    public UserDto getUserByCredentials(String email, String password) {
+        LOGGER.info("Getting user by credentials");
+
+        User user = userDao.findUserByEmailAndPassword(email, password);
+
+        if(user != null) {
+            UserDto userDto = new UserDto();
+            userDto.setFirstName(user.getFirstName());
+            userDto.setLastName(user.getLastName());
+            userDto.setEmail(user.getEmail());
+            userDto.setUserType(user.getUserType().name());
+
+            return userDto;
+        }
+
+        return null;
+    }
 }

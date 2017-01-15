@@ -18,4 +18,13 @@ public interface UserService {
      * @return     Updated user object.
      */
     boolean registerUser(UserDto user);
+
+    /**
+     * This method gets user object based on credentials.
+     *
+     * @param email    User email.
+     * @param password User password.
+     * @return         User object if user is found, otherwise null.
+     */
+    UserDto getUserByCredentials(String email, String password);
 }
