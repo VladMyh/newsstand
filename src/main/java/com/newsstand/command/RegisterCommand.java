@@ -10,18 +10,18 @@ public class RegisterCommand implements ServletCommand {
 
     private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);
 
-    private static String url;
+    private static String page;
 
     public RegisterCommand(){
         LOGGER.info("Initializing LoginCommand");
 
         MappingProperties properties = MappingProperties.getInstance();
-        url = properties.getProperty("registerPage");
+        page = properties.getProperty("registerPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
 
-        return url;
+        return page;
     }
 }

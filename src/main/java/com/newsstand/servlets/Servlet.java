@@ -1,6 +1,7 @@
 package com.newsstand.servlets;
 
 import com.newsstand.command.CommandManager;
+import com.newsstand.command.ServletCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
@@ -19,22 +20,26 @@ public class Servlet extends HttpServlet {
 	private CommandManager commandManager;
 
 	public void init(ServletConfig config) throws ServletException {
+		LOGGER.info("Initializing Servlet");
 		commandManager = new CommandManager();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		String command = request.getRequestURI().substring(request.getContextPath().length());
-		LOGGER.info("Processing get request with command: " + command);
-
-		request.getRequestDispatcher(commandManager.doGetCommand(command, request, response)).forward(request, response);
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		String command = request.getRequestURI().substring(request.getContextPath().length());
-		LOGGER.info("Processing post request with command: " + command);
+		processRequest(request, response);
+	}
 
-		request.getRequestDispatcher(commandManager.doPostCommand(command, request, response)).forward(request, response);
+	public void processRequest(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+		LOGGER.info("Processing " + request.getMethod() + " request");
+
+		ServletCommand command = commandManager.getCommand(request);
+		String page = command.execute(request, response);
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 }

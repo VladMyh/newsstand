@@ -10,18 +10,18 @@ public class MainPageCommand implements ServletCommand {
 
     private static final Logger LOGGER = Logger.getLogger(MainPageCommand.class);
 
-    private static String url;
+    private static String page;
 
     public MainPageCommand(){
         LOGGER.info("Initializing MainPageCommand");
 
         MappingProperties properties = MappingProperties.getInstance();
-        url = properties.getProperty("mainPage");
+        page = properties.getProperty("mainPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
 
-        return url;
+        return page;
     }
 }
