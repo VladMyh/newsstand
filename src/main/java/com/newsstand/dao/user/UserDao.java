@@ -7,4 +7,6 @@ public interface UserDao {
 	User updateUser(User user);
 	void deleteUserById(Long id);
 	User findUserById(Long id);
+	User findUserByEmail(String email);
+	User findUserByEmailAndPassword(String email, String password);
 }

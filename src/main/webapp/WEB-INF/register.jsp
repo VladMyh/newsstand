@@ -59,7 +59,7 @@
                     <h3 class="panel-title">Sign Up</h3>
                 </div>
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form">
+                    <form accept-charset="UTF-8" role="form" method="post" action="${pageContext.request.contextPath}/register">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="First name" name="fname" type="text" required>
@@ -74,8 +74,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password"
-                                       value="" required>
+                                <input class="form-control" placeholder="Password" name="password" type="password" required>
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Sign Up">

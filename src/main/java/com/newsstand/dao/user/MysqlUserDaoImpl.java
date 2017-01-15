@@ -18,6 +18,8 @@ public class MysqlUserDaoImpl implements UserDao{
 	private static String updateQuery;
 	private static String deleteQuery;
 	private static String findByIdQuery;
+	private static String findByEmailQuery;
+	private static String findByEmailAndPasswordQuery;
 
 	private MysqlUserDaoImpl() {
 		LOGGER.info("Initializing MysqlUserDaoImpl");
@@ -29,6 +31,8 @@ public class MysqlUserDaoImpl implements UserDao{
 		updateQuery = properties.getProperty("updateUserById");
 		deleteQuery = properties.getProperty("deleteUserById");
 		findByIdQuery = properties.getProperty("findUserById");
+		findByEmailQuery = properties.getProperty("findUserByEmail");
+		findByEmailAndPasswordQuery = properties.getProperty("findUserByEmailAndPassword");
 	}
 
 	public static MysqlUserDaoImpl getInstance() {
@@ -126,7 +130,7 @@ public class MysqlUserDaoImpl implements UserDao{
 	@Override
 	public User findUserById(Long id) {
 		LOGGER.info("Getting user with id " + id);
-		User user = new User();
+		User user = null;
 
 		try(Connection connection = connectionFactory.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(findByIdQuery);
@@ -135,6 +139,62 @@ public class MysqlUserDaoImpl implements UserDao{
 			ResultSet result = statement.executeQuery();
 
 			if(result.next()) {
+				user = new User();
+				user.setId(result.getLong("id"));
+				user.setFirstName(result.getString("firstName"));
+				user.setLastName(result.getString("lastName"));
+				user.setPassword(result.getString("password"));
+				user.setEmail(result.getString("email"));
+				user.setUserType(UserType.values()[result.getInt("userTypeId") - 1]);
+			}
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+
+		return user;
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		LOGGER.info("Getting user with email " + email);
+		User user = null;
+
+		try(Connection connection = connectionFactory.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(findByEmailQuery);
+			statement.setString(1, email);
+
+			ResultSet result = statement.executeQuery();
+
+			if(result.next()) {
+				user = new User();
+				user.setId(result.getLong("id"));
+				user.setFirstName(result.getString("firstName"));
+				user.setLastName(result.getString("lastName"));
+				user.setPassword(result.getString("password"));
+				user.setEmail(result.getString("email"));
+				user.setUserType(UserType.values()[result.getInt("userTypeId") - 1]);
+			}
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+
+		return user;
+	}
+
+	@Override
+	public User findUserByEmailAndPassword(String email, String password) {
+		LOGGER.info("Getting user with email " + email);
+		User user = null;
+
+		try(Connection connection = connectionFactory.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(findByEmailAndPasswordQuery);
+			statement.setString(1, email);
+			statement.setString(2, password);
+
+			ResultSet result = statement.executeQuery();
+
+			if(result.next()) {
+				user = new User();
 				user.setId(result.getLong("id"));
 				user.setFirstName(result.getString("firstName"));
 				user.setLastName(result.getString("lastName"));

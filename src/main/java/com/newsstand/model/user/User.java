@@ -3,7 +3,7 @@ package com.newsstand.model.user;
 import java.io.Serializable;
 
 public class User implements Serializable{
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,7 +12,7 @@ public class User implements Serializable{
 
     public User() {}
 
-    public User(long id, String firstName, String lastName, String email, String password, UserType userType) {
+    public User(Long id, String firstName, String lastName, String email, String password, UserType userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,11 +21,11 @@ public class User implements Serializable{
         this.userType = userType;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
