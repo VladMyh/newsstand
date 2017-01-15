@@ -33,13 +33,16 @@ public class RegisterCommand implements ServletCommand {
 
         String resultPage = registerPage;
 
-        if(request.getParameter("fname") == null && request.getParameter("lname") == null &&
+        if(request.getSession().getAttribute("authenticated") != null &&
+            request.getSession().getAttribute("authenticated").equals(true)) {
+            resultPage = mainPage;
+        }
+        else if(request.getParameter("fname") == null && request.getParameter("lname") == null &&
             request.getParameter("email") == null && request.getParameter("password") == null) {
             LOGGER.info("Returning registration page");
             return resultPage;
         }
-
-        if(userService.checkEmailAvailability(request.getParameter("email"))) {
+        else if(userService.checkEmailAvailability(request.getParameter("email"))) {
             LOGGER.info("New user registration");
 
             UserDto userDto = new UserDto();

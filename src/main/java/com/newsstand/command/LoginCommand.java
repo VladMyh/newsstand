@@ -33,19 +33,26 @@ public class LoginCommand implements ServletCommand{
 
         String resultPage = loginPage;
 
-        if(request.getParameter("email") == null && request.getParameter("password") == null) {
+        if(request.getSession().getAttribute("authenticated") != null &&
+            request.getSession().getAttribute("authenticated").equals(true)) {
+            resultPage = mainPage;
+        }
+        else if(request.getParameter("email") == null && request.getParameter("password") == null) {
             LOGGER.info("Returning login page");
             return resultPage;
         }
+        else {
+            UserDto userDto = userService.getUserByCredentials(request.getParameter("email"),
+                request.getParameter("password"));
 
-        UserDto userDto = userService.getUserByCredentials(request.getParameter("email"),
-                                                           request.getParameter("password"));
+            if (userDto != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("email", userDto.getEmail());
+                session.setAttribute("username", userDto.getFirstName() + " " + userDto.getLastName());
+                session.setAttribute("authenticated", true);
 
-        if(userDto != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("email", userDto.getEmail());
-
-            resultPage = mainPage;
+                resultPage = mainPage;
+            }
         }
 
         return resultPage;
