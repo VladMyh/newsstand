@@ -38,7 +38,9 @@
                     <li>
                         <a href=""><c:out value="${sessionScope.username}"/></a>
                     </li>
-
+                    <li>
+                        <a href="${pageContext.request.contextPath}/logout">Sign out</a>
+                    </li>
                 </c:if>
             </ul>
         </div>

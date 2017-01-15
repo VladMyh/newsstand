@@ -43,7 +43,7 @@ public class LoginCommand implements ServletCommand{
         }
         else {
             UserDto userDto = userService.getUserByCredentials(request.getParameter("email"),
-                request.getParameter("password"));
+                                                               request.getParameter("password"));
 
             if (userDto != null) {
                 HttpSession session = request.getSession();

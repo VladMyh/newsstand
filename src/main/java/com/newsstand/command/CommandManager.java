@@ -20,6 +20,7 @@ public class CommandManager {
 
         commands.put("", new MainPageCommand());
         commands.put("/login", new LoginCommand());
+        commands.put("/logout", new LogoutController());
         commands.put("/register", new RegisterCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
