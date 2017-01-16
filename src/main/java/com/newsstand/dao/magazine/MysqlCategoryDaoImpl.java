@@ -6,6 +6,8 @@ import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlCategoryDaoImpl implements CategoryDao {
 
@@ -18,6 +20,7 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
     private static String updateQuery;
     private static String deleteQuery;
     private static String findQuery;
+    private static String getAllQuery;
 
     private MysqlCategoryDaoImpl() {
         LOGGER.info("Initializing MysqlCategoryDaoImpl");
@@ -29,6 +32,7 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
         updateQuery = properties.getProperty("updateCategoryById");
         deleteQuery = properties.getProperty("deleteCategoryById");
         findQuery = properties.getProperty("findCategoryById");
+        getAllQuery = properties.getProperty("getAllCategories");
     }
 
     public static MysqlCategoryDaoImpl getInstance() {
@@ -135,5 +139,28 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
         }
 
         return category;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        LOGGER.info("Getting all categories");
+        List<Category> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(getAllQuery);
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                Category category = new Category();
+                category.setId(result.getLong("id"));
+                category.setName(result.getString("name"));
+
+                res.add(category);
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
     }
 }

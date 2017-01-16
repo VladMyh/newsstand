@@ -2,6 +2,8 @@ package com.newsstand.dao.magazine;
 
 import com.newsstand.model.magazine.Category;
 
+import java.util.List;
+
 public interface CategoryDao {
     /**
      * This method saves new category to db.
@@ -30,7 +32,14 @@ public interface CategoryDao {
      * This method finds category by id.
      *
      * @param id Id of the category.
-     * @return   Category object retrieved from db
+     * @return   Category object retrieved from db.
      */
     Category findCategoryById(Long id);
+
+    /**
+     * This method gets all categories
+     *
+     * @return A list of all categories.
+     */
+    List<Category> getAllCategories();
 }

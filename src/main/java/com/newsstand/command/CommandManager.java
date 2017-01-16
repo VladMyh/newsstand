@@ -18,7 +18,7 @@ public class CommandManager {
 
         commands = new HashMap<>();
 
-        commands.put("", new MainPageCommand());
+        commands.put("/", new MainPageCommand());
         commands.put("/login", new LoginCommand());
         commands.put("/logout", new LogoutController());
         commands.put("/register", new RegisterCommand());
@@ -30,6 +30,10 @@ public class CommandManager {
     public ServletCommand getCommand(HttpServletRequest request) {
         String command = request.getRequestURI().substring(request.getContextPath().length());
         LOGGER.info("Getting command " + command);
+
+        if(commands.get(command) == null) {
+            return commands.get("/");
+        }
 
         return commands.get(command);
     }
