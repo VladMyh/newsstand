@@ -9,16 +9,19 @@ public class Magazine implements Serializable{
     private Category category;
     private Float price;
     private Long quantity;
+    private String description;
 
     public Magazine() {}
 
-    public Magazine(long id, String title, Publisher publisher, Category category, Float price, Long quantity) {
+    public Magazine(long id, String title, Publisher publisher, Category category,
+                    Float price, Long quantity, String description) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
+        this.description = description;
     }
 
     public long getId() {
@@ -69,6 +72,14 @@ public class Magazine implements Serializable{
         this.quantity = quantity;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,21 +89,22 @@ public class Magazine implements Serializable{
 
         if (id != magazine.id) return false;
         if (!title.equals(magazine.title)) return false;
-        if (publisher != null ? !publisher.equals(magazine.publisher) : magazine.publisher != null) return false;
-        if (category != null ? !category.equals(magazine.category) : magazine.category != null) return false;
-        if (price != null ? !price.equals(magazine.price) : magazine.price != null) return false;
-        return quantity != null ? quantity.equals(magazine.quantity) : magazine.quantity == null;
-
+        if (!publisher.equals(magazine.publisher)) return false;
+        if (!category.equals(magazine.category)) return false;
+        if (!price.equals(magazine.price)) return false;
+        if (!quantity.equals(magazine.quantity)) return false;
+        return description != null ? description.equals(magazine.description) : magazine.description == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + title.hashCode();
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + publisher.hashCode();
+        result = 31 * result + category.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + quantity.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 }

@@ -56,6 +56,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             statement.setBigDecimal(3, new BigDecimal(magazine.getPrice()));
             statement.setLong(4, magazine.getPublisher().getId());
             statement.setLong(5, magazine.getCategory().getId());
+            statement.setString(6, magazine.getDescription());
 
 
             int affectedRows = statement.executeUpdate();
@@ -93,7 +94,8 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             statement.setBigDecimal(3, new BigDecimal(magazine.getPrice()));
             statement.setLong(4, magazine.getPublisher().getId());
             statement.setLong(5, magazine.getCategory().getId());
-            statement.setLong(6, magazine.getId());
+            statement.setString(6, magazine.getDescription());
+            statement.setLong(7, magazine.getId());
 
             boolean result = statement.execute();
 
@@ -149,6 +151,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
                 magazine.setPrice(result.getBigDecimal("price").floatValue());
                 magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
                 magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
+                magazine.setDescription(result.getString("description"));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
