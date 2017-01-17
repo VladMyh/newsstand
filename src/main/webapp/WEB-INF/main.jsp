@@ -67,65 +67,19 @@
 
             <div class="row">
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$12.34</h4>
-                            <h4><a href="#">Magazine 1</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dignissim aliquet dolor, et euismod felis congue sed. Sed efficitur neque eget tincidunt tristique. Sed a posuere felis. </p>
+                <c:forEach items="${latestMagazines}" var="magazine">
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="http://placehold.it/320x150" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right">$${magazine.price}</h4>
+                                <h4><a href="#">${magazine.title}</a>
+                                </h4>
+                                <p>${magazine.description}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$12.34</h4>
-                            <h4><a href="#">Magazine 2</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dignissim aliquet dolor, et euismod felis congue sed. Sed efficitur neque eget tincidunt tristique. Sed a posuere felis. </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$12.34</h4>
-                            <h4><a href="#">Magazine 3</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dignissim aliquet dolor, et euismod felis congue sed. Sed efficitur neque eget tincidunt tristique. Sed a posuere felis. </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$12.34</h4>
-                            <h4><a href="#">Magazine 4</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dignissim aliquet dolor, et euismod felis congue sed. Sed efficitur neque eget tincidunt tristique. Sed a posuere felis. </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$12.34</h4>
-                            <h4><a href="#">Magazine 5</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dignissim aliquet dolor, et euismod felis congue sed. Sed efficitur neque eget tincidunt tristique. Sed a posuere felis. </p>
-                        </div>
-                    </div>
-                </div>
+                </c:forEach>
 
             </div>
 

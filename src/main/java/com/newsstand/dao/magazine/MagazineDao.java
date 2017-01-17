@@ -2,6 +2,8 @@ package com.newsstand.dao.magazine;
 
 import com.newsstand.model.magazine.Magazine;
 
+import java.util.List;
+
 public interface MagazineDao {
     /**
      * This method creates new magazine.
@@ -33,4 +35,12 @@ public interface MagazineDao {
      * @return   Magazine object.
      */
     Magazine findMagazineById(Long id);
+
+    /**
+     * This method finds latest added magazines.
+     *
+     * @param limit How much to find.
+     * @return      A list of magazines.
+     */
+    List<Magazine> findLastNMagazines(Integer limit);
 }

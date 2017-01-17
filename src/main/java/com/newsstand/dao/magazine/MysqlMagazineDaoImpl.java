@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlMagazineDaoImpl implements MagazineDao {
 
@@ -22,6 +24,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     private static String updateQuery;
     private static String deleteQuery;
     private static String findByIdQuery;
+    private static String findLastQuery;
 
     private MysqlMagazineDaoImpl() {
         LOGGER.info("Initializing MysqlMagazineDaoImpl");
@@ -33,6 +36,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         updateQuery = properties.getProperty("updateMagazineById");
         deleteQuery = properties.getProperty("deleteMagazineById");
         findByIdQuery = properties.getProperty("findMagazineById");
+        findLastQuery = properties.getProperty("findLastMagazines");
 
         categoryDao = MysqlCategoryDaoImpl.getInstance();
         publisherDao = MysqlPublisherDaoImpl.getInstance();
@@ -136,7 +140,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     @Override
     public Magazine findMagazineById(Long id) {
         LOGGER.info("Getting magazine with id " + id);
-        Magazine magazine = new Magazine();
+        Magazine magazine = null;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findByIdQuery);
@@ -145,6 +149,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
+                magazine = new Magazine();
                 magazine.setId(result.getLong("id"));
                 magazine.setTitle(result.getString("name"));
                 magazine.setQuantity(result.getLong("quantity"));
@@ -158,5 +163,35 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         }
 
         return magazine;
+    }
+
+    @Override
+    public List<Magazine> findLastNMagazines(Integer limit) {
+        LOGGER.info("Getting " + limit + " latest magazines");
+        List<Magazine> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findLastQuery);
+            statement.setInt(1, limit);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Magazine magazine = new Magazine();
+                magazine.setId(result.getLong("id"));
+                magazine.setTitle(result.getString("name"));
+                magazine.setQuantity(result.getLong("quantity"));
+                magazine.setPrice(result.getBigDecimal("price").floatValue());
+                magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
+                magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
+                magazine.setDescription(result.getString("description"));
+
+                res.add(magazine);
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
     }
 }

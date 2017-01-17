@@ -3,7 +3,7 @@ package com.newsstand.model.magazine;
 import java.io.Serializable;
 
 public class Magazine implements Serializable{
-    private long id;
+    private Long id;
     private String title;
     private Publisher publisher;
     private Category category;
@@ -13,7 +13,7 @@ public class Magazine implements Serializable{
 
     public Magazine() {}
 
-    public Magazine(long id, String title, Publisher publisher, Category category,
+    public Magazine(Long id, String title, Publisher publisher, Category category,
                     Float price, Long quantity, String description) {
         this.id = id;
         this.title = title;
@@ -24,11 +24,11 @@ public class Magazine implements Serializable{
         this.description = description;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
