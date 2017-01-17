@@ -24,6 +24,7 @@ public class CommandManager {
         commands.put("/register", new RegisterCommand());
         commands.put("/magazine", new MagazinePageCommand());
         commands.put("/category", new CategoryPageCommand());
+        commands.put("/adminDashboard", new AdminPageCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");

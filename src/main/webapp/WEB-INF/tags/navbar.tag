@@ -26,6 +26,12 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <c:if test="${sessionScope.role == 'ADMIN'}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/adminDashboard">Dashboard</a>
+                    </li>
+                </c:if>
+
                 <c:if test="${sessionScope.authenticated == null}">
                     <li>
                         <a href="${pageContext.request.contextPath}/login">Sign In</a>
@@ -34,6 +40,7 @@
                         <a href="${pageContext.request.contextPath}/register">Sign Up</a>
                     </li>
                 </c:if>
+
                 <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
                     <li>
                         <a href=""><c:out value="${sessionScope.username}"/></a>

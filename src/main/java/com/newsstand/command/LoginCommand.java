@@ -1,6 +1,7 @@
 package com.newsstand.command;
 
 import com.newsstand.dto.UserDto;
+import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.user.UserService;
 import com.newsstand.service.user.UserServiceImpl;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 public class LoginCommand implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
@@ -17,6 +19,7 @@ public class LoginCommand implements ServletCommand{
 
     private static String loginPage;
     private static String mainPage;
+    private static String adminPage;
 
     public LoginCommand(){
         LOGGER.info("Initializing LoginCommand");
@@ -26,6 +29,7 @@ public class LoginCommand implements ServletCommand{
         MappingProperties properties = MappingProperties.getInstance();
         loginPage = properties.getProperty("loginPage");
         mainPage = properties.getProperty("mainPage");
+        adminPage = properties.getProperty("adminPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -50,8 +54,14 @@ public class LoginCommand implements ServletCommand{
                 session.setAttribute("email", userDto.getEmail());
                 session.setAttribute("username", userDto.getFirstName() + " " + userDto.getLastName());
                 session.setAttribute("authenticated", true);
+                session.setAttribute("role", userDto.getUserType());
 
-                resultPage = mainPage;
+                if(Objects.equals(userDto.getUserType(), UserType.ADMIN.name())) {
+                    resultPage = adminPage;
+                }
+                else {
+                    resultPage = mainPage;
+                }
             }
         }
 
