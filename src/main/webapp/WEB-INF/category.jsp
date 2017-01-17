@@ -44,7 +44,7 @@
                 <c:forEach items="${page}" var="magazine">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="placehold.it/300x800" width="300" height="800"/>
                             <div class="caption">
                                 <h4 class="pull-right">$${magazine.price}</h4>
                                 <h4><a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>

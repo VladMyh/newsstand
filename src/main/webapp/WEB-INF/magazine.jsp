@@ -44,6 +44,10 @@
                     <p><b>Publisher: </b><a href="#">${magazine.publisher.title}</a></p>
                     <p><b>Category: </b><a href="#">${magazine.category.name}</a></p>
 
+                    <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
+                        <input type="button" class="pull-right" value="Subscribe">
+                    </c:if>
+                    <hr>
                     <p>${magazine.description}</p>
                 </div>
             </div>
@@ -51,7 +55,9 @@
         </div>
 
         <div class="col-md-3">
-            <img src="http://placehold.it/300x500">
+            <a href="#" class="thumbnail">
+                <img src="placehold.it/300x800" width="300" height="800"/>
+            </a>
         </div>
 
     </div>
