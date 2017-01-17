@@ -28,7 +28,8 @@
             <p class="lead">Categories</p>
             <div class="list-group">
                 <c:forEach items="${categories}" var="category">
-                    <a href="" class="list-group-item">${category.name}</a>
+                    <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=1&s=6"
+                       class="list-group-item">${category.name}</a>
                 </c:forEach>
             </div>
         </div>

@@ -30,7 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAllCategories() {
         LOGGER.info("Getting all categories");
-
         return categoryDao.getAllCategories();
+    }
+
+    @Override
+    public Category findCategoryById(Long id) {
+        LOGGER.info("Finding category by id " + id);
+        return categoryDao.findCategoryById(id);
     }
 }

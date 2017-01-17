@@ -20,4 +20,14 @@ public interface MagazineService {
      * @return      A list of magazines.
      */
     List<Magazine> findLatestAdded(Integer limit);
+
+    /**
+     * This method returns a page of magazines with category id.
+     *
+     * @param page       Number of the page, starts from 1.
+     * @param size       Size of the page.
+     * @param categoryId If of the category to filter magazines.
+     * @return           A list of magazines.
+     */
+    List<Magazine> getPageByCategoryId(Long page, Long size, Long categoryId);
 }

@@ -1,5 +1,7 @@
 package com.newsstand.service.category;
 
+import com.newsstand.model.magazine.Category;
+
 import java.util.List;
 
 public interface CategoryService {
@@ -8,5 +10,13 @@ public interface CategoryService {
      *
      * @return A list of all categories.
      */
-    List<com.newsstand.model.magazine.Category> getAllCategories();
+    List<Category> getAllCategories();
+
+    /**
+     * This method gets category by id.
+     *
+     * @param id Id of the category to find.
+     * @return   Category object.
+     */
+    Category findCategoryById(Long id);
 }

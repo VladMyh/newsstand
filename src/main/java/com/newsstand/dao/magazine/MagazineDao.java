@@ -43,4 +43,14 @@ public interface MagazineDao {
      * @return      A list of magazines.
      */
     List<Magazine> findLastNMagazines(Integer limit);
+
+    /**
+     * This method finds a page of magazines.
+     *
+     * @param categoryId Id of the category of magazines to find
+     * @param offset     Element to start from.
+     * @param size       How much elements to take.
+     * @return           List of magazines.
+     */
+    List<Magazine> findPageByCategory(Long categoryId, Long offset, Long size);
 }

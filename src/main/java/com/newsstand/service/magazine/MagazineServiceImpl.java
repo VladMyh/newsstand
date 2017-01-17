@@ -38,4 +38,10 @@ public class MagazineServiceImpl implements MagazineService {
         LOGGER.info("Finding " + limit + " latest magazines");
         return magazineDao.findLastNMagazines(limit);
     }
+
+    @Override
+    public List<Magazine> getPageByCategoryId(Long page, Long size, Long categoryId) {
+        LOGGER.info("Getting page number " + page + ", of size " + size + ", for category id " + categoryId);
+        return magazineDao.findPageByCategory(categoryId, (page - 1) * size, size);
+    }
 }

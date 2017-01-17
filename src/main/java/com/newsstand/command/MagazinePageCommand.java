@@ -37,23 +37,17 @@ public class MagazinePageCommand implements ServletCommand {
         String resultPage = errorPage;
 
         if(request.getParameter("id") != null) {
-            try {
-                Long id = Long.parseLong(request.getParameter("id"));
-                Magazine magazine = magazineService.findMagazineById(id);
+            Long id = Long.parseLong(request.getParameter("id"));
+            Magazine magazine = magazineService.findMagazineById(id);
 
-                if(magazine != null) {
-                    request.setAttribute("categories", categoryService.getAllCategories());
-                    request.setAttribute("magazine", magazine);
+            if(magazine != null) {
+                request.setAttribute("categories", categoryService.getAllCategories());
+                request.setAttribute("magazine", magazine);
 
-                    resultPage = magazinePage;
-                }
-                else {
-                    LOGGER.info("Magazine with id " + id + " doesn't exist");
-                }
+                resultPage = magazinePage;
             }
-            catch (NumberFormatException ex) {
-                LOGGER.error("Invalid get parameter " + request.getParameter("id"));
-                LOGGER.error(ex.getMessage());
+            else {
+                LOGGER.info("Magazine with id " + id + " doesn't exist");
             }
         }
 

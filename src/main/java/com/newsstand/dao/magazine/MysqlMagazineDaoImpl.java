@@ -25,6 +25,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     private static String deleteQuery;
     private static String findByIdQuery;
     private static String findLastQuery;
+    private static String findPageQuery;
 
     private MysqlMagazineDaoImpl() {
         LOGGER.info("Initializing MysqlMagazineDaoImpl");
@@ -37,6 +38,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         deleteQuery = properties.getProperty("deleteMagazineById");
         findByIdQuery = properties.getProperty("findMagazineById");
         findLastQuery = properties.getProperty("findLastMagazines");
+        findPageQuery = properties.getProperty("findPageByCategory");
 
         categoryDao = MysqlCategoryDaoImpl.getInstance();
         publisherDao = MysqlPublisherDaoImpl.getInstance();
@@ -176,6 +178,40 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
 
             ResultSet result = statement.executeQuery();
 
+            res = getMagazines(result);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Magazine> findPageByCategory(Long categoryId, Long offset, Long size) {
+        LOGGER.info("Getting page with offset " + offset + ", size " + size + " of category id " + categoryId);
+        List<Magazine> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findPageQuery);
+            statement.setLong(1, categoryId);
+            statement.setLong(2, offset);
+            statement.setLong(3, size);
+
+            ResultSet result = statement.executeQuery();
+
+            res = getMagazines(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    private List<Magazine> getMagazines(ResultSet result) {
+        List<Magazine> res = new ArrayList<>();
+
+        try {
             while (result.next()) {
                 Magazine magazine = new Magazine();
                 magazine.setId(result.getLong("id"));

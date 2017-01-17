@@ -23,6 +23,7 @@ public class CommandManager {
         commands.put("/logout", new LogoutController());
         commands.put("/register", new RegisterCommand());
         commands.put("/magazine", new MagazinePageCommand());
+        commands.put("/category", new CategoryPageCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
