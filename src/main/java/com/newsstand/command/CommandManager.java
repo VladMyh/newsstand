@@ -22,13 +22,14 @@ public class CommandManager {
         commands.put("/login", new LoginCommand());
         commands.put("/logout", new LogoutController());
         commands.put("/register", new RegisterCommand());
+        commands.put("/magazine", new MagazinePageCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
     }
 
     public ServletCommand getCommand(HttpServletRequest request) {
-        String command = request.getRequestURI().substring(request.getContextPath().length());
+        String command = request.getRequestURI().substring(request.getContextPath().length()).split("\\?")[0];
         LOGGER.info("Getting command " + command);
 
         if(commands.get(command) == null) {

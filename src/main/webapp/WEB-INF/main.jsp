@@ -27,7 +27,7 @@
             <p class="lead">Categories</p>
             <div class="list-group">
                 <c:forEach items="${categories}" var="category">
-                    <a href="#" class="list-group-item">${category.name}</a>
+                    <a href="" class="list-group-item">${category.name}</a>
                 </c:forEach>
             </div>
         </div>
@@ -73,7 +73,7 @@
                             <img src="http://placehold.it/320x150" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$${magazine.price}</h4>
-                                <h4><a href="#">${magazine.title}</a>
+                                <h4><a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>
                                 </h4>
                                 <p>${magazine.description}</p>
                             </div>
