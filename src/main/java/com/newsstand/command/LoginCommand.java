@@ -29,7 +29,7 @@ public class LoginCommand implements ServletCommand{
         MappingProperties properties = MappingProperties.getInstance();
         loginPage = properties.getProperty("loginPage");
         mainPage = properties.getProperty("mainPage");
-        adminPage = properties.getProperty("adminPage");
+        adminPage = properties.getProperty("adminDashboardPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {

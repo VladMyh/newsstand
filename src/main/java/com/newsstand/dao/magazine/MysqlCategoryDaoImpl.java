@@ -19,7 +19,8 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
     private static String createQuery;
     private static String updateQuery;
     private static String deleteQuery;
-    private static String findQuery;
+    private static String findByIdQuery;
+    private static String findByNameQuery;
     private static String getAllQuery;
 
     private MysqlCategoryDaoImpl() {
@@ -31,7 +32,8 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
         createQuery = properties.getProperty("createCategory");
         updateQuery = properties.getProperty("updateCategoryById");
         deleteQuery = properties.getProperty("deleteCategoryById");
-        findQuery = properties.getProperty("findCategoryById");
+        findByIdQuery = properties.getProperty("findCategoryById");
+        findByNameQuery = properties.getProperty("findCategoryByName");
         getAllQuery = properties.getProperty("getAllCategories");
     }
 
@@ -99,8 +101,9 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public void deleteCategoryById(Long id) {
+    public boolean deleteCategoryById(Long id) {
         LOGGER.info("Deleting category");
+        boolean res = false;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(deleteQuery);
@@ -113,24 +116,28 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
             }
             else {
                 LOGGER.info("Category deleted successfully");
+                res = true;
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+
+        return res;
     }
 
     @Override
     public Category findCategoryById(Long id) {
         LOGGER.info("Getting category with id " + id);
-        Category category = new Category();
+        Category category = null;
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(findQuery);
+            PreparedStatement statement = connection.prepareStatement(findByIdQuery);
             statement.setLong(1, id);
 
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
+                category = new Category();
                 category.setId(result.getLong("id"));
                 category.setName(result.getString("name"));
             }
@@ -142,6 +149,29 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
     }
 
     @Override
+    public Category findCategoryByName(String name) {
+        LOGGER.info("Getting category with name " + name);
+        Category category = null;
+
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findByNameQuery);
+            statement.setString(1, name);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                category = new Category();
+                category.setId(result.getLong("id"));
+                category.setName(result.getString("name"));
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return category;
+    }
+
+        @Override
     public List<Category> getAllCategories() {
         LOGGER.info("Getting all categories");
         List<Category> res = new ArrayList<>();

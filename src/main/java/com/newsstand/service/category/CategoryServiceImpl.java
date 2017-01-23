@@ -38,4 +38,27 @@ public class CategoryServiceImpl implements CategoryService {
         LOGGER.info("Finding category by id " + id);
         return categoryDao.findCategoryById(id);
     }
+
+    @Override
+    public Category createCategory(Category category) {
+        LOGGER.info("Creating new category");
+
+        if(categoryDao.findCategoryByName(category.getName()) == null) {
+            return categoryDao.createCategory(category);
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean deleteCategoryById(Long id) {
+        LOGGER.info("Deleting category with id " + id);
+        return categoryDao.deleteCategoryById(id);
+    }
+
+    @Override
+    public Category updateCategory(Category category) {
+        LOGGER.info("Updating category with id " + category.getId());
+        return categoryDao.updateCategory(category);
+    }
 }

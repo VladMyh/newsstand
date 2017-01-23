@@ -25,16 +25,25 @@ public interface CategoryDao {
      * This method deletes category from db.
      *
      * @param id Id of the category to be deleted.
+     * @return   True if deletion successful, otherwise false.
      */
-    void deleteCategoryById(Long id);
+    boolean deleteCategoryById(Long id);
 
     /**
      * This method finds category by id.
      *
      * @param id Id of the category.
-     * @return   Category object retrieved from db.
+     * @return   Category object retrieved from db, otherwise null.
      */
     Category findCategoryById(Long id);
+
+    /**
+     * This method finds category by name.
+     *
+     * @param name Name of the category.
+     * @return     Category object with given name, otherwise null.
+     */
+    Category findCategoryByName(String name);
 
     /**
      * This method gets all categories

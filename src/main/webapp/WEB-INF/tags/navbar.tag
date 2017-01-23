@@ -33,12 +33,12 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="${pageContext.request.contextPath}/adminDashboard">Dashboard</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
                             <li><a href="#">Magazines</a></li>
                             <li><a href="#">Subscriptions</a></li>
                             <li><a href="#">Users</a></li>
                             <li><a href="#">Publishers</a></li>
-                            <li><a href="#">Categories</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
                         </ul>
                     </li>
                 </c:if>

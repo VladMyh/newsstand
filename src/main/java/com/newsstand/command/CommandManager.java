@@ -1,5 +1,7 @@
 package com.newsstand.command;
 
+import com.newsstand.command.admin.AdminPageCommand;
+import com.newsstand.command.admin.category.*;
 import com.newsstand.properties.MappingProperties;
 import org.apache.log4j.Logger;
 
@@ -24,14 +26,22 @@ public class CommandManager {
         commands.put("/register", new RegisterCommand());
         commands.put("/magazine", new MagazinePageCommand());
         commands.put("/category", new CategoryPageCommand());
-        commands.put("/adminDashboard", new AdminPageCommand());
+        commands.put("/admin/dashboard", new AdminPageCommand());
+        commands.put("/admin/categories", new CategoriesAdminPageCommand());
+        commands.put("/admin/categories/add", new AddCategoryAdminPageCommand());
+        commands.put("/admin/categories/delete", new DeleteCategoryAdminCommand());
+        commands.put("/admin/categories/update", new UpdateCategoryAdminCommand());
+        commands.put("/admin/categories/edit", new EditCategoryAdminPageCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
     }
 
     public ServletCommand getCommand(HttpServletRequest request) {
-        String command = request.getRequestURI().substring(request.getContextPath().length()).split("\\?")[0];
+        String command = request.getRequestURI().substring(request.getContextPath().length());
+        if(command.endsWith("/")) {
+            command = command.substring(0, command.length() - 1);
+        }
         LOGGER.info("Getting command " + command);
 
         if(commands.get(command) == null) {
