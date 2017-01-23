@@ -6,6 +6,8 @@ import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class MysqlPublisherDaoImpl implements PublisherDao {
     private static final Logger LOGGER = Logger.getLogger(MysqlPublisherDaoImpl.class);
@@ -17,6 +19,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
     private static String updateQuery;
     private static String deleteQuery;
     private static String findQuery;
+    private static String getAllQuery;
 
     private MysqlPublisherDaoImpl() {
         LOGGER.info("Initializing MysqlPublisherDaoImpl");
@@ -28,6 +31,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         updateQuery = properties.getProperty("updatePublisherById");
         deleteQuery = properties.getProperty("deletePublisherById");
         findQuery = properties.getProperty("findPublisherById");
+        getAllQuery = properties.getProperty("getAllPublishers");
     }
 
     public static MysqlPublisherDaoImpl getInstance() {
@@ -91,8 +95,9 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         return publisher;
     }
 
-    public void deletePublisherById(Long id) {
+    public boolean deletePublisherById(Long id) {
         LOGGER.info("Deleting publisher");
+        boolean res = false;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(deleteQuery);
@@ -105,15 +110,18 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             }
             else {
                 LOGGER.info("Publisher deleted successfully");
+                res = true;
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+
+        return res;
     }
 
     public Publisher findPublisherById(Long id) {
         LOGGER.info("Getting publisher with id " + id);
-        Publisher publisher = new Publisher();
+        Publisher publisher = null;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findQuery);
@@ -122,6 +130,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
+                publisher = new Publisher();
                 publisher.setId(result.getLong("id"));
                 publisher.setTitle(result.getString("name"));
             }
@@ -130,5 +139,28 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         }
 
         return publisher;
+    }
+
+    @Override
+    public List<Publisher> getAllPublishers() {
+        LOGGER.info("Getting all publishers");
+        List<Publisher> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(getAllQuery);
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                Publisher publisher = new Publisher();
+                publisher.setId(result.getLong("id"));
+                publisher.setTitle(result.getString("title"));
+
+                res.add(publisher);
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
     }
 }
