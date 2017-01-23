@@ -37,7 +37,7 @@
                             <li><a href="#">Magazines</a></li>
                             <li><a href="#">Subscriptions</a></li>
                             <li><a href="#">Users</a></li>
-                            <li><a href="#">Publishers</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/publishers">Publishers</a></li>
                             <li><a href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
                         </ul>
                     </li>

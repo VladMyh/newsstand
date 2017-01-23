@@ -18,7 +18,8 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
     private static String createQuery;
     private static String updateQuery;
     private static String deleteQuery;
-    private static String findQuery;
+    private static String findByIdQuery;
+    private static String findByNameQuery;
     private static String getAllQuery;
 
     private MysqlPublisherDaoImpl() {
@@ -30,8 +31,9 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         createQuery = properties.getProperty("createPublisher");
         updateQuery = properties.getProperty("updatePublisherById");
         deleteQuery = properties.getProperty("deletePublisherById");
-        findQuery = properties.getProperty("findPublisherById");
+        findByIdQuery = properties.getProperty("findPublisherById");
         getAllQuery = properties.getProperty("getAllPublishers");
+        findByNameQuery = properties.getProperty("findPublisherByName");
     }
 
     public static MysqlPublisherDaoImpl getInstance() {
@@ -124,7 +126,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         Publisher publisher = null;
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(findQuery);
+            PreparedStatement statement = connection.prepareStatement(findByIdQuery);
             statement.setLong(1, id);
 
             ResultSet result = statement.executeQuery();
@@ -153,7 +155,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
             while(result.next()) {
                 Publisher publisher = new Publisher();
                 publisher.setId(result.getLong("id"));
-                publisher.setTitle(result.getString("title"));
+                publisher.setTitle(result.getString("name"));
 
                 res.add(publisher);
             }
@@ -162,5 +164,28 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         }
 
         return res;
+    }
+
+    @Override
+    public Publisher findPublisherByTitle(String title) {
+        LOGGER.info("Getting category with name " + title);
+        Publisher publisher = null;
+
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findByNameQuery);
+            statement.setString(1, title);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                publisher = new Publisher();
+                publisher.setId(result.getLong("id"));
+                publisher.setTitle(result.getString("name"));
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return publisher;
     }
 }

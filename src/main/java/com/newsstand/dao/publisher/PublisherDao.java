@@ -44,4 +44,12 @@ public interface PublisherDao {
      * @return A list of all publishers.
      */
     List<Publisher> getAllPublishers();
+
+    /**
+     * This method finds publisher by title.
+     *
+     * @param title Title of the publisher.
+     * @return     Publisher object with given title, otherwise null.
+     */
+    Publisher findPublisherByTitle(String title);
 }

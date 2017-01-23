@@ -42,7 +42,12 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public Publisher createPublisher(Publisher publisher) {
         LOGGER.info("Creating new publisher");
-        return publisherDao.createPublisher(publisher);
+
+        if(publisherDao.findPublisherByTitle(publisher.getTitle()) == null) {
+            return publisherDao.createPublisher(publisher);
+        }
+
+        return null;
     }
 
     @Override

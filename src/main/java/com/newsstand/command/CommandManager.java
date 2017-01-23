@@ -2,6 +2,9 @@ package com.newsstand.command;
 
 import com.newsstand.command.admin.AdminPageCommand;
 import com.newsstand.command.admin.category.*;
+import com.newsstand.command.admin.publisher.AddPublisherAdminPageCommand;
+import com.newsstand.command.admin.publisher.EditPublisherAdminPageCommand;
+import com.newsstand.command.admin.publisher.PublishersAdminPageCommand;
 import com.newsstand.properties.MappingProperties;
 import org.apache.log4j.Logger;
 
@@ -27,11 +30,18 @@ public class CommandManager {
         commands.put("/magazine", new MagazinePageCommand());
         commands.put("/category", new CategoryPageCommand());
         commands.put("/admin/dashboard", new AdminPageCommand());
+
+        //admin categories
         commands.put("/admin/categories", new CategoriesAdminPageCommand());
         commands.put("/admin/categories/add", new AddCategoryAdminPageCommand());
         commands.put("/admin/categories/delete", new DeleteCategoryAdminCommand());
         commands.put("/admin/categories/update", new UpdateCategoryAdminCommand());
         commands.put("/admin/categories/edit", new EditCategoryAdminPageCommand());
+
+        //admin publishers
+        commands.put("/admin/publishers", new PublishersAdminPageCommand());
+        commands.put("/admin/publishers/edit", new EditPublisherAdminPageCommand());
+        commands.put("/admin/publishers/add", new AddPublisherAdminPageCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
