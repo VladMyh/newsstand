@@ -26,12 +26,24 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+
+                <%--Admin--%>
                 <c:if test="${sessionScope.role == 'ADMIN'}">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/adminDashboard">Dashboard</a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${pageContext.request.contextPath}/adminDashboard">Dashboard</a></li>
+                            <li><a href="#">Magazines</a></li>
+                            <li><a href="#">Subscriptions</a></li>
+                            <li><a href="#">Users</a></li>
+                            <li><a href="#">Publishers</a></li>
+                            <li><a href="#">Categories</a></li>
+                        </ul>
                     </li>
                 </c:if>
 
+                <%--User not logged in--%>
                 <c:if test="${sessionScope.authenticated == null}">
                     <li>
                         <a href="${pageContext.request.contextPath}/login">Sign In</a>
@@ -41,6 +53,7 @@
                     </li>
                 </c:if>
 
+                <%--User controlls--%>
                 <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
                     <li>
                         <a href=""><c:out value="${sessionScope.username}"/></a>
