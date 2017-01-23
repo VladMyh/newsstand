@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="name">Name</label>
                     <div class="col-md-4">
-                        <input id="name" name="name"class="form-control input-md" type="text"
+                        <input id="name" name="name" class="form-control input-md" type="text"
                                value="${category.name}" required>
                     </div>
                 </div>

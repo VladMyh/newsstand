@@ -32,9 +32,9 @@
                 <legend>Edit Publisher</legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="name">Title</label>
+                    <label class="col-md-4 control-label" for="title">Title</label>
                     <div class="col-md-4">
-                        <input id="name" name="name" class="form-control input-md" type="text"
+                        <input id="title" name="title" class="form-control input-md" type="text"
                                value="${publisher.title}" required>
                     </div>
                 </div>
