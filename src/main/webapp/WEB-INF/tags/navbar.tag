@@ -34,7 +34,7 @@
                            aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-                            <li><a href="#">Magazines</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/magazines">Magazines</a></li>
                             <li><a href="#">Subscriptions</a></li>
                             <li><a href="${pageContext.request.contextPath}/admin/users?p=1&s=10">Users</a></li>
                             <li><a href="${pageContext.request.contextPath}/admin/publishers">Publishers</a></li>

@@ -30,4 +30,12 @@ public interface MagazineService {
      * @return           A list of magazines.
      */
     List<Magazine> getPageByCategoryId(Long page, Long size, Long categoryId);
+
+    /**
+     * This method creates new magazine.
+     *
+     * @param magazine Magazine object to create.
+     * @return         Updated object
+     */
+    Magazine createMagazine(Magazine magazine);
 }
