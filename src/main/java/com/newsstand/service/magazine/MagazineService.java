@@ -26,7 +26,7 @@ public interface MagazineService {
      *
      * @param page       Number of the page, starts from 1.
      * @param size       Size of the page.
-     * @param categoryId If of the category to filter magazines.
+     * @param categoryId Id of the category to filter magazines.
      * @return           A list of magazines.
      */
     List<Magazine> getPageByCategoryId(Long page, Long size, Long categoryId);

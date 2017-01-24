@@ -1,4 +1,4 @@
-package com.newsstand.dao.magazine;
+package com.newsstand.dao.category;
 
 import com.newsstand.model.magazine.Category;
 

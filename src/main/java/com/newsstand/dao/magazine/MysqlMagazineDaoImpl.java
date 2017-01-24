@@ -1,6 +1,7 @@
 package com.newsstand.dao.magazine;
 
 import com.newsstand.connection.ConnectionFactory;
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
 import com.newsstand.dao.publisher.MysqlPublisherDaoImpl;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.properties.MysqlQueryProperties;

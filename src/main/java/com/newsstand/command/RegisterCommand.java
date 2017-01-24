@@ -1,6 +1,7 @@
 package com.newsstand.command;
 
-import com.newsstand.dto.UserDto;
+import com.newsstand.model.user.User;
+import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.user.UserService;
 import com.newsstand.service.user.UserServiceImpl;
@@ -45,13 +46,14 @@ public class RegisterCommand implements ServletCommand {
         else if(userService.checkEmailAvailability(request.getParameter("email"))) {
             LOGGER.info("New user registration");
 
-            UserDto userDto = new UserDto();
-            userDto.setFirstName(request.getParameter("fname"));
-            userDto.setLastName(request.getParameter("lname"));
-            userDto.setEmail(request.getParameter("email"));
-            userDto.setPassword(request.getParameter("password"));
+            User user = new User();
+            user.setFirstName(request.getParameter("fname"));
+            user.setLastName(request.getParameter("lname"));
+            user.setEmail(request.getParameter("email"));
+            user.setPassword(request.getParameter("password"));
+            user.setUserType(UserType.USER);
 
-            if(userService.registerUser(userDto)) {
+            if(userService.registerUser(user)) {
                 resultPage = mainPage;
             }
         }

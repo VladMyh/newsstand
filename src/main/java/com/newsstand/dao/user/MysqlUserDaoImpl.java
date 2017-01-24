@@ -7,6 +7,8 @@ import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlUserDaoImpl implements UserDao{
 	private static final Logger LOGGER = Logger.getLogger(MysqlUserDaoImpl.class);
@@ -20,6 +22,7 @@ public class MysqlUserDaoImpl implements UserDao{
 	private static String findByIdQuery;
 	private static String findByEmailQuery;
 	private static String findByEmailAndPasswordQuery;
+	private static String findPageByUserType;
 
 	private MysqlUserDaoImpl() {
 		LOGGER.info("Initializing MysqlUserDaoImpl");
@@ -33,6 +36,7 @@ public class MysqlUserDaoImpl implements UserDao{
 		findByIdQuery = properties.getProperty("findUserById");
 		findByEmailQuery = properties.getProperty("findUserByEmail");
 		findByEmailAndPasswordQuery = properties.getProperty("findUserByEmailAndPassword");
+		findPageByUserType = properties.getProperty("findPageByUserType");
 	}
 
 	public static MysqlUserDaoImpl getInstance() {
@@ -138,15 +142,7 @@ public class MysqlUserDaoImpl implements UserDao{
 
 			ResultSet result = statement.executeQuery();
 
-			if(result.next()) {
-				user = new User();
-				user.setId(result.getLong("id"));
-				user.setFirstName(result.getString("firstName"));
-				user.setLastName(result.getString("lastName"));
-				user.setPassword(result.getString("password"));
-				user.setEmail(result.getString("email"));
-				user.setUserType(UserType.values()[result.getInt("userTypeId") - 1]);
-			}
+			user = getUser(result);
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -165,15 +161,7 @@ public class MysqlUserDaoImpl implements UserDao{
 
 			ResultSet result = statement.executeQuery();
 
-			if(result.next()) {
-				user = new User();
-				user.setId(result.getLong("id"));
-				user.setFirstName(result.getString("firstName"));
-				user.setLastName(result.getString("lastName"));
-				user.setPassword(result.getString("password"));
-				user.setEmail(result.getString("email"));
-				user.setUserType(UserType.values()[result.getInt("userTypeId") - 1]);
-			}
+			user = getUser(result);
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -193,19 +181,78 @@ public class MysqlUserDaoImpl implements UserDao{
 
 			ResultSet result = statement.executeQuery();
 
-			if(result.next()) {
-				user = new User();
-				user.setId(result.getLong("id"));
-				user.setFirstName(result.getString("firstName"));
-				user.setLastName(result.getString("lastName"));
-				user.setPassword(result.getString("password"));
-				user.setEmail(result.getString("email"));
-				user.setUserType(UserType.values()[result.getInt("userTypeId") - 1]);
-			}
+			user = getUser(result);
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
 
 		return user;
 	}
+
+	@Override
+	public List<User> findPageByUserType(UserType userType, Long offset, Long size) {
+		LOGGER.info("Getting page with offset " + offset + ", size " + size + " of userType " + userType.name());
+		List<User> res = new ArrayList<>();
+
+		try(Connection connection = connectionFactory.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(findPageByUserType);
+			statement.setLong(1, userType.ordinal() + 1);
+			statement.setLong(2, offset);
+			statement.setLong(3, size);
+
+			ResultSet result = statement.executeQuery();
+
+			res = getUsers(result);
+
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+
+		return res;
+	}
+
+
+	private User getUser(ResultSet resultSet) {
+		User user = null;
+
+		try {
+			if(resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setFirstName(resultSet.getString("firstName"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
+            }
+		} catch (SQLException e) {
+			LOGGER.info(e.getMessage());
+		}
+
+		return user;
+	}
+
+	private List<User> getUsers(ResultSet resultSet) {
+		List<User> res = new ArrayList<>();
+
+		try {
+			while (resultSet.next()) {
+				User user = new User();
+				user.setId(resultSet.getLong("id"));
+				user.setFirstName(resultSet.getString("firstName"));
+				user.setLastName(resultSet.getString("lastName"));
+				user.setPassword(resultSet.getString("password"));
+				user.setEmail(resultSet.getString("email"));
+				user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
+
+				res.add(user);
+			}
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+
+		return res;
+	}
+
+
 }

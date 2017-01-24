@@ -1,6 +1,6 @@
 package com.newsstand.command;
 
-import com.newsstand.dto.UserDto;
+import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.user.UserService;
@@ -46,17 +46,17 @@ public class LoginCommand implements ServletCommand{
             return resultPage;
         }
         else {
-            UserDto userDto = userService.getUserByCredentials(request.getParameter("email"),
-                                                               request.getParameter("password"));
+            User user = userService.getUserByCredentials(request.getParameter("email"),
+                                                         request.getParameter("password"));
 
-            if (userDto != null) {
+            if (user != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("email", userDto.getEmail());
-                session.setAttribute("username", userDto.getFirstName() + " " + userDto.getLastName());
+                session.setAttribute("email", user.getEmail());
+                session.setAttribute("username", user.getFirstName() + " " + user.getLastName());
                 session.setAttribute("authenticated", true);
-                session.setAttribute("role", userDto.getUserType());
+                session.setAttribute("role", user.getUserType().name());
 
-                if(Objects.equals(userDto.getUserType(), UserType.ADMIN.name())) {
+                if(Objects.equals(user.getUserType(), UserType.ADMIN)) {
                     resultPage = adminPage;
                 }
                 else {

@@ -2,10 +2,11 @@ package com.newsstand.service.user;
 
 import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.dao.user.UserDao;
-import com.newsstand.dto.UserDto;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -36,35 +37,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registerUser(UserDto userDto) {
+    public boolean registerUser(User user) {
         LOGGER.info("New user registration");
-
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setUserType(UserType.USER);
 
         return userDao.createUser(user).getId() != null;
     }
 
     @Override
-    public UserDto getUserByCredentials(String email, String password) {
+    public User getUserByCredentials(String email, String password) {
         LOGGER.info("Getting user by credentials");
 
-        User user = userDao.findUserByEmailAndPassword(email, password);
+        return userDao.findUserByEmailAndPassword(email, password);
+    }
 
-        if(user != null) {
-            UserDto userDto = new UserDto();
-            userDto.setFirstName(user.getFirstName());
-            userDto.setLastName(user.getLastName());
-            userDto.setEmail(user.getEmail());
-            userDto.setUserType(user.getUserType().name());
+    @Override
+    public List<User> getPageByUserType(Long page, Long size, UserType userType) {
+        LOGGER.info("Getting page number " + page + ", of size " + size + ", for user type " + userType.name());
 
-            return userDto;
-        }
-
-        return null;
+        return userDao.findPageByUserType(userType, (page - 1) * size, size);
     }
 }

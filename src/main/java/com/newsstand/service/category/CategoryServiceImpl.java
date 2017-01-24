@@ -1,7 +1,7 @@
 package com.newsstand.service.category;
 
-import com.newsstand.dao.magazine.CategoryDao;
-import com.newsstand.dao.magazine.MysqlCategoryDaoImpl;
+import com.newsstand.dao.category.CategoryDao;
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
 import com.newsstand.model.magazine.Category;
 import org.apache.log4j.Logger;
 
