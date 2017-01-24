@@ -12,6 +12,11 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
+/**
+ * This is a helper class that is used to work with servlet commands.
+ *
+ * It handles mapping of the url paths to the commands.
+ */
 public class CommandManager {
 
     private static final Logger LOGGER = Logger.getLogger(CommandManager.class);
@@ -57,6 +62,12 @@ public class CommandManager {
         errorPage = properties.getProperty("errorPage");
     }
 
+    /**
+     * This method is used to get a command instance based on a request.
+     *
+     * @param request http request from servlet.
+     * @return        A servlet command instance.
+     */
     public ServletCommand getCommand(HttpServletRequest request) {
         String command = request.getRequestURI().substring(request.getContextPath().length());
         if(command.endsWith("/")) {

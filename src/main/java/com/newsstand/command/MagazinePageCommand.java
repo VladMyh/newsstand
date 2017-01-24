@@ -11,6 +11,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle GET requests to the page used to view a single magazine.
+ */
 public class MagazinePageCommand implements ServletCommand {
 
     private static final Logger LOGGER = Logger.getLogger(MagazinePageCommand.class);

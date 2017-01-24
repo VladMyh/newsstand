@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-
+/**
+ * This class is used to handle GET requests to the page to view all the magazines
+ * of the particular category.
+ */
 public class CategoryPageCommand implements ServletCommand {
 
     private static final Logger LOGGER = Logger.getLogger(CategoryPageCommand.class);
@@ -43,21 +46,28 @@ public class CategoryPageCommand implements ServletCommand {
         if(request.getParameter("catId") != null && request.getParameter("p") != null &&
             request.getParameter("s") != null) {
 
-            Long categoryId = Long.parseLong(request.getParameter("catId"));
-            Long pageNum = Long.parseLong(request.getParameter("p"));
-            Long size = Long.parseLong(request.getParameter("s"));
+            try {
+                Long categoryId = Long.parseLong(request.getParameter("catId"));
+                Long pageNum = Long.parseLong(request.getParameter("p"));
+                Long size = Long.parseLong(request.getParameter("s"));
 
-            Category category = categoryService.findCategoryById(categoryId);
-            List<Magazine> page = magazineService.getPageByCategoryId(pageNum, size, category.getId());
+                Category category = categoryService.findCategoryById(categoryId);
+                List<Magazine> page = magazineService.getPageByCategoryId(pageNum, size, category.getId());
 
-            request.setAttribute("categories", categoryService.getAllCategories());
-            request.setAttribute("page", page);
-            request.setAttribute("category", category);
-            request.setAttribute("pageNum", pageNum);
-            request.setAttribute("pageSize", size);
-            request.setAttribute("currSize", page.size());
+                request.setAttribute("categories", categoryService.getAllCategories());
+                request.setAttribute("page", page);
+                request.setAttribute("category", category);
+                request.setAttribute("pageNum", pageNum);
+                request.setAttribute("pageSize", size);
+                request.setAttribute("currSize", page.size());
 
-            resultPage = categoryPage;
+                resultPage = categoryPage;
+            }
+            catch (NumberFormatException ex) {
+                LOGGER.info("Couldn't parse " + request.getParameter("catId") + ", "
+                                              + request.getParameter("p") + ", "
+                                              + request.getParameter("s")+ " to long");
+            }
         }
 
         return resultPage;

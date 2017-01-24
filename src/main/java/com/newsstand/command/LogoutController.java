@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle user logout, by invalidating session.
+ */
 public class LogoutController implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 

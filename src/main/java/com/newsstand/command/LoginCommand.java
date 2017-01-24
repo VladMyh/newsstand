@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
+/**
+ * This class is used to handle GET requests to the login page,
+ * and POST requests to authenticate user.
+ */
 public class LoginCommand implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 

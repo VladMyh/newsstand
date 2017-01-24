@@ -10,6 +10,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle GET requests to get user registration page,
+ * and POST requests to register user.
+ */
 public class RegisterCommand implements ServletCommand {
 
     private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);

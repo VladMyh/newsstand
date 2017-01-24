@@ -10,6 +10,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle POST requests to delete publisher.
+ */
 public class DeletePublisherAdminCommand implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(DeletePublisherAdminCommand.class);
 

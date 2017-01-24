@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle GET requests to the page to add new publisher,
+ * and POST requests to create new publisher
+ */
 public class AddPublisherAdminPageCommand implements ServletCommand {
     private static final Logger LOGGER = Logger.getLogger(AddPublisherAdminPageCommand.class);
 

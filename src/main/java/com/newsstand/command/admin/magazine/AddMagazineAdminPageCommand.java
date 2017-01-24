@@ -17,6 +17,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class is used to handle GET requests to the page admin used to add new magazines,
+ * and POST requests to add new magazines.
+ */
 public class AddMagazineAdminPageCommand implements ServletCommand {
     private static final Logger LOGGER = Logger.getLogger(AddMagazineAdminPageCommand.class);
 

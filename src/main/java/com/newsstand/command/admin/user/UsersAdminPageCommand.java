@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class is used to GET requests to the admin page to view users.
+ */
 public class UsersAdminPageCommand implements ServletCommand {
     private static final Logger LOGGER = Logger.getLogger(UsersAdminPageCommand.class);
 

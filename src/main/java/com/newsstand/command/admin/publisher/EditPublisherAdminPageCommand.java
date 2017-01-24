@@ -11,6 +11,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This page is used handle GET requests to the page used to edit publishers.
+ */
 public class EditPublisherAdminPageCommand implements ServletCommand {
     private static final Logger LOGGER = Logger.getLogger(EditPublisherAdminPageCommand.class);
 
