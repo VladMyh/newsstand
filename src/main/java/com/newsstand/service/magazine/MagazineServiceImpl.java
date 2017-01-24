@@ -49,6 +49,20 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
+    public List<Magazine> getPageByPublisherId(Long page, Long size, Long publisherId) {
+        LOGGER.info("Getting page number " + page + ", of size " + size + ", for publisher id " + publisherId);
+
+        return magazineDao.findPageByPublisher(publisherId, (page - 1) * size, size);
+    }
+
+    @Override
+    public List<Magazine> getPage(Long page, Long size) {
+        LOGGER.info("Getting page number " + page + ", of size " + size );
+
+        return magazineDao.findPage((page - 1) * size, size);
+    }
+
+    @Override
     public Magazine createMagazine(Magazine magazine) {
         LOGGER.info("Creating new magazine");
 

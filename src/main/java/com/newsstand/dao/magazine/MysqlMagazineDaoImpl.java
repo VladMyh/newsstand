@@ -26,7 +26,9 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     private static String deleteQuery;
     private static String findByIdQuery;
     private static String findLastQuery;
-    private static String findPageQuery;
+    private static String findPageByCategoryQuery;
+    private static String findPageByPublisherQuery;
+    private static String findPage;
 
     private MysqlMagazineDaoImpl() {
         LOGGER.info("Initializing MysqlMagazineDaoImpl");
@@ -39,7 +41,9 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         deleteQuery = properties.getProperty("deleteMagazineById");
         findByIdQuery = properties.getProperty("findMagazineById");
         findLastQuery = properties.getProperty("findLastMagazines");
-        findPageQuery = properties.getProperty("findPageByCategory");
+        findPageByCategoryQuery = properties.getProperty("findPageByCategory");
+        findPageByPublisherQuery = properties.getProperty("findPageByPublisher");
+        findPage = properties.getProperty("findPage");
 
         categoryDao = MysqlCategoryDaoImpl.getInstance();
         publisherDao = MysqlPublisherDaoImpl.getInstance();
@@ -193,10 +197,53 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         List<Magazine> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(findPageQuery);
+            PreparedStatement statement = connection.prepareStatement(findPageByCategoryQuery);
             statement.setLong(1, categoryId);
             statement.setLong(2, offset);
             statement.setLong(3, size);
+
+            ResultSet result = statement.executeQuery();
+
+            res = getMagazines(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Magazine> findPageByPublisher(Long publisherId, Long offset, Long size) {
+        LOGGER.info("Getting page with offset " + offset + ", size " + size + " of publisher id " + publisherId);
+        List<Magazine> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findPageByPublisherQuery);
+            statement.setLong(1, publisherId);
+            statement.setLong(2, offset);
+            statement.setLong(3, size);
+
+            ResultSet result = statement.executeQuery();
+
+            res = getMagazines(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Magazine> findPage(Long offset, Long size) {
+        LOGGER.info("Getting page with offset " + offset + ", size " + size);
+        List<Magazine> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findPage);
+            statement.setLong(1, offset);
+            statement.setLong(2, size);
 
             ResultSet result = statement.executeQuery();
 

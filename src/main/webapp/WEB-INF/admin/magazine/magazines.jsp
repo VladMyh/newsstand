@@ -31,7 +31,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>title</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Publisher</th>
@@ -41,9 +41,41 @@
             </thead>
 
             <tbody>
-
+            <c:forEach items="${page}" var="magazine">
+                <tr>
+                    <td>${magazine.title}</td>
+                    <td>${magazine.quantity}</td>
+                    <td>${magazine.price}</td>
+                    <td>${magazine.category.name}</td>
+                    <td>${magazine.publisher.title}</td>
+                    <td>
+                        <a class='btn btn-info btn-xs' href="#">
+                            <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
+
+        <div class="row">
+            <ul class="pager">
+                <c:if test="${pageNum > 1}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/magazines?p=${pageNum-1}&s=${pageSize}">
+                            <span aria-hidden="true">&larr;</span>
+                        </a>
+                    </li>
+                </c:if>
+
+                <c:if test="${currSize == pageSize}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/magazines?p=${pageNum+1}&s=${pageSize}">
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
 
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/magazines/add" role="button">Add</a>
     </div>
