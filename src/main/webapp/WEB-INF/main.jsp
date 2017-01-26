@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="en"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <%--<fmt:setLocale value="en"/>--%>
+    <fmt:setBundle basename="localization" var="bundle"/>
 
     <title>Newsstand - Main page</title>
 
@@ -24,7 +36,7 @@
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Categories</p>
+            <p class="lead"><fmt:message key="categories" bundle="${bundle}"/></p>
             <div class="list-group">
                 <c:forEach items="${categories}" var="category">
                     <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=1&s=6"
@@ -58,6 +70,18 @@
         </div>
 
     </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="${pageContext.request.contextPath}/?locale=en">EN</a>
+                <a href="${pageContext.request.contextPath}/?locale=ru">RU</a>
+            </div>
+        </div>
+    </footer>
 
 </div>
 <!-- /.container -->

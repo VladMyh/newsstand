@@ -38,6 +38,18 @@ public class MainPageCommand implements ServletCommand {
         request.setAttribute("categories", categoryService.getAllCategories());
         request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
+        if(request.getParameter("locale") != null) {
+            String locale = request.getParameter("locale");
+            switch (locale) {
+                case "en":
+                    request.getSession().setAttribute("locale", "en");
+                    break;
+                case "ru":
+                    request.getSession().setAttribute("locale", "ru");
+                    break;
+            }
+        }
+
         return page;
     }
 }
