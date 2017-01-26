@@ -3,6 +3,10 @@ package com.newsstand.command;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
+import com.newsstand.service.category.CategoryService;
+import com.newsstand.service.category.CategoryServiceImpl;
+import com.newsstand.service.magazine.MagazineService;
+import com.newsstand.service.magazine.MagazineServiceImpl;
 import com.newsstand.service.user.UserService;
 import com.newsstand.service.user.UserServiceImpl;
 import org.apache.log4j.Logger;
@@ -20,6 +24,8 @@ public class LoginCommand implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 
     private static UserService userService;
+    private static CategoryService categoryService;
+    private static MagazineService magazineService;
 
     private static String loginPage;
     private static String mainPage;
@@ -29,6 +35,8 @@ public class LoginCommand implements ServletCommand{
         LOGGER.info("Initializing LoginCommand");
 
         userService = UserServiceImpl.getInstance();
+        categoryService = CategoryServiceImpl.getInstance();
+        magazineService = MagazineServiceImpl.getInstance();
 
         MappingProperties properties = MappingProperties.getInstance();
         loginPage = properties.getProperty("loginPage");
@@ -64,6 +72,9 @@ public class LoginCommand implements ServletCommand{
                     resultPage = adminPage;
                 }
                 else {
+                    request.setAttribute("categories", categoryService.getAllCategories());
+                    request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
+
                     resultPage = mainPage;
                 }
             }
