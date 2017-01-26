@@ -11,15 +11,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <%--Localization--%>
     <c:if test="${sessionScope.locale == null}">
-        <fmt:setLocale value="en"/>
+        <fmt:setLocale value="ru"/>
     </c:if>
     <c:if test="${sessionScope.locale != null}">
         <fmt:setLocale value="${sessionScope.locale}"/>
     </c:if>
 
-    <%--<fmt:setLocale value="en"/>--%>
     <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
 
     <title>Newsstand - Main page</title>
 

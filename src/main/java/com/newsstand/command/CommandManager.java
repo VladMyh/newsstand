@@ -36,6 +36,7 @@ public class CommandManager {
         commands.put("/magazine", new MagazinePageCommand());
         commands.put("/category", new CategoryPageCommand());
         commands.put("/admin/dashboard", new AdminPageCommand());
+        commands.put("/subscribe", new SubscribePageCommand());
 
         //admin categories
         commands.put("/admin/categories", new CategoriesAdminPageCommand());

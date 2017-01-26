@@ -39,15 +39,25 @@
             <div class="thumbnail">
                 <div class="caption-full">
                     <h4 class="pull-right">Price $${magazine.price}  </h4>
-                    <h4><a href="#">${magazine.title}</a></h4>
+                    <h3>${magazine.title}</h3>
 
                     <p><b>Publisher: </b><a href="#">${magazine.publisher.title}</a></p>
                     <p><b>Category: </b><a href="#">${magazine.category.name}</a></p>
 
-                    <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
-                        <input type="button" class="pull-right" value="Subscribe">
+                    <%--User logged in--%>
+                    <c:if test="${sessionScope.authenticated != null &&
+                                  sessionScope.authenticated == true &&
+                                  sessionScope.role == 'USER'}">
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">Subscribe!</a>
                     </c:if>
+
+                    <%--User not logged in--%>
+                    <c:if test="${sessionScope.authenticated == null}">
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">Subscribe!</a>
+                    </c:if>
+
                     <hr>
+                    <h5><b>Description</b></h5>
                     <p>${magazine.description}</p>
                 </div>
             </div>
