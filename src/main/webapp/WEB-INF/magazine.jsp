@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -8,6 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
 
     <title>Newsstand - ${magazine.title}</title>
 
@@ -25,7 +37,7 @@
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Categories</p>
+            <p class="lead"><fmt:message key="categories" bundle="${bundle}"/></p>
             <div class="list-group">
                 <c:forEach items="${categories}" var="category">
                     <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=1&s=6"
@@ -38,26 +50,30 @@
 
             <div class="thumbnail">
                 <div class="caption-full">
-                    <h4 class="pull-right">Price $${magazine.price}  </h4>
+                    <h4 class="pull-right">${magazine.price}  </h4>
                     <h3>${magazine.title}</h3>
 
-                    <p><b>Publisher: </b><a href="#">${magazine.publisher.title}</a></p>
-                    <p><b>Category: </b><a href="#">${magazine.category.name}</a></p>
+                    <p><b><fmt:message key="publisher" bundle="${bundle}"/>: </b><a href="#">${magazine.publisher.title}</a></p>
+                    <p><b><fmt:message key="category" bundle="${bundle}"/>: </b><a href="#">${magazine.category.name}</a></p>
 
                     <%--User logged in--%>
                     <c:if test="${sessionScope.authenticated != null &&
                                   sessionScope.authenticated == true &&
                                   sessionScope.role == 'USER'}">
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">Subscribe!</a>
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">
+                            <fmt:message key="subscribe" bundle="${bundle}"/>
+                        </a>
                     </c:if>
 
                     <%--User not logged in--%>
                     <c:if test="${sessionScope.authenticated == null}">
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">Subscribe!</a>
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">
+                            <fmt:message key="subscribe" bundle="${bundle}"/>
+                        </a>
                     </c:if>
 
                     <hr>
-                    <h5><b>Description</b></h5>
+                    <h5><b><fmt:message key="description" bundle="${bundle}"/></b></h5>
                     <p>${magazine.description}</p>
                 </div>
             </div>

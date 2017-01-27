@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -8,6 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
 
     <title>Newsstand - Subscribe</title>
 
@@ -28,7 +40,7 @@
 
         <div class="col-md-6">
 
-            <h1>Subscribe</h1>
+            <h1><fmt:message key="subscribe" bundle="${bundle}"/></h1>
 
             <div class="well">
                 <h4><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
@@ -39,32 +51,32 @@
 
             <div class="well">
                 <h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                    Subscription type</h4>
+                    <fmt:message key="subscriptionType" bundle="${bundle}"/></h4>
 
                 <select class="selectpicker">
-                    <option selected>One month</option>
-                    <option>Two month</option>
-                    <option>Three month</option>
-                    <option>Six month</option>
-                    <option>One year</option>
+                    <option selected><fmt:message key="oneMonth" bundle="${bundle}"/></option>
+                    <option><fmt:message key="twoMonths" bundle="${bundle}"/></option>
+                    <option><fmt:message key="threeMonths" bundle="${bundle}"/></option>
+                    <option><fmt:message key="sixMonths" bundle="${bundle}"/></option>
+                    <option><fmt:message key="oneYear" bundle="${bundle}"/></option>
                 </select>
 
             </div>
 
             <div class="well">
                 <h4><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                    Payment</h4>
+                    <fmt:message key="payment" bundle="${bundle}"/></h4>
 
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Credit card
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> <fmt:message key="creditCard" bundle="${bundle}"/>
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> PayPal
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> <fmt:message key="paypal" bundle="${bundle}"/>
                 </label>
 
             </div>
 
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-primary"><fmt:message key="continue" bundle="${bundle}"/></button>
 
         </div>
 

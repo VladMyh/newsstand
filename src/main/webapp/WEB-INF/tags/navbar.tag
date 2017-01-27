@@ -1,6 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@tag description="Page navigation bar" pageEncoding="UTF-8"%>
 <%@attribute name="navbar" fragment="true" %>
+
+<%--Localization--%>
+<c:if test="${sessionScope.locale == null}">
+    <fmt:setLocale value="ru"/>
+</c:if>
+<c:if test="${sessionScope.locale != null}">
+    <fmt:setLocale value="${sessionScope.locale}"/>
+</c:if>
+
+<fmt:setBundle basename="localization" var="bundle"/>
+<%----%>
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -19,9 +31,9 @@
             <ul class="nav navbar-nav">
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="<fmt:message key="search" bundle="${bundle}"/>">
                     </div>
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button type="submit" class="btn btn-default"><fmt:message key="search" bundle="${bundle}"/></button>
                 </form>
             </ul>
 
@@ -46,10 +58,10 @@
                 <%--User not logged in--%>
                 <c:if test="${sessionScope.authenticated == null}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/login">Sign In</a>
+                        <a href="${pageContext.request.contextPath}/login"><fmt:message key="signin" bundle="${bundle}"/></a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/register">Sign Up</a>
+                        <a href="${pageContext.request.contextPath}/register"><fmt:message key="signup" bundle="${bundle}"/></a>
                     </li>
                 </c:if>
 
@@ -59,7 +71,7 @@
                         <a href=""><c:out value="${sessionScope.username}"/></a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/logout">Sign out</a>
+                        <a href="${pageContext.request.contextPath}/logout"><fmt:message key="signout" bundle="${bundle}"/></a>
                     </li>
                 </c:if>
             </ul>

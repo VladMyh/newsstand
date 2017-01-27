@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -8,6 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
 
     <title>Newsstand - ${category.name}</title>
 
@@ -24,7 +36,7 @@
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Categories</p>
+            <p class="lead"><fmt:message key="categories" bundle="${bundle}"/></p>
             <div class="list-group">
                 <c:forEach items="${categories}" var="category">
                     <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=1&s=6"
