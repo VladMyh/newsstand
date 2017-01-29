@@ -10,7 +10,7 @@ public interface CategoryService {
      *
      * @return A list of all categories.
      */
-    List<Category> getAllCategories();
+    List<Category> findAll();
 
     /**
      * This method gets category by id.

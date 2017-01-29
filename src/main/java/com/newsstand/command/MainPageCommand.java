@@ -35,7 +35,7 @@ public class MainPageCommand implements ServletCommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
 
-        request.setAttribute("categories", categoryService.getAllCategories());
+        request.setAttribute("categories", categoryService.findAll());
         request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
         if(request.getParameter("locale") != null) {

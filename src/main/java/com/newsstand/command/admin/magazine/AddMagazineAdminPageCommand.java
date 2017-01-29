@@ -79,8 +79,8 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
             }
         }
         else {
-            request.setAttribute("publishers", publisherService.getAllPublishers());
-            request.setAttribute("categories", categoryService.getAllCategories());
+            request.setAttribute("publishers", publisherService.findAll());
+            request.setAttribute("categories", categoryService.findAll());
         }
 
         return resultPage;

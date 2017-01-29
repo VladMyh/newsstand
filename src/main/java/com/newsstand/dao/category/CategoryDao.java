@@ -50,5 +50,5 @@ public interface CategoryDao {
      *
      * @return A list of all categories.
      */
-    List<Category> getAllCategories();
+    List<Category> findAll();
 }

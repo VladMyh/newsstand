@@ -43,7 +43,7 @@ public interface PublisherDao {
      *
      * @return A list of all publishers.
      */
-    List<Publisher> getAllPublishers();
+    List<Publisher> findAll();
 
     /**
      * This method finds publisher by title.

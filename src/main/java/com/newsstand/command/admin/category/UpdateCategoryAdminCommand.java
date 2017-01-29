@@ -52,7 +52,7 @@ public class UpdateCategoryAdminCommand implements ServletCommand {
                 categoryService.updateCategory(category);
 
                 request.setAttribute("updateSuccess", true);
-                request.setAttribute("categories", categoryService.getAllCategories());
+                request.setAttribute("categories", categoryService.findAll());
             }
             catch (NumberFormatException ex) {
                 LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");

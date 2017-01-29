@@ -72,7 +72,7 @@ public class LoginCommand implements ServletCommand{
                     resultPage = adminPage;
                 }
                 else {
-                    request.setAttribute("categories", categoryService.getAllCategories());
+                    request.setAttribute("categories", categoryService.findAll());
                     request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
                     resultPage = mainPage;

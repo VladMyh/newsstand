@@ -46,7 +46,7 @@ public class DeletePublisherAdminCommand implements ServletCommand{
                 Long id = Long.parseLong(request.getParameter("id"));
 
                 request.setAttribute("deletionSuccess", publisherService.deletePublisherById(id));
-                request.setAttribute("publishers", publisherService.getAllPublishers());
+                request.setAttribute("publishers", publisherService.findAll());
             }
             catch (NumberFormatException ex) {
                 LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");

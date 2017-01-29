@@ -20,7 +20,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
     private static String deleteQuery;
     private static String findByIdQuery;
     private static String findByNameQuery;
-    private static String getAllQuery;
+    private static String findAllQuery;
 
     private MysqlPublisherDaoImpl() {
         LOGGER.info("Initializing MysqlPublisherDaoImpl");
@@ -32,7 +32,7 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
         updateQuery = properties.getProperty("updatePublisherById");
         deleteQuery = properties.getProperty("deletePublisherById");
         findByIdQuery = properties.getProperty("findPublisherById");
-        getAllQuery = properties.getProperty("getAllPublishers");
+        findAllQuery = properties.getProperty("findAllPublishers");
         findByNameQuery = properties.getProperty("findPublisherByName");
     }
 
@@ -144,12 +144,12 @@ public final class MysqlPublisherDaoImpl implements PublisherDao {
     }
 
     @Override
-    public List<Publisher> getAllPublishers() {
+    public List<Publisher> findAll() {
         LOGGER.info("Getting all publishers");
         List<Publisher> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(getAllQuery);
+            PreparedStatement statement = connection.prepareStatement(findAllQuery);
             ResultSet result = statement.executeQuery();
 
             while(result.next()) {

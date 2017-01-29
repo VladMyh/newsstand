@@ -37,7 +37,7 @@ public class LogoutController implements ServletCommand{
 
         request.getSession().invalidate();
 
-        request.setAttribute("categories", categoryService.getAllCategories());
+        request.setAttribute("categories", categoryService.findAll());
         request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
         return mainPage;

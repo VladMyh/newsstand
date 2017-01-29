@@ -54,7 +54,7 @@ public class CategoryPageCommand implements ServletCommand {
                 Category category = categoryService.findCategoryById(categoryId);
                 List<Magazine> page = magazineService.getPageByCategoryId(pageNum, size, category.getId());
 
-                request.setAttribute("categories", categoryService.getAllCategories());
+                request.setAttribute("categories", categoryService.findAll());
                 request.setAttribute("page", page);
                 request.setAttribute("category", category);
                 request.setAttribute("pageNum", pageNum);

@@ -31,7 +31,7 @@ public class CategoriesAdminPageCommand implements ServletCommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
 
-        request.setAttribute("categories", categoryService.getAllCategories());
+        request.setAttribute("categories", categoryService.findAll());
 
         return page;
     }

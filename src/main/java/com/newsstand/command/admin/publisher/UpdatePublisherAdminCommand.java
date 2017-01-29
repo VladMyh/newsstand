@@ -52,7 +52,7 @@ public class UpdatePublisherAdminCommand implements ServletCommand {
                 publisherService.updatePublisher(publisher);
 
                 request.setAttribute("updateSuccess", true);
-                request.setAttribute("publishers", publisherService.getAllPublishers());
+                request.setAttribute("publishers", publisherService.findAll());
             }
             catch (NumberFormatException ex) {
                 LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");

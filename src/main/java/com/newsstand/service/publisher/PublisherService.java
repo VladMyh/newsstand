@@ -10,7 +10,7 @@ public interface PublisherService {
      *
      * @return A list of all publishers.
      */
-    List<Publisher> getAllPublishers();
+    List<Publisher> findAll();
 
     /**
      * This method gets publisher by id.

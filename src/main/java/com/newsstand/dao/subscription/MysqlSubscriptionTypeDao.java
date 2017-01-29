@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
 
@@ -19,6 +21,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
     private static String updateQuery;
     private static String deleteQuery;
     private static String findQuery;
+    private static String findAll;
 
     private MysqlSubscriptionTypeDao() {
         LOGGER.info("Initializing MysqlSubscriptionTypeDao");
@@ -30,6 +33,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
         updateQuery = properties.getProperty("updateSubscriptionTypeById");
         deleteQuery = properties.getProperty("deleteSubscriptionTypeById");
         findQuery = properties.getProperty("findSubscriptionTypeById");
+        findAll = properties.getProperty("findAllSubscriptionTypes");
     }
 
     public static MysqlSubscriptionTypeDao getInstance() {
@@ -139,5 +143,29 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
         }
 
         return subscriptionType;
+    }
+
+    @Override
+    public List<SubscriptionType> findAll() {
+        LOGGER.info("Getting all subscription types");
+        List<SubscriptionType> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findAll);
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                SubscriptionType type = new SubscriptionType();
+                type.setId(result.getLong("id"));
+                type.setName(result.getString("name"));
+                type.setPriceMultiplier(result.getBigDecimal("priceMultiplier").floatValue());
+
+                res.add(type);
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
     }
 }

@@ -45,7 +45,7 @@ public class MagazinePageCommand implements ServletCommand {
                 Magazine magazine = magazineService.findMagazineById(id);
 
                 if (magazine != null) {
-                    request.setAttribute("categories", categoryService.getAllCategories());
+                    request.setAttribute("categories", categoryService.findAll());
                     request.setAttribute("magazine", magazine);
 
                     resultPage = magazinePage;

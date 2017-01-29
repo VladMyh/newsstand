@@ -31,7 +31,7 @@ public class PublishersAdminPageCommand implements ServletCommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
 
-        request.setAttribute("publishers", publisherService.getAllPublishers());
+        request.setAttribute("publishers", publisherService.findAll());
 
         return page;
     }

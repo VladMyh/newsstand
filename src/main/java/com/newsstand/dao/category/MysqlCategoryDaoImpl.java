@@ -21,7 +21,7 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
     private static String deleteQuery;
     private static String findByIdQuery;
     private static String findByNameQuery;
-    private static String getAllQuery;
+    private static String findAllQuery;
 
     private MysqlCategoryDaoImpl() {
         LOGGER.info("Initializing MysqlCategoryDaoImpl");
@@ -34,7 +34,7 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
         deleteQuery = properties.getProperty("deleteCategoryById");
         findByIdQuery = properties.getProperty("findCategoryById");
         findByNameQuery = properties.getProperty("findCategoryByName");
-        getAllQuery = properties.getProperty("getAllCategories");
+        findAllQuery = properties.getProperty("findAllCategories");
     }
 
     public static MysqlCategoryDaoImpl getInstance() {
@@ -171,13 +171,13 @@ public class MysqlCategoryDaoImpl implements CategoryDao {
         return category;
     }
 
-        @Override
-    public List<Category> getAllCategories() {
+    @Override
+    public List<Category> findAll() {
         LOGGER.info("Getting all categories");
         List<Category> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(getAllQuery);
+            PreparedStatement statement = connection.prepareStatement(findAllQuery);
             ResultSet result = statement.executeQuery();
 
             while(result.next()) {

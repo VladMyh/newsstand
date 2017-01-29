@@ -2,6 +2,8 @@ package com.newsstand.dao.subscription;
 
 import com.newsstand.model.subscription.SubscriptionType;
 
+import java.util.List;
+
 public interface SubscriptionTypeDao {
     /**
      * This method creates new subscription type.
@@ -33,4 +35,11 @@ public interface SubscriptionTypeDao {
      * @return   Object found by id.
      */
     SubscriptionType findSubscriptionTypeById(Long id);
+
+    /**
+     * This method finds all subscription types.
+     *
+     * @return A list of subscription types.
+     */
+    List<SubscriptionType> findAll();
 }

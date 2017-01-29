@@ -28,9 +28,9 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<Publisher> getAllPublishers() {
+    public List<Publisher> findAll() {
         LOGGER.info("Getting all publishers");
-        return publisherDao.getAllPublishers();
+        return publisherDao.findAll();
     }
 
     @Override

@@ -45,7 +45,7 @@ public class DeleteCategoryAdminCommand implements ServletCommand{
             Long id = Long.parseLong(request.getParameter("id"));
 
             request.setAttribute("deletionSuccess", categoryService.deleteCategoryById(id));
-            request.setAttribute("categories", categoryService.getAllCategories());
+            request.setAttribute("categories", categoryService.findAll());
         }
 
         return resultPage;
