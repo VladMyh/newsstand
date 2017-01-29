@@ -44,7 +44,7 @@
 
             <div class="well">
                 <h4><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                    Magazine details</h4>
+                    <fmt:message key="details" bundle="${bundle}"/></h4>
 
                 <p>Magazine name</p>
             </div>

@@ -5,6 +5,7 @@ import com.newsstand.model.subscription.SubscriptionType;
 import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
@@ -45,6 +46,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, subscriptionType.getName());
+            statement.setBigDecimal(2, new BigDecimal(subscriptionType.getPriceMultiplier()));
 
             int affectedRows = statement.executeUpdate();
 
@@ -77,7 +79,8 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(updateQuery);
             statement.setString(1, subscriptionType.getName());
-            statement.setLong(2, subscriptionType.getId());
+            statement.setBigDecimal(2, new BigDecimal(subscriptionType.getPriceMultiplier()));
+            statement.setLong(3, subscriptionType.getId());
 
             boolean result = statement.execute();
 
@@ -129,6 +132,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
             if(result.next()) {
                 subscriptionType.setId(result.getLong("id"));
                 subscriptionType.setName(result.getString("name"));
+                subscriptionType.setPriceMultiplier(result.getBigDecimal("priceMultiplier").floatValue());
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
