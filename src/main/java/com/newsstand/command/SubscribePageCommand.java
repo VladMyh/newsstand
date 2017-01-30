@@ -32,6 +32,7 @@ public class SubscribePageCommand implements ServletCommand {
     private static String subscribePage;
     private static String mainPage;
     private static String loginPage;
+    private static String subscriptionSuccessPage;
 
     public SubscribePageCommand(){
         LOGGER.info("Initializing SubscribePageCommand");
@@ -45,6 +46,7 @@ public class SubscribePageCommand implements ServletCommand {
         subscribePage = properties.getProperty("subscribePage");
         mainPage = properties.getProperty("mainPage");
         loginPage = properties.getProperty("loginPage");
+        subscriptionSuccessPage = properties.getProperty("subscriptionSuccessPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -82,6 +84,8 @@ public class SubscribePageCommand implements ServletCommand {
                     subscription.setEndDate(endDate);
 
                     subscriptionService.createSubscription(subscription);
+
+                    resultPage = subscriptionSuccessPage;
                 }
                 else {
                     LOGGER.info("Couldn't find magazine or subscriptionType by ids " + magazine
