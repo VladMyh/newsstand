@@ -26,6 +26,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
     private static String updateQuery;
     private static String deleteQuery;
     private static String findByIdQuery;
+    private static String checkIfUserSubscribedQuery;
 
     private MysqlSubscriptionDaoImpl() {
         LOGGER.info("Initializing MysqlSubscriptionDaoImpl");
@@ -37,6 +38,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
         updateQuery = properties.getProperty("updateSubscriptionById");
         deleteQuery = properties.getProperty("deleteSubscriptionById");
         findByIdQuery = properties.getProperty("findSubscriptionById");
+        checkIfUserSubscribedQuery = properties.getProperty("checkIfUserSubscribed");
 
         magazineDao = MysqlMagazineDaoImpl.getInstance();
         subscriptionTypeDao = MysqlSubscriptionTypeDao.getInstance();
@@ -161,5 +163,28 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
         }
 
         return subscription;
+    }
+
+    @Override
+    public boolean checkIfUserSubscribed(Long userId, Long magazineId) {
+        LOGGER.info("Checking if user " + userId + " is subscribed to magazine " + magazineId);
+        boolean result = false;
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(checkIfUserSubscribedQuery);
+            statement.setLong(1, userId);
+            statement.setLong(2, magazineId);
+
+            ResultSet res = statement.executeQuery();
+
+            if(res.next()) {
+                result = true;
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return result;
     }
 }

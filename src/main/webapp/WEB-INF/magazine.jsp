@@ -60,9 +60,19 @@
                     <c:if test="${sessionScope.authenticated != null &&
                                   sessionScope.authenticated == true &&
                                   sessionScope.role == 'USER'}">
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">
-                            <fmt:message key="subscribe" bundle="${bundle}"/>
-                        </a>
+                        <c:if test="${!isSubscribed}">
+                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">
+                                <fmt:message key="subscribe" bundle="${bundle}"/>
+                            </a>
+                        </c:if>
+
+                        <c:if test="${isSubscribed}">
+                            <button class="btn btn-primary" disabled="disabled">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                <fmt:message key="subscribed" bundle="${bundle}"/>
+                            </button>
+                        </c:if>
+
                     </c:if>
 
                     <%--User not logged in--%>

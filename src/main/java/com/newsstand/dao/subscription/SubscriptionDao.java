@@ -33,4 +33,13 @@ public interface SubscriptionDao {
      * @return   Object found by id.
      */
     Subscription findSubscriptionById(Long id);
+
+    /**
+     * This method returns weather user is currently subscribed to magazine.
+     *
+     * @param userId     Id of the user.
+     * @param magazineId Id of the magazine.
+     * @return           True if user currently subscribed, otherwise false.
+     */
+    boolean checkIfUserSubscribed(Long userId, Long magazineId);
 }

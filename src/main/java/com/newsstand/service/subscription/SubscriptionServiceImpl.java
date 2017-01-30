@@ -2,7 +2,9 @@ package com.newsstand.service.subscription;
 
 import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
 import com.newsstand.dao.subscription.SubscriptionDao;
+import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.subscription.Subscription;
+import com.newsstand.model.user.User;
 import org.apache.log4j.Logger;
 
 public class SubscriptionServiceImpl implements SubscriptionService {
@@ -31,4 +33,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 		return subscriptionDao.createSubscription(subscription);
 	}
+
+	@Override
+	public boolean checkIfUserSubscribed(User user, Magazine magazine) {
+		LOGGER.info("Checking if user is subscribed to magazine");
+
+		return subscriptionDao.checkIfUserSubscribed(user.getId(), magazine.getId());
+	}
+
 }
