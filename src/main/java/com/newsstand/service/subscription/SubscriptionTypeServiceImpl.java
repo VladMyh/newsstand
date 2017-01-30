@@ -33,4 +33,11 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
 		return subscriptionTypeDao.findAll();
 	}
+
+	@Override
+	public SubscriptionType findSubscriptionTypeById(Long id) {
+		LOGGER.info("Finding subscription type by id " + id);
+
+		return subscriptionTypeDao.findSubscriptionTypeById(id);
+	}
 }

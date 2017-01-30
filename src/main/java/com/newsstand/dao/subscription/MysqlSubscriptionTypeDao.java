@@ -51,6 +51,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
             PreparedStatement statement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, subscriptionType.getName());
             statement.setBigDecimal(2, new BigDecimal(subscriptionType.getPriceMultiplier()));
+            statement.setInt(3, subscriptionType.getDurationInMonth());
 
             int affectedRows = statement.executeUpdate();
 
@@ -84,7 +85,8 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
             PreparedStatement statement = connection.prepareStatement(updateQuery);
             statement.setString(1, subscriptionType.getName());
             statement.setBigDecimal(2, new BigDecimal(subscriptionType.getPriceMultiplier()));
-            statement.setLong(3, subscriptionType.getId());
+            statement.setInt(3, subscriptionType.getDurationInMonth());
+            statement.setLong(4, subscriptionType.getId());
 
             boolean result = statement.execute();
 
@@ -125,7 +127,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
     @Override
     public SubscriptionType findSubscriptionTypeById(Long id) {
         LOGGER.info("Getting subscription type with id " + id);
-        SubscriptionType subscriptionType = new SubscriptionType();
+        SubscriptionType subscriptionType = null;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findQuery);
@@ -134,8 +136,10 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
+                subscriptionType = new SubscriptionType();
                 subscriptionType.setId(result.getLong("id"));
                 subscriptionType.setName(result.getString("name"));
+                subscriptionType.setDurationInMonth(result.getInt("durationInMonth"));
                 subscriptionType.setPriceMultiplier(result.getBigDecimal("priceMultiplier").floatValue());
             }
         } catch (SQLException e) {
@@ -158,6 +162,7 @@ public class MysqlSubscriptionTypeDao implements SubscriptionTypeDao {
                 SubscriptionType type = new SubscriptionType();
                 type.setId(result.getLong("id"));
                 type.setName(result.getString("name"));
+                type.setDurationInMonth(result.getInt("durationInMonth"));
                 type.setPriceMultiplier(result.getBigDecimal("priceMultiplier").floatValue());
 
                 res.add(type);

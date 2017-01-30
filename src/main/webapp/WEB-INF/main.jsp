@@ -57,7 +57,7 @@
                                 <img src="placehold.it/300x800" width="300" height="800"/>
                             </a>
                             <div class="caption">
-                                <h4 class="pull-right">$${magazine.price}</h4>
+                                <h4 class="pull-right">${magazine.price}₴</h4>
                                 <h4><a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>
                                 </h4>
                                 <p>${magazine.description}</p>

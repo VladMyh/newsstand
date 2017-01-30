@@ -21,7 +21,7 @@
     <fmt:setBundle basename="localization" var="bundle"/>
     <%----%>
 
-    <title>Newsstand - Subscribe</title>
+    <title>Newsstand - <fmt:message key="subscribe" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -40,44 +40,50 @@
 
         <div class="col-md-6">
 
-            <h1><fmt:message key="subscribe" bundle="${bundle}"/></h1>
+            <form method="post" action="${pageContext.request.contextPath}/subscribe">
 
-            <div class="well">
-                <h4><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                    <fmt:message key="details" bundle="${bundle}"/></h4>
+                <input type="hidden" name="id" value="${magazine.id}">
 
-                <p>Magazine name</p>
-            </div>
+                <h1><fmt:message key="subscribe" bundle="${bundle}"/></h1>
 
-            <div class="well">
-                <h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                    <fmt:message key="subscriptionType" bundle="${bundle}"/></h4>
+                <div class="well">
+                    <h4><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        <fmt:message key="details" bundle="${bundle}"/></h4>
 
-                <select class="selectpicker">
-                    <option selected><fmt:message key="oneMonth" bundle="${bundle}"/></option>
-                    <option><fmt:message key="twoMonths" bundle="${bundle}"/></option>
-                    <option><fmt:message key="threeMonths" bundle="${bundle}"/></option>
-                    <option><fmt:message key="sixMonths" bundle="${bundle}"/></option>
-                    <option><fmt:message key="oneYear" bundle="${bundle}"/></option>
-                </select>
+                    <p>${mazagine.title}</p>
+                    <p><fmt:message key="perMonth" bundle="${bundle}"/>: <label id="basePrice">${magazine.price}</label>₴</p>
+                    <hr>
+                    <p><fmt:message key="total" bundle="${bundle}"/>: <label id="price">${magazine.price}</label>₴</p>
+                </div>
 
-            </div>
+                <div class="well">
+                    <h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        <fmt:message key="subscriptionType" bundle="${bundle}"/></h4>
 
-            <div class="well">
-                <h4><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                    <fmt:message key="payment" bundle="${bundle}"/></h4>
+                    <select id="subscriptionType" name="type" onchange="onChange()" class="selectpicker">
+                        <c:forEach items="${subscriptionTypes}" var="type">
+                            <option value="${type.id}" multiplier="${type.priceMultiplier}">${type.name}</option>
+                        </c:forEach>
+                    </select>
 
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> <fmt:message key="creditCard" bundle="${bundle}"/>
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> <fmt:message key="paypal" bundle="${bundle}"/>
-                </label>
+                </div>
 
-            </div>
+                <div class="well">
+                    <h4><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                        <fmt:message key="payment" bundle="${bundle}"/></h4>
 
-            <button type="submit" class="btn btn-primary"><fmt:message key="continue" bundle="${bundle}"/></button>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> <fmt:message key="creditCard" bundle="${bundle}"/>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> <fmt:message key="paypal" bundle="${bundle}"/>
+                    </label>
 
+                </div>
+
+                <button type="submit" class="btn btn-primary"><fmt:message key="continue" bundle="${bundle}"/></button>
+
+            </form>
         </div>
 
         <div class="col-md-3"></div>
@@ -86,6 +92,18 @@
 
 </div>
 <!-- /.container -->
+
+<script>
+    function onChange() {
+        var select = document.getElementById("subscriptionType");
+        var label = document.getElementById("price");
+
+        var basePrice = parseFloat(document.getElementById("basePrice").innerHTML);
+        var multiplier = parseFloat(select.options[select.selectedIndex].getAttribute("multiplier"));
+
+        label.innerHTML = (basePrice * multiplier).toString();
+    }
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 

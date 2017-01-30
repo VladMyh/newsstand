@@ -56,4 +56,11 @@ public class UserServiceImpl implements UserService {
 
         return userDao.findPageByUserType(userType, (page - 1) * size, size);
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        LOGGER.info("Finding user by email " + email);
+
+        return userDao.findUserByEmail(email);
+    }
 }

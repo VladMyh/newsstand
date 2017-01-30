@@ -32,7 +32,7 @@ public interface SubscriptionTypeDao {
      * This method finds subscription type by id.
      *
      * @param id Id of object to find.
-     * @return   Object found by id.
+     * @return   Object found by id, otherwise null.
      */
     SubscriptionType findSubscriptionTypeById(Long id);
 

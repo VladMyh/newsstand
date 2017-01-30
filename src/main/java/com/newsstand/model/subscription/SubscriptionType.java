@@ -4,13 +4,15 @@ public class SubscriptionType{
     private Long id;
     private String name;
     private Float priceMultiplier;
+    private Integer durationInMonth;
 
     public SubscriptionType() {}
 
-    public SubscriptionType(Long id, String name, Float priceMultiplier) {
+    public SubscriptionType(Long id, String name, Float priceMultiplier, Integer durationInMonth) {
         this.id = id;
         this.name = name;
         this.priceMultiplier = priceMultiplier;
+        this.durationInMonth = durationInMonth;
     }
 
     public Long getId() {
@@ -37,6 +39,14 @@ public class SubscriptionType{
         this.priceMultiplier = priceMultiplier;
     }
 
+    public Integer getDurationInMonth() {
+        return durationInMonth;
+    }
+
+    public void setDurationInMonth(Integer durationInMonth) {
+        this.durationInMonth = durationInMonth;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,7 +56,8 @@ public class SubscriptionType{
 
         if (!id.equals(that.id)) return false;
         if (!name.equals(that.name)) return false;
-        return priceMultiplier.equals(that.priceMultiplier);
+        if (!priceMultiplier.equals(that.priceMultiplier)) return false;
+        return durationInMonth.equals(that.durationInMonth);
     }
 
     @Override
@@ -54,6 +65,7 @@ public class SubscriptionType{
         int result = id.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + priceMultiplier.hashCode();
+        result = 31 * result + durationInMonth.hashCode();
         return result;
     }
 }
