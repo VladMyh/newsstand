@@ -58,9 +58,9 @@
                             </a>
                             <div class="caption">
                                 <h4 class="pull-right">${magazine.price}₴</h4>
-                                <h4><a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>
+                                <h4>
+                                    <a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>
                                 </h4>
-                                <p>${magazine.description}</p>
                             </div>
                         </div>
                     </div>

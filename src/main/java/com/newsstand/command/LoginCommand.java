@@ -78,6 +78,9 @@ public class LoginCommand implements ServletCommand{
                     resultPage = mainPage;
                 }
             }
+            else {
+                request.setAttribute("loginSuccess", false);
+            }
         }
 
         return resultPage;

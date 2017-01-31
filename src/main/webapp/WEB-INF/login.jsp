@@ -34,6 +34,14 @@
 
     <div class="row vertical-offset-100">
         <div class="col-md-4 col-md-offset-4">
+
+            <c:if test="${loginSuccess != null && loginSuccess == false}">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <fmt:message key="loginFail" bundle="${bundle}"/>
+                </div>
+            </c:if>
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><fmt:message key="signin" bundle="${bundle}"/></h3>
