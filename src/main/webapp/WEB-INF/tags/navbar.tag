@@ -68,7 +68,7 @@
                 <%--User controlls--%>
                 <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
                     <li>
-                        <a href=""><c:out value="${sessionScope.username}"/></a>
+                        <a href="${pageContext.request.contextPath}/account"><c:out value="${sessionScope.username}"/></a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/logout"><fmt:message key="signout" bundle="${bundle}"/></a>

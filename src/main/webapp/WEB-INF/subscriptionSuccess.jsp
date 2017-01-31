@@ -46,7 +46,7 @@
 
                 <hr>
 
-                <a href="#"><fmt:message key="viewSubscriptions" bundle="${bundle}"/></a>
+                <a href="${pageContext.request.contextPath}/account"><fmt:message key="viewSubscriptions" bundle="${bundle}"/></a>
             </div>
         </div>
 

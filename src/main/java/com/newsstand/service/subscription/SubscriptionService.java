@@ -4,6 +4,8 @@ import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
 
+import java.util.List;
+
 public interface SubscriptionService {
 
 	/**
@@ -22,4 +24,12 @@ public interface SubscriptionService {
 	 * @return         True if user currently subscribed, otherwise false.
 	 */
 	boolean checkIfUserSubscribed(User user, Magazine magazine);
+
+	/**
+	 * This method finds all subscriptions of user.
+	 *
+	 * @param userId Id of user.
+	 * @return       List of user subscriptions.
+	 */
+	List<Subscription> getUserSubscriptions(Long userId);
 }

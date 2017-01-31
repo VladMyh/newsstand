@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
 
@@ -27,6 +29,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
     private static String deleteQuery;
     private static String findByIdQuery;
     private static String checkIfUserSubscribedQuery;
+    private static String findByUserIdQuery;
 
     private MysqlSubscriptionDaoImpl() {
         LOGGER.info("Initializing MysqlSubscriptionDaoImpl");
@@ -39,6 +42,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
         deleteQuery = properties.getProperty("deleteSubscriptionById");
         findByIdQuery = properties.getProperty("findSubscriptionById");
         checkIfUserSubscribedQuery = properties.getProperty("checkIfUserSubscribed");
+        findByUserIdQuery = properties.getProperty("findSubscriptionsByUserId");
 
         magazineDao = MysqlMagazineDaoImpl.getInstance();
         subscriptionTypeDao = MysqlSubscriptionTypeDao.getInstance();
@@ -186,5 +190,36 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Subscription> findSubscriptionsByUserId(Long userId) {
+        LOGGER.info("Finding subscriptions for user with id " + userId);
+        List<Subscription> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findByUserIdQuery);
+            statement.setLong(1, userId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Subscription subscription = new Subscription();
+                subscription.setId(result.getLong("id"));
+                subscription.setUser(userDao.findUserById(result.getLong("userId")));
+                subscription.setMagazine(magazineDao.findMagazineById(result.getLong("magazineId")));
+                subscription.setType(subscriptionTypeDao.findSubscriptionTypeById(result.getLong("subscriptionTypeId")));
+                subscription.setStartDate(result.getDate("startDate"));
+                subscription.setEndDate(result.getDate("endDate"));
+                subscription.setPrice(result.getBigDecimal("price").floatValue());
+
+                res.add(subscription);
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
     }
 }

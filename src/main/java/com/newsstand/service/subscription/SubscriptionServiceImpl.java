@@ -7,6 +7,8 @@ import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class SubscriptionServiceImpl implements SubscriptionService {
 
 	private static final Logger LOGGER = Logger.getLogger(SubscriptionServiceImpl.class);
@@ -39,6 +41,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		LOGGER.info("Checking if user is subscribed to magazine");
 
 		return subscriptionDao.checkIfUserSubscribed(user.getId(), magazine.getId());
+	}
+
+	@Override
+	public List<Subscription> getUserSubscriptions(Long userId) {
+		LOGGER.info("Finding subscription by user id " + userId);
+
+		return subscriptionDao.findSubscriptionsByUserId(userId);
 	}
 
 }

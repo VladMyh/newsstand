@@ -2,6 +2,8 @@ package com.newsstand.dao.subscription;
 
 import com.newsstand.model.subscription.Subscription;
 
+import java.util.List;
+
 public interface SubscriptionDao {
     /**
      * This method creates new subscription.
@@ -42,4 +44,12 @@ public interface SubscriptionDao {
      * @return           True if user currently subscribed, otherwise false.
      */
     boolean checkIfUserSubscribed(Long userId, Long magazineId);
+
+    /**
+     * This method returns subscriptions of user.
+     *
+     * @param userId Id of the user to find subscriptions for.
+     * @return       A list of user subscriptions.
+     */
+    List<Subscription> findSubscriptionsByUserId(Long userId);
 }
