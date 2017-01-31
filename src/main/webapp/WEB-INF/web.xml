@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>Servlet</servlet-name>
-        <servlet-class>com.newsstand.servlets.Servlet</servlet-class>
+        <servlet-class>com.newsstand.servlet.Servlet</servlet-class>
     </servlet>
     
     <servlet-mapping>

@@ -57,4 +57,12 @@ public interface MagazineService {
      * @return         Updated object
      */
     Magazine createMagazine(Magazine magazine);
+
+    /**
+     * This method updates magazine.
+     *
+     * @param magazine Magazine object to update.
+     * @return         Updated object.
+     */
+    Magazine updateMagazine(Magazine magazine);
 }

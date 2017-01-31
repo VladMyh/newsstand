@@ -68,4 +68,11 @@ public class MagazineServiceImpl implements MagazineService {
 
         return magazineDao.createMagazine(magazine);
     }
+
+    @Override
+    public Magazine updateMagazine(Magazine magazine) {
+        LOGGER.info("Updating magazine");
+
+        return magazineDao.updateMagazine(magazine);
+    }
 }

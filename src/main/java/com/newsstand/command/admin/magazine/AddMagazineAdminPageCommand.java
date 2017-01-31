@@ -75,7 +75,12 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
 
             }
             catch (NumberFormatException ex) {
-                LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");
+                LOGGER.info("Couldn't parse " + request.getParameter("id")
+                                              + ", "
+                                              + request.getParameter("category")
+                                              + ", "
+                                              + request.getParameter("publisher")
+                                              + " to long");
             }
         }
         else {

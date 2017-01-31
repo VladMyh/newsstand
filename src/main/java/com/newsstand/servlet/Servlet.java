@@ -1,4 +1,4 @@
-package com.newsstand.servlets;
+package com.newsstand.servlet;
 
 import com.newsstand.command.CommandManager;
 import com.newsstand.command.ServletCommand;

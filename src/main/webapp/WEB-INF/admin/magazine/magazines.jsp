@@ -38,6 +38,10 @@
 
     <div class="col-md-8">
 
+        <c:if test="${updateSuccess != null && updateSuccess == true}">
+            <div class="alert alert-success" role="alert"><fmt:message key="magazineUpdated" bundle="${bundle}"/></div>
+        </c:if>
+
         <h1><fmt:message key="magazines" bundle="${bundle}"/></h1>
 
         <table class="table">
@@ -61,7 +65,7 @@
                     <td>${magazine.category.name}</td>
                     <td>${magazine.publisher.title}</td>
                     <td>
-                        <a class='btn btn-info btn-xs' href="#">
+                        <a class='btn btn-info btn-xs' href="${pageContext.request.contextPath}/admin/magazines/edit?id=${magazine.id}">
                             <span class="glyphicon glyphicon-edit"></span> <fmt:message key="edit" bundle="${bundle}"/></a>
                     </td>
                 </tr>
