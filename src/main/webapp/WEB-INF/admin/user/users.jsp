@@ -40,7 +40,7 @@
 
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" class="active"><a href="#"><fmt:message key="users" bundle="${bundle}"/></a></li>
-            <li role="presentation"><a href="#"><fmt:message key="admins" bundle="${bundle}"/></a></li>
+            <li role="presentation"><a href="${pageContext.request.contextPath}/admin/admins?p=1&s=10"><fmt:message key="admins" bundle="${bundle}"/></a></li>
         </ul>
 
         <h1><fmt:message key="users" bundle="${bundle}"/></h1>
@@ -80,7 +80,7 @@
             <ul class="pager">
                 <c:if test="${pageNum > 1}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/users?catId=${category.id}&p=${pageNum-1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/users?p=${pageNum-1}&s=${pageSize}">
                             <span aria-hidden="true">&larr;</span>
                         </a>
                     </li>
@@ -88,7 +88,7 @@
 
                 <c:if test="${currSize == pageSize}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/users?catId=${category.id}&p=${pageNum+1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/users?p=${pageNum+1}&s=${pageSize}">
                             <span aria-hidden="true">&rarr;</span>
                         </a>
                     </li>

@@ -50,7 +50,6 @@ public class UsersAdminPageCommand implements ServletCommand {
                                           + request.getParameter("s") +" to long");
         }
 
-
         return page;
     }
 }
