@@ -43,14 +43,34 @@
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                           aria-haspopup="true" aria-expanded="false"><fmt:message key="admin" bundle="${bundle}"/> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/magazines?p=1&s=10">Magazines</a></li>
-                            <li><a href="#">Subscriptions</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/users?p=1&s=10">Users</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/publishers">Publishers</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/magazines?p=1&s=10">
+                                    <fmt:message key="magazines" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <fmt:message key="subscriptions" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/users?p=1&s=10">
+                                    <fmt:message key="users" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/publishers">
+                                    <fmt:message key="publishers" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/categories">
+                                    <fmt:message key="categories" bundle="${bundle}"/>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </c:if>

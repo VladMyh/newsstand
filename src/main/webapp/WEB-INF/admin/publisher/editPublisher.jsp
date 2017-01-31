@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,7 +10,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Newsstand - Admin - Edit Publisher</title>
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
+
+    <title>Newsstand -  <fmt:message key="admin" bundle="${bundle}"/> -  <fmt:message key="editPublisher" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -29,10 +41,10 @@
         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/publishers/update?id=${publisher.id}">
             <fieldset>
 
-                <legend>Edit Publisher</legend>
+                <legend> <fmt:message key="editPublisher" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Title</label>
+                    <label class="col-md-4 control-label" for="title"> <fmt:message key="title" bundle="${bundle}"/></label>
                     <div class="col-md-4">
                         <input id="title" name="title" class="form-control input-md" type="text"
                                value="${publisher.title}" required>
@@ -43,11 +55,11 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-2">
                         <button id="updatebutton" name="addbutton" class="btn btn-primary"
-                                type="submit">Update</button>
+                                type="submit"> <fmt:message key="update" bundle="${bundle}"/></button>
                     </div>
                     <div class="col-md-2">
                         <a class='btn btn-danger' href="${pageContext.request.contextPath}/admin/publishers/delete?id=${publisher.id}">
-                            <span class="glyphicon glyphicon-remove"></span> Delete</a>
+                            <span class="glyphicon glyphicon-remove"></span>  <fmt:message key="delete" bundle="${bundle}"/></a>
                     </div>
                 </div>
 
@@ -55,7 +67,7 @@
         </form>
 
         <a class='btn btn-default' href="${pageContext.request.contextPath}/admin/publishers">
-            <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+            <span class="glyphicon glyphicon-chevron-left"></span>  <fmt:message key="back" bundle="${bundle}"/></a>
 
     </div>
 

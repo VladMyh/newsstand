@@ -79,8 +79,8 @@
                                                 <h3>${sub.magazine.title}</h3>
                                                 <span class="pull-right"><h3>${sub.price}₴</h3></span>
 
-                                                <p>From: ${sub.startDate}</p>
-                                                <p>To: ${sub.endDate}</p>
+                                                <p><fmt:message key="from" bundle="${bundle}"/>: ${sub.startDate}</p>
+                                                <p><fmt:message key="to" bundle="${bundle}"/>: ${sub.endDate}</p>
 
                                             </div>
                                         </div>

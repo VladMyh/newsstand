@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,7 +10,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Newsstand - Admin - Users</title>
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
+
+    <title>Newsstand - <fmt:message key="admin" bundle="${bundle}"/> - <fmt:message key="users" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -27,24 +39,24 @@
     <div class="col-md-10">
 
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" class="active"><a href="#">Users</a></li>
-            <li role="presentation"><a href="#">Admins</a></li>
+            <li role="presentation" class="active"><a href="#"><fmt:message key="users" bundle="${bundle}"/></a></li>
+            <li role="presentation"><a href="#"><fmt:message key="admins" bundle="${bundle}"/></a></li>
         </ul>
 
-        <h1>Users</h1>
+        <h1><fmt:message key="users" bundle="${bundle}"/></h1>
 
         <c:if test="${currSize == 0}">
-            <h1>Nothing here</h1>
+            <h1><fmt:message key="nothing" bundle="${bundle}"/></h1>
         </c:if>
 
         <c:if test="${currSize != 0}">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                    <th><fmt:message key="firstName" bundle="${bundle}"/></th>
+                    <th><fmt:message key="lastName" bundle="${bundle}"/></th>
+                    <th><fmt:message key="email" bundle="${bundle}"/></th>
+                    <th><fmt:message key="actions" bundle="${bundle}"/></th>
                 </tr>
                 </thead>
 
@@ -56,7 +68,7 @@
                             <td>${user.email}</td>
                             <td>
                                 <a class='btn btn-info btn-xs' href="#">
-                                <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                <span class="glyphicon glyphicon-edit"></span> <fmt:message key="edit" bundle="${bundle}"/></a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,7 +10,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Newsstand - Admin - Add Magazine</title>
+    <%--Localization--%>
+    <c:if test="${sessionScope.locale == null}">
+        <fmt:setLocale value="ru"/>
+    </c:if>
+    <c:if test="${sessionScope.locale != null}">
+        <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+
+    <fmt:setBundle basename="localization" var="bundle"/>
+    <%----%>
+
+    <title>Newsstand - <fmt:message key="admin" bundle="${bundle}"/> - <fmt:message key="addMagazine" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -29,10 +41,12 @@
         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/magazines/add">
             <fieldset>
 
-                <legend>New Magazine</legend>
+                <legend><fmt:message key="addMagazine" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Name</label>
+                    <label class="col-md-4 control-label" for="title">
+                        <fmt:message key="title" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <input id="title" name="title" placeholder="title" class="form-control input-md" type="text" required>
 
@@ -40,23 +54,27 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="quantity">Quantity</label>
+                    <label class="col-md-4 control-label" for="quantity">
+                        <fmt:message key="quantity" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <input id="quantity" name="quantity" class="form-control input-md" type="number" required>
-
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="price">Price</label>
+                    <label class="col-md-4 control-label" for="price">
+                        <fmt:message key="price" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <input id="price" name="price" placeholder="" class="form-control input-md" type="number" required>
-
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="publisher">Publisher</label>
+                    <label class="col-md-4 control-label" for="publisher">
+                        <fmt:message key="publisher" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <select id="publisher" name="publisher" class="form-control">
                             <c:forEach items="${publishers}" var="publisher">
@@ -67,7 +85,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="category">Category</label>
+                    <label class="col-md-4 control-label" for="category">
+                        <fmt:message key="category" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <select id="category" name="category" class="form-control">
                             <c:forEach items="${categories}" var="category">
@@ -78,16 +98,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="description">Description</label>
+                    <label class="col-md-4 control-label" for="description">
+                        <fmt:message key="description" bundle="${bundle}"/>
+                    </label>
                     <div class="col-md-4">
                         <textarea class="form-control" id="description" name="description"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="submit">Single Button</label>
+                    <label class="col-md-4 control-label"></label>
                     <div class="col-md-4">
-                        <button id="submit" name="submit" type="submit" class="btn btn-primary">Button</button>
+                        <button id="submit" name="submit" type="submit" class="btn btn-primary">
+                            <fmt:message key="add" bundle="${bundle}"/>
+                        </button>
                     </div>
                 </div>
 
@@ -96,7 +120,7 @@
 
 
         <a class='btn btn-default' href="${pageContext.request.contextPath}/admin/magazines">
-            <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+            <span class="glyphicon glyphicon-chevron-left"></span> <fmt:message key="back" bundle="${bundle}"/></a>
 
     </div>
 
