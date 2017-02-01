@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="navbar"%>
+<%@ taglib uri="/WEB-INF/price.tld" prefix="p"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -59,7 +60,7 @@
                     <td>${subscription.type.name}</td>
                     <td>${subscription.startDate}</td>
                     <td>${subscription.endDate}</td>
-                    <td>${subscription.price}</td>
+                    <td><p:price price="${subscription.price}"/></td>
                     <td>${subscription.user.firstName} ${subscription.user.lastName}</td>
                 </tr>
             </c:forEach>

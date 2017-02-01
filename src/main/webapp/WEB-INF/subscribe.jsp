@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="navbar"%>
+<%@ taglib uri="/WEB-INF/price.tld" prefix="p"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -51,9 +52,9 @@
                         <fmt:message key="details" bundle="${bundle}"/></h4>
 
                     <p>${mazagine.title}</p>
-                    <p><fmt:message key="perMonth" bundle="${bundle}"/>: <label id="basePrice">${magazine.price}</label>₴</p>
+                    <p><fmt:message key="perMonth" bundle="${bundle}"/>: <label id="basePrice"><p:price price="${magazine.price}"/></label></p>
                     <hr>
-                    <p><fmt:message key="total" bundle="${bundle}"/>: <label id="price">${magazine.price}</label>₴</p>
+                    <p><fmt:message key="total" bundle="${bundle}"/>: <label id="price"><p:price price="${magazine.price}"/></label></p>
                 </div>
 
                 <div class="well">

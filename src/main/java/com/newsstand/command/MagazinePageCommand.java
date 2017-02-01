@@ -54,10 +54,14 @@ public class MagazinePageCommand implements ServletCommand {
                 Magazine magazine = magazineService.findMagazineById(id);
 
                 if (magazine != null) {
-                    User user = userService.findUserByEmail(request.getSession().getAttribute("email").toString());
-                    boolean isSubscribed = subscriptionService.checkIfUserSubscribed(user, magazine);
+                    if(request.getSession().getAttribute("authenticated") != null &&
+                       request.getSession().getAttribute("authenticated").equals(true)) {
+                        User user = userService.findUserByEmail(request.getSession().getAttribute("email").toString());
+                        boolean isSubscribed = subscriptionService.checkIfUserSubscribed(user, magazine);
 
-                    request.setAttribute("isSubscribed", isSubscribed);
+                        request.setAttribute("isSubscribed", isSubscribed);
+                    }
+
                     request.setAttribute("categories", categoryService.findAll());
                     request.setAttribute("magazine", magazine);
 

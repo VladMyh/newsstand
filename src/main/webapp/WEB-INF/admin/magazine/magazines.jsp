@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="navbar"%>
+<%@ taglib uri="/WEB-INF/price.tld" prefix="p"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -67,7 +68,7 @@
                 <tr>
                     <td>${magazine.title}</td>
                     <td>${magazine.quantity}</td>
-                    <td>${magazine.price}</td>
+                    <td><p:price price="${magazine.price}"/></td>
                     <td>${magazine.category.name}</td>
                     <td>${magazine.publisher.title}</td>
                     <td>

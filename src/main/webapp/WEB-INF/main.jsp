@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="navbar" tagdir="/WEB-INF/tags" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="navbar"%>
+<%@ taglib uri="/WEB-INF/price.tld" prefix="p"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -57,7 +58,7 @@
                                 <img src="placehold.it/300x800" width="300" height="800"/>
                             </a>
                             <div class="caption">
-                                <h4 class="pull-right">${magazine.price}₴</h4>
+                                <h4 class="pull-right"><p:price price="${magazine.price}"/></h4>
                                 <h4>
                                     <a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>
                                 </h4>
