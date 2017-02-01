@@ -51,7 +51,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public List<Subscription> getPage(Long page, Long size) {
+	public List<Subscription> getPage(Integer page, Integer size) {
 		LOGGER.info("Getting page number " + page + ", of size " + size );
 
 		return subscriptionDao.findPage((page - 1) * size, size);

@@ -54,7 +54,7 @@
             </thead>
 
             <tbody>
-            <c:forEach items="${page}" var="subscription">
+            <c:forEach items="${page.items}" var="subscription">
                 <tr>
                     <td>${subscription.magazine.title}</td>
                     <td>${subscription.type.name}</td>
@@ -69,17 +69,17 @@
 
         <div class="row">
             <ul class="pager">
-                <c:if test="${pageNum > 1}">
+                <c:if test="${!page.first}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/subscriptions?p=${pageNum-1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/subscriptions?p=${page.number-1}&s=${page.size}">
                             <span aria-hidden="true">&larr;</span>
                         </a>
                     </li>
                 </c:if>
 
-                <c:if test="${currSize == pageSize}">
+                <c:if test="${!page.last}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/subscriptions?p=${pageNum+1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/subscriptions?p=${page.number+1}&s=${page.size}">
                             <span aria-hidden="true">&rarr;</span>
                         </a>
                     </li>

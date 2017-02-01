@@ -7,6 +7,7 @@ import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,18 +49,16 @@ public class CategoryPageCommand implements ServletCommand {
 
             try {
                 Long categoryId = Long.parseLong(request.getParameter("catId"));
-                Long pageNum = Long.parseLong(request.getParameter("p"));
-                Long size = Long.parseLong(request.getParameter("s"));
+                Integer pageNum = Integer.parseInt(request.getParameter("p"));
+                Integer size = Integer.parseInt(request.getParameter("s"));
 
                 Category category = categoryService.findCategoryById(categoryId);
-                List<Magazine> page = magazineService.getPageByCategoryId(pageNum, size, category.getId());
+                List<Magazine> items = magazineService.getPageByCategoryId(pageNum, size, category.getId());
+                Page<Magazine> page = new Page<>(items, pageNum, size);
 
                 request.setAttribute("categories", categoryService.findAll());
                 request.setAttribute("page", page);
                 request.setAttribute("category", category);
-                request.setAttribute("pageNum", pageNum);
-                request.setAttribute("pageSize", size);
-                request.setAttribute("currSize", page.size());
 
                 resultPage = categoryPage;
             }

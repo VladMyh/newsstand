@@ -215,14 +215,14 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
     }
 
     @Override
-    public List<Subscription> findPage(Long offset, Long size) {
+    public List<Subscription> findPage(Integer offset, Integer size) {
         LOGGER.info("Getting page with offset " + offset + ", size " + size);
         List<Subscription> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findPageQuery);
-            statement.setLong(1, offset);
-            statement.setLong(2, size);
+            statement.setInt(1, offset);
+            statement.setInt(2, size);
 
             ResultSet result = statement.executeQuery();
 

@@ -5,6 +5,7 @@ import com.newsstand.model.subscription.Subscription;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.subscription.SubscriptionService;
 import com.newsstand.service.subscription.SubscriptionServiceImpl;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,14 +35,13 @@ public class SubscriptionsAdminPageCommand implements ServletCommand {
 		LOGGER.info("Executing command");
 
 		try {
-			Long pageNum = Long.parseLong(request.getParameter("p"));
-			Long size = Long.parseLong(request.getParameter("s"));
+			Integer pageNum = Integer.parseInt(request.getParameter("p"));
+			Integer size = Integer.parseInt(request.getParameter("s"));
 
-			List<Subscription> page = subscriptionService.getPage(pageNum, size);
+			List<Subscription> items = subscriptionService.getPage(pageNum, size);
+			Page<Subscription> page = new Page<>(items, pageNum, size);
+
 			request.setAttribute("page", page);
-			request.setAttribute("pageNum", pageNum);
-			request.setAttribute("pageSize", size);
-			request.setAttribute("currSize", page.size());
 		}
 		catch (NumberFormatException ex) {
 			LOGGER.info("Couldn't parse " + request.getParameter("p") + ", "

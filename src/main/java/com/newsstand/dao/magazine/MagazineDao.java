@@ -53,7 +53,7 @@ public interface MagazineDao {
      * @param size       How much elements to take.
      * @return           List of magazines.
      */
-    List<Magazine> findPageByCategory(Long categoryId, Long offset, Long size);
+    List<Magazine> findPageByCategory(Long categoryId, Integer offset, Integer size);
 
     /**
      * This method finds a page of magazines by publisher.
@@ -63,7 +63,7 @@ public interface MagazineDao {
      * @param size        How much elements to take.
      * @return            List of magazines.
      */
-    List<Magazine> findPageByPublisher(Long publisherId, Long offset, Long size);
+    List<Magazine> findPageByPublisher(Long publisherId, Integer offset, Integer size);
 
     /**
      * This methods finds page from all magazines
@@ -72,5 +72,5 @@ public interface MagazineDao {
      * @param size   How much elements to take.
      * @return       List of magazines.
      */
-    List<Magazine> findPage(Long offset, Long size);
+    List<Magazine> findPage(Integer offset, Integer size);
 }

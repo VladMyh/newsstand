@@ -42,21 +42,21 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public List<Magazine> getPageByCategoryId(Long page, Long size, Long categoryId) {
+    public List<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for category id " + categoryId);
 
         return magazineDao.findPageByCategory(categoryId, (page - 1) * size, size);
     }
 
     @Override
-    public List<Magazine> getPageByPublisherId(Long page, Long size, Long publisherId) {
+    public List<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for publisher id " + publisherId);
 
         return magazineDao.findPageByPublisher(publisherId, (page - 1) * size, size);
     }
 
     @Override
-    public List<Magazine> getPage(Long page, Long size) {
+    public List<Magazine> getPage(Integer page, Integer size) {
         LOGGER.info("Getting page number " + page + ", of size " + size );
 
         return magazineDao.findPage((page - 1) * size, size);

@@ -60,5 +60,5 @@ public interface SubscriptionDao {
      * @param size   How much elements to take.
      * @return       List of subscriptions.
      */
-    List<Subscription> findPage(Long offset, Long size);
+    List<Subscription> findPage(Integer offset, Integer size);
 }

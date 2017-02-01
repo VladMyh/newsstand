@@ -50,11 +50,11 @@
 
             <div class="row">
 
-                <c:if test="${currSize == 0}">
+                <c:if test="${page.currentSize == 0}">
                     <h1>Nothing here</h1>
                 </c:if>
 
-                <c:forEach items="${page}" var="magazine">
+                <c:forEach items="${page.items}" var="magazine">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <img src="placehold.it/300x800" width="300" height="800"/>
@@ -71,17 +71,17 @@
 
             <div class="row">
                 <ul class="pager">
-                    <c:if test="${pageNum > 1}">
+                    <c:if test="${!page.first}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${pageNum-1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${page.number-1}&s=${page.size}">
                             <span aria-hidden="true">&larr;</span>
                         </a>
                     </li>
                     </c:if>
 
-                    <c:if test="${currSize == pageSize}">
+                    <c:if test="${!page.last}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${pageNum+1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${page.number+1}&s=${page.size}">
                             <span aria-hidden="true">&rarr;</span>
                         </a>
                     </li>

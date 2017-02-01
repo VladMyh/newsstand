@@ -196,15 +196,15 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     }
 
     @Override
-    public List<Magazine> findPageByCategory(Long categoryId, Long offset, Long size) {
+    public List<Magazine> findPageByCategory(Long categoryId, Integer offset, Integer size) {
         LOGGER.info("Getting page with offset " + offset + ", size " + size + " of category id " + categoryId);
         List<Magazine> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findPageByCategoryQuery);
             statement.setLong(1, categoryId);
-            statement.setLong(2, offset);
-            statement.setLong(3, size);
+            statement.setInt(2, offset);
+            statement.setInt(3, size);
 
             ResultSet result = statement.executeQuery();
 
@@ -218,15 +218,15 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     }
 
     @Override
-    public List<Magazine> findPageByPublisher(Long publisherId, Long offset, Long size) {
+    public List<Magazine> findPageByPublisher(Long publisherId, Integer offset, Integer size) {
         LOGGER.info("Getting page with offset " + offset + ", size " + size + " of publisher id " + publisherId);
         List<Magazine> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findPageByPublisherQuery);
             statement.setLong(1, publisherId);
-            statement.setLong(2, offset);
-            statement.setLong(3, size);
+            statement.setInt(2, offset);
+            statement.setInt(3, size);
 
             ResultSet result = statement.executeQuery();
 
@@ -240,14 +240,14 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     }
 
     @Override
-    public List<Magazine> findPage(Long offset, Long size) {
+    public List<Magazine> findPage(Integer offset, Integer size) {
         LOGGER.info("Getting page with offset " + offset + ", size " + size);
         List<Magazine> res = new ArrayList<>();
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(findPage);
-            statement.setLong(1, offset);
-            statement.setLong(2, size);
+            statement.setInt(1, offset);
+            statement.setInt(2, size);
 
             ResultSet result = statement.executeQuery();
 

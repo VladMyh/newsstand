@@ -40,5 +40,5 @@ public interface SubscriptionService {
 	 * @param size Size of the page.
 	 * @return     A list of subscriptions.
 	 */
-	List<Subscription> getPage(Long page, Long size);
+	List<Subscription> getPage(Integer page, Integer size);
 }
