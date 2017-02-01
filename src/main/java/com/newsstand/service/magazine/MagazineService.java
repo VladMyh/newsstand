@@ -65,4 +65,12 @@ public interface MagazineService {
      * @return         Updated object.
      */
     Magazine updateMagazine(Magazine magazine);
+
+    /**
+     * This method deletes magazine.
+     *
+     * @param id Id of the magazine to delete.
+     * @return   True if magazine deleted successfully, otherwise false.
+     */
+    boolean deleteMagazineById(Long id);
 }

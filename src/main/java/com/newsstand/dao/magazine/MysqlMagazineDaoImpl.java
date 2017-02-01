@@ -124,8 +124,9 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     }
 
     @Override
-    public void deleteMagazineById(Long id) {
+    public boolean deleteMagazineById(Long id) {
         LOGGER.info("Deleting magazine");
+        boolean res = false;
 
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(deleteQuery);
@@ -138,10 +139,13 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             }
             else {
                 LOGGER.info("Magazine deleted successfully");
+                res = true;
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+
+        return res;
     }
 
     @Override

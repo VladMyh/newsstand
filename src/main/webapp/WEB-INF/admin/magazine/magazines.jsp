@@ -41,6 +41,12 @@
         <c:if test="${updateSuccess != null && updateSuccess == true}">
             <div class="alert alert-success" role="alert"><fmt:message key="magazineUpdated" bundle="${bundle}"/></div>
         </c:if>
+        <c:if test="${deletionSuccess != null && deletionSuccess == true}">
+            <div class="alert alert-success" role="alert"><fmt:message key="magazineDeleted" bundle="${bundle}"/></div>
+        </c:if>
+        <c:if test="${deletionSuccess != null && deletionSuccess == false}">
+            <div class="alert alert-danger" role="alert"><fmt:message key="magazineDeleteFail" bundle="${bundle}"/></div>
+        </c:if>
 
         <h1><fmt:message key="magazines" bundle="${bundle}"/></h1>
 

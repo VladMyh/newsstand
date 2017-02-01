@@ -75,4 +75,11 @@ public class MagazineServiceImpl implements MagazineService {
 
         return magazineDao.updateMagazine(magazine);
     }
+
+    @Override
+    public boolean deleteMagazineById(Long id) {
+        LOGGER.info("Deleting magazine by id " + id);
+
+        return magazineDao.deleteMagazineById(id);
+    }
 }

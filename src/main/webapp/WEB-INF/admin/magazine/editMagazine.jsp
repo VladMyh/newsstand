@@ -113,10 +113,14 @@
 
                 <div class="form-group">
                     <label class="col-md-4 control-label"></label>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <button id="submit" name="submit" type="submit" class="btn btn-primary">
                             <fmt:message key="update" bundle="${bundle}"/>
                         </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a class='btn btn-danger' href="${pageContext.request.contextPath}/admin/magazines/delete?id=${magazine.id}">
+                            <span class="glyphicon glyphicon-remove"></span> <fmt:message key="delete" bundle="${bundle}"/></a>
                     </div>
                 </div>
 

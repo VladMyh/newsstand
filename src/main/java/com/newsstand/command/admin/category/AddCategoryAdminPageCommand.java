@@ -49,13 +49,7 @@ public class AddCategoryAdminPageCommand implements ServletCommand {
 
             category = categoryService.createCategory(category);
 
-            if(category == null) {
-                request.setAttribute("success", false);
-
-            }
-            else {
-                request.setAttribute("success", true);
-            }
+            request.setAttribute("success", category != null);
         }
 
         return resultPage;

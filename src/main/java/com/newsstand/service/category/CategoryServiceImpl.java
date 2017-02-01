@@ -30,12 +30,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAll() {
         LOGGER.info("Getting all categories");
+
         return categoryDao.findAll();
     }
 
     @Override
     public Category findCategoryById(Long id) {
         LOGGER.info("Finding category by id " + id);
+
         return categoryDao.findCategoryById(id);
     }
 
@@ -53,12 +55,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean deleteCategoryById(Long id) {
         LOGGER.info("Deleting category with id " + id);
+
         return categoryDao.deleteCategoryById(id);
     }
 
     @Override
     public Category updateCategory(Category category) {
         LOGGER.info("Updating category with id " + category.getId());
+
         return categoryDao.updateCategory(category);
     }
 }

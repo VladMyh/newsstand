@@ -25,8 +25,9 @@ public interface MagazineDao {
      * This method deleted magazine by id.
      *
      * @param id Id of the magazine to be deleted.
+     * @return   True if deletion successful, otherwise false.
      */
-    void deleteMagazineById(Long id);
+    boolean deleteMagazineById(Long id);
 
     /**
      * This method finds magazine by id.

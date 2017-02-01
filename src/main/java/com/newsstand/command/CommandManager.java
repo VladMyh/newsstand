@@ -2,10 +2,7 @@ package com.newsstand.command;
 
 import com.newsstand.command.admin.AdminPageCommand;
 import com.newsstand.command.admin.category.*;
-import com.newsstand.command.admin.magazine.AddMagazineAdminPageCommand;
-import com.newsstand.command.admin.magazine.EditMagazineAdminPageCommand;
-import com.newsstand.command.admin.magazine.MagazinesAdminPageCommand;
-import com.newsstand.command.admin.magazine.UpdateMagazineAdminCommand;
+import com.newsstand.command.admin.magazine.*;
 import com.newsstand.command.admin.publisher.*;
 import com.newsstand.command.admin.user.AdminsAdminPageCommand;
 import com.newsstand.command.admin.user.UsersAdminPageCommand;
@@ -65,6 +62,7 @@ public class CommandManager {
         commands.put("/admin/magazines/add", new AddMagazineAdminPageCommand());
         commands.put("/admin/magazines/edit", new EditMagazineAdminPageCommand());
         commands.put("/admin/magazines/update", new UpdateMagazineAdminCommand());
+        commands.put("/admin/magazines/delete", new DeleteMagazineAdminCommand());
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
