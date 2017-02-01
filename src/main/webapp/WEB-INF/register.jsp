@@ -39,7 +39,7 @@
                     <h3 class="panel-title"><fmt:message key="signup" bundle="${bundle}"/></h3>
                 </div>
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form" method="post" action="${pageContext.request.contextPath}/register">
+                    <form class="pure-form" accept-charset="UTF-8" role="form" method="post" action="${pageContext.request.contextPath}/register">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="<fmt:message key="firstName" bundle="${bundle}"/>" name="fname" type="text" required>
@@ -54,7 +54,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input class="form-control" placeholder="<fmt:message key="password" bundle="${bundle}"/>" name="password" type="password" required>
+                                <input class="form-control" placeholder="<fmt:message key="password" bundle="${bundle}"/>" name="password"
+                                       id="password" type="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" placeholder="<fmt:message key="confirmPassword" bundle="${bundle}"/>" name="confirm_password"
+                                       id="confirm_password" type="password" required>
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="<fmt:message key="signup" bundle="${bundle}"/>">
@@ -65,6 +71,27 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    <fmt:message key="passwordMatchFail" bundle="${bundle}" var="msg"/>
+    var msg = "${msg}";
+
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+        if(password.value != confirm_password.value) {
+            confirm_password.setCustomValidity(msg);
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
