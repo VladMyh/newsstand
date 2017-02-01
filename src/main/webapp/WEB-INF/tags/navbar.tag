@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/admin/subscriptions?p=1&s=10">
                                     <fmt:message key="subscriptions" bundle="${bundle}"/>
                                 </a>
                             </li>

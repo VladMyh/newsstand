@@ -52,4 +52,13 @@ public interface SubscriptionDao {
      * @return       A list of user subscriptions.
      */
     List<Subscription> findSubscriptionsByUserId(Long userId);
+
+    /**
+     * This methods finds page from all subscriptions.
+     *
+     * @param offset Element to start from.
+     * @param size   How much elements to take.
+     * @return       List of subscriptions.
+     */
+    List<Subscription> findPage(Long offset, Long size);
 }

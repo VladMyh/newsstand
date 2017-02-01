@@ -30,6 +30,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
     private static String findByIdQuery;
     private static String checkIfUserSubscribedQuery;
     private static String findByUserIdQuery;
+    private static String findPageQuery;
 
     private MysqlSubscriptionDaoImpl() {
         LOGGER.info("Initializing MysqlSubscriptionDaoImpl");
@@ -43,6 +44,7 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
         findByIdQuery = properties.getProperty("findSubscriptionById");
         checkIfUserSubscribedQuery = properties.getProperty("checkIfUserSubscribed");
         findByUserIdQuery = properties.getProperty("findSubscriptionsByUserId");
+        findPageQuery = properties.getProperty("findSubscriptionPage");
 
         magazineDao = MysqlMagazineDaoImpl.getInstance();
         subscriptionTypeDao = MysqlSubscriptionTypeDao.getInstance();
@@ -203,6 +205,40 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
 
             ResultSet result = statement.executeQuery();
 
+            res = getSubscriptions(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Subscription> findPage(Long offset, Long size) {
+        LOGGER.info("Getting page with offset " + offset + ", size " + size);
+        List<Subscription> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findPageQuery);
+            statement.setLong(1, offset);
+            statement.setLong(2, size);
+
+            ResultSet result = statement.executeQuery();
+
+            res = getSubscriptions(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    private List<Subscription> getSubscriptions(ResultSet result) {
+        List<Subscription> res = new ArrayList<>();
+
+        try {
             while (result.next()) {
                 Subscription subscription = new Subscription();
                 subscription.setId(result.getLong("id"));
@@ -215,7 +251,6 @@ public class MysqlSubscriptionDaoImpl implements SubscriptionDao {
 
                 res.add(subscription);
             }
-
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }

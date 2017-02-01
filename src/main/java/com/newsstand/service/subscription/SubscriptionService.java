@@ -32,4 +32,13 @@ public interface SubscriptionService {
 	 * @return       List of user subscriptions.
 	 */
 	List<Subscription> getUserSubscriptions(Long userId);
+
+	/**
+	 * This method returns a page of all subscription.
+	 *
+	 * @param page Number of the page, starts from 1.
+	 * @param size Size of the page.
+	 * @return     A list of subscriptions.
+	 */
+	List<Subscription> getPage(Long page, Long size);
 }
