@@ -73,4 +73,12 @@ public interface MagazineService {
      * @return   True if magazine deleted successfully, otherwise false.
      */
     boolean deleteMagazineById(Long id);
+
+    /**
+     * This method finds magazine image by id.
+     *
+     * @param id Id of the magazine image to find.
+     * @return   Image bytes.
+     */
+	byte[] findImageByMagazineId(Long id);
 }

@@ -82,4 +82,11 @@ public class MagazineServiceImpl implements MagazineService {
 
         return magazineDao.deleteMagazineById(id);
     }
+
+    @Override
+    public byte[] findImageByMagazineId(Long id) {
+        LOGGER.info("Finding magazine image by id " + id);
+
+        return magazineDao.findImageById(id);
+    }
 }

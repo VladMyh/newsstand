@@ -55,7 +55,10 @@
                     <h3>${magazine.title}</h3>
 
                     <p><b><fmt:message key="publisher" bundle="${bundle}"/>: </b><a href="#">${magazine.publisher.title}</a></p>
-                    <p><b><fmt:message key="category" bundle="${bundle}"/>: </b><a href="#">${magazine.category.name}</a></p>
+                    <p>
+                        <b><fmt:message key="category" bundle="${bundle}"/>: </b>
+                        <a href="${pageContext.request.contextPath}/category?catId=${magazine.category.id}&p=1&s=6">${magazine.category.name}</a>
+                    </p>
 
                     <%--User logged in--%>
                     <c:if test="${sessionScope.authenticated != null &&
@@ -93,7 +96,8 @@
 
         <div class="col-md-3">
             <a href="#" class="thumbnail">
-                <img src="placehold.it/300x800" width="300" height="800"/>
+                <img src="${pageContext.request.contextPath}/image?id=${magazine.id}"
+                     onerror="this.src='https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400'"/>
             </a>
         </div>
 

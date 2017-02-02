@@ -57,7 +57,9 @@
                 <c:forEach items="${page.items}" var="magazine">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="placehold.it/300x800" width="300" height="800"/>
+                            <img src="${pageContext.request.contextPath}/image?id=${magazine.id}"
+                                 onerror="this.src='https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400'"/>
+
                             <div class="caption">
                                 <h4 class="pull-right"><p:price price="${magazine.price}"/></h4>
                                 <h4><a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}">${magazine.title}</a>

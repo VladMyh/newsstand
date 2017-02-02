@@ -73,4 +73,12 @@ public interface MagazineDao {
      * @return       List of magazines.
      */
     List<Magazine> findPage(Integer offset, Integer size);
+
+    /**
+     * This method finds magazine image by id.
+     *
+     * @param id Id of the magazine image to find.
+     * @return   Image bytes.
+     */
+	byte[] findImageById(Long id);
 }
