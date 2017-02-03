@@ -16,6 +16,7 @@ public class MysqlImageDaoImpl implements ImageDao {
 
 	private static String findImageQuery;
 	private static String createQuery;
+	private static String deleteQuery;
 
 	private MysqlImageDaoImpl() {
 		LOGGER.info("Initializing MysqlImageDaoImpl");
@@ -25,6 +26,7 @@ public class MysqlImageDaoImpl implements ImageDao {
 
 		findImageQuery = properties.getProperty("findImageById");
 		createQuery = properties.getProperty("createImage");
+		deleteQuery = properties.getProperty("deleteImageById");
 	}
 
 	public static MysqlImageDaoImpl getInstance() {
@@ -87,5 +89,30 @@ public class MysqlImageDaoImpl implements ImageDao {
 		}
 
 		return id;
+	}
+
+	@Override
+	public boolean deleteImageById(Long id) {
+		LOGGER.info("Deleting image by id " + id);
+		boolean result = false;
+
+		try(Connection connection = connectionFactory.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(deleteQuery);
+			statement.setLong(1, id);
+
+			boolean res = statement.execute();
+
+			if(res) {
+				LOGGER.info("Failed to delete image by id " + id);
+			}
+			else {
+				LOGGER.info("Image deleted successfully");
+				result = true;
+			}
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+
+		return result;
 	}
 }

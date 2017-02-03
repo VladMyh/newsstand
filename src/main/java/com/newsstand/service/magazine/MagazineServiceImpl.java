@@ -1,5 +1,7 @@
 package com.newsstand.service.magazine;
 
+import com.newsstand.dao.image.ImageDao;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
 import com.newsstand.dao.magazine.MagazineDao;
 import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Magazine;
@@ -13,11 +15,13 @@ public class MagazineServiceImpl implements MagazineService {
 
     private static MagazineServiceImpl INSTANCE;
     private static MagazineDao magazineDao;
+    private static ImageDao imageDao;
 
     private MagazineServiceImpl() {
         LOGGER.info("Initializing MagazineServiceImpl");
 
         magazineDao = MysqlMagazineDaoImpl.getInstance();
+        imageDao = MysqlImageDaoImpl.getInstance();
     }
 
     public static MagazineServiceImpl getInstance() {
@@ -79,6 +83,12 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     public boolean deleteMagazineById(Long id) {
         LOGGER.info("Deleting magazine by id " + id);
+
+        Magazine magazine = magazineDao.findMagazineById(id);
+
+        if(magazine != null && magazine.getImageId() != null) {
+            imageDao.deleteImageById(magazine.getImageId());
+        }
 
         return magazineDao.deleteMagazineById(id);
     }

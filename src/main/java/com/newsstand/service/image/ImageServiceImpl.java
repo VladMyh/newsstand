@@ -39,4 +39,11 @@ public class ImageServiceImpl implements ImageService {
 
 		return imageDao.createImage(image);
 	}
+
+	@Override
+	public boolean deleteImageById(Long id) {
+		LOGGER.info("Deleting image by id " + id);
+
+		return imageDao.deleteImageById(id);
+	}
 }

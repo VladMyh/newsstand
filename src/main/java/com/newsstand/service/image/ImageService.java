@@ -18,4 +18,12 @@ public interface ImageService {
 	 * @return      Created image id.
 	 */
 	Long createImage(InputStream image);
+
+	/**
+	 * This method deletes image by id.
+	 *
+	 * @param id Id of the image to delete.
+	 * @return   True if image deleted, otherwise false.
+	 */
+	boolean deleteImageById(Long id);
 }

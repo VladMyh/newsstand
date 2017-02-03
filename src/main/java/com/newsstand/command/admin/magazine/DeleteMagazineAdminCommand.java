@@ -4,6 +4,8 @@ import com.newsstand.command.ServletCommand;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
+import com.newsstand.service.image.ImageService;
+import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
 import com.newsstand.util.Page;
