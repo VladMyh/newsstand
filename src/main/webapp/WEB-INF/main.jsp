@@ -55,8 +55,12 @@
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <a href="${pageContext.request.contextPath}/magazine?id=${magazine.id}" class="thumbnail">
-                                <img src="${pageContext.request.contextPath}/image?id=${magazine.id}"
-                                     onerror="this.src='https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400'"/>
+                                <c:if test="${magazine.imageId != 0}">
+                                    <img src="${pageContext.request.contextPath}/image?id=${magazine.imageId}"/>
+                                </c:if>
+                                <c:if test="${magazine.imageId == 0}">
+                                    <img src="https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400"/>
+                                </c:if>
                             </a>
                             <div class="caption">
                                 <h4 class="pull-right"><p:price price="${magazine.price}"/></h4>

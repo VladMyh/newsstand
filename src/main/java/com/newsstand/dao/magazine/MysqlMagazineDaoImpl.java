@@ -29,7 +29,6 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     private static String findPageByCategoryQuery;
     private static String findPageByPublisherQuery;
     private static String findPage;
-    private static String findImage;
 
     private MysqlMagazineDaoImpl() {
         LOGGER.info("Initializing MysqlMagazineDaoImpl");
@@ -45,7 +44,6 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         findPageByCategoryQuery = properties.getProperty("findPageByCategory");
         findPageByPublisherQuery = properties.getProperty("findPageByPublisher");
         findPage = properties.getProperty("findPage");
-        findImage = properties.getProperty("findImageByMagazineId");
 
         categoryDao = MysqlCategoryDaoImpl.getInstance();
         publisherDao = MysqlPublisherDaoImpl.getInstance();
@@ -70,7 +68,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             statement.setLong(4, magazine.getPublisher().getId());
             statement.setLong(5, magazine.getCategory().getId());
             statement.setString(6, magazine.getDescription());
-
+            statement.setLong(7, magazine.getImageId());
 
             int affectedRows = statement.executeUpdate();
 
@@ -108,7 +106,8 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             statement.setLong(4, magazine.getPublisher().getId());
             statement.setLong(5, magazine.getCategory().getId());
             statement.setString(6, magazine.getDescription());
-            statement.setLong(7, magazine.getId());
+            statement.setLong(7, magazine.getImageId());
+            statement.setLong(8, magazine.getId());
 
             boolean result = statement.execute();
 
@@ -170,6 +169,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
                 magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
                 magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
                 magazine.setDescription(result.getString("description"));
+                magazine.setImageId(result.getLong("imageId"));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -262,29 +262,6 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         return res;
     }
 
-    @Override
-    public byte[] findImageById(Long id) {
-        LOGGER.info("Finding magazines image");
-        byte[] result = new byte[0];
-
-        try(Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(findImage);
-            statement.setLong(1, id);
-
-            ResultSet res = statement.executeQuery();
-
-            if(res.next()) {
-                result = res.getBytes("image");
-            }
-
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-        }
-
-        return result;
-    }
-
-
     private List<Magazine> getMagazines(ResultSet result) {
         List<Magazine> res = new ArrayList<>();
 
@@ -298,6 +275,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
                 magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
                 magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
                 magazine.setDescription(result.getString("description"));
+                magazine.setImageId(result.getLong("imageId"));
 
                 res.add(magazine);
             }

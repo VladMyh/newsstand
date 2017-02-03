@@ -39,7 +39,7 @@ public class CommandManager {
         commands.put("/admin/dashboard", new AdminPageCommand());
         commands.put("/subscribe", new SubscribePageCommand());
         commands.put("/account", new AccountPageCommand());
-        commands.put("/image", new MagazineImageCommand());
+        commands.put("/image", new ImageCommand());
 
         //admin categories
         commands.put("/admin/categories", new CategoriesAdminPageCommand());

@@ -8,14 +8,20 @@ import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
+import com.newsstand.service.image.ImageService;
+import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
 import com.newsstand.service.publisher.PublisherService;
 import com.newsstand.service.publisher.PublisherServiceImpl;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This class is used to handle GET requests to the page admin used to add new magazines,
@@ -27,6 +33,7 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
     private static MagazineService magazineService;
     private static PublisherService publisherService;
     private static CategoryService categoryService;
+    private static ImageService imageService;
 
     private static String addMagazinePage;
     private static String loginPage;
@@ -37,6 +44,7 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
         magazineService = MagazineServiceImpl.getInstance();
         publisherService = PublisherServiceImpl.getInstance();
         categoryService = CategoryServiceImpl.getInstance();
+        imageService = ImageServiceImpl.getInstance();
 
         MappingProperties properties = MappingProperties.getInstance();
         addMagazinePage = properties.getProperty("adminAddMagazinePage");
@@ -57,6 +65,14 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
             request.getParameter("price") != null && request.getParameter("publisher") != null &&
             request.getParameter("category") != null && request.getParameter("description") != null) {
             try {
+                Part filePart = request.getPart("image");
+                Long imageId = null;
+
+                if(filePart != null) {
+                    InputStream image = filePart.getInputStream();
+                    imageId = imageService.createImage(image);
+                }
+
                 Category category = new Category();
                 category.setId(Long.parseLong(request.getParameter("category")));
 
@@ -70,6 +86,7 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
                 magazine.setQuantity(Long.parseLong(request.getParameter("quantity")));
                 magazine.setCategory(category);
                 magazine.setPublisher(publisher);
+                magazine.setImageId(imageId);
 
                 magazineService.createMagazine(magazine);
 
@@ -81,6 +98,8 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
                                               + ", "
                                               + request.getParameter("publisher")
                                               + " to long");
+            } catch (ServletException | IOException e) {
+                LOGGER.info(e.getMessage());
             }
         }
         else {

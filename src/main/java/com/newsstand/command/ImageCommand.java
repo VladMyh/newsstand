@@ -1,6 +1,8 @@
 package com.newsstand.command;
 
 import com.newsstand.properties.MappingProperties;
+import com.newsstand.service.image.ImageService;
+import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
 import org.apache.log4j.Logger;
@@ -10,20 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This class is used to handle GET requests to retrieve magazine image.
+ * This class is used to handle GET requests to retrieve images.
  */
-public class MagazineImageCommand implements ServletCommand {
+public class ImageCommand implements ServletCommand {
 
-	private static final Logger LOGGER = Logger.getLogger(MagazineImageCommand.class);
+	private static final Logger LOGGER = Logger.getLogger(ImageCommand.class);
 
-	private static MagazineService magazineService;
+	private static ImageService imageService;
 
 	private static String errorpage;
 
-	public MagazineImageCommand(){
-		LOGGER.info("Initializing MagazineImageCommand");
+	public ImageCommand(){
+		LOGGER.info("Initializing ImageCommand");
 
-		magazineService = MagazineServiceImpl.getInstance();
+		imageService = ImageServiceImpl.getInstance();
 
 		MappingProperties properties = MappingProperties.getInstance();
 		errorpage = properties.getProperty("error404Page");
@@ -38,7 +40,7 @@ public class MagazineImageCommand implements ServletCommand {
 			try {
 				Long id = Long.parseLong(request.getParameter("id"));
 
-				byte[] image =  magazineService.findImageByMagazineId(id);
+				byte[] image =  imageService.findImageById(id);
 
 				if(image != null && image.length != 0) {
 					response.setContentType("image/png");

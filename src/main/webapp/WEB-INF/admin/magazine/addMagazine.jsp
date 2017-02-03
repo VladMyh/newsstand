@@ -39,7 +39,8 @@
 
     <div class="col-md-8">
 
-        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/magazines/add">
+        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/magazines/add"
+              enctype="multipart/form-data">
             <fieldset>
 
                 <legend><fmt:message key="addMagazine" bundle="${bundle}"/></legend>
@@ -105,6 +106,15 @@
                     </label>
                     <div class="col-md-4">
                         <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <fmt:message key="image" bundle="${bundle}"/>
+                    </label>
+                    <div class="col-md-4">
+                        <input type="file" id="image" name="image" required/>
                     </div>
                 </div>
 

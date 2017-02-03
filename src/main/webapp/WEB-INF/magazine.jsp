@@ -96,8 +96,12 @@
 
         <div class="col-md-3">
             <a href="#" class="thumbnail">
-                <img src="${pageContext.request.contextPath}/image?id=${magazine.id}"
-                     onerror="this.src='https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400'"/>
+                <c:if test="${magazine.imageId != 0}">
+                    <img src="${pageContext.request.contextPath}/image?id=${magazine.imageId}"/>
+                </c:if>
+                <c:if test="${magazine.imageId == 0}">
+                    <img src="https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400"/>
+                </c:if>
             </a>
         </div>
 
