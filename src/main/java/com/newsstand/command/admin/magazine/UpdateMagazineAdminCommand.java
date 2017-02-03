@@ -8,14 +8,22 @@ import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
+import com.newsstand.service.image.ImageService;
+import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
 import com.newsstand.service.publisher.PublisherService;
 import com.newsstand.service.publisher.PublisherServiceImpl;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -27,6 +35,7 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 	private static MagazineService magazineService;
 	private static PublisherService publisherService;
 	private static CategoryService categoryService;
+	private static ImageService imageService;
 
 	private static String magazinesPage;
 	private static String loginPage;
@@ -37,6 +46,7 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 		magazineService = MagazineServiceImpl.getInstance();
 		publisherService = PublisherServiceImpl.getInstance();
 		categoryService = CategoryServiceImpl.getInstance();
+		imageService = ImageServiceImpl.getInstance();
 
 		MappingProperties properties = MappingProperties.getInstance();
 		magazinesPage = properties.getProperty("adminMagazinesPage");
@@ -59,12 +69,29 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 				request.getParameter("description") != null) {
 			try {
 				Long id = Long.parseLong(request.getParameter("id"));
+				Magazine oldMagazine = magazineService.findMagazineById(id);
 
+				//get category
 				Category category = new Category();
 				category.setId(Long.parseLong(request.getParameter("category")));
 
+				//get publisher
 				Publisher publisher = new Publisher();
 				publisher.setId(Long.parseLong(request.getParameter("publisher")));
+
+				//get image
+				Part filePart = request.getPart("image");
+				Long imageId = null;
+
+				if(filePart != null && !Paths.get(filePart.getSubmittedFileName()).getFileName().toString().isEmpty()) {
+					InputStream image = filePart.getInputStream();
+					imageId = imageService.createImage(image);
+
+					//delete old image
+					if(oldMagazine.getImageId() != null) {
+						imageService.deleteImageById(oldMagazine.getImageId());
+					}
+				}
 
 				Magazine magazine = new Magazine();
 				magazine.setId(id);
@@ -74,16 +101,16 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 				magazine.setQuantity(Long.parseLong(request.getParameter("quantity")));
 				magazine.setCategory(category);
 				magazine.setPublisher(publisher);
+				magazine.setImageId(imageId == null ? oldMagazine.getImageId() : imageId);
 
 				magazineService.updateMagazine(magazine);
 
 				request.setAttribute("updateSuccess", true);
 
-				List<Magazine> page = magazineService.getPage(1, 10);
+				List<Magazine> items = magazineService.getPage(1, 10);
+				Page<Magazine> page = new Page<>(items, 1, 10);
 				request.setAttribute("page", page);
-				request.setAttribute("pageNum", 1L);
-				request.setAttribute("pageSize", 10L);
-				request.setAttribute("currSize", page.size());
+
 
 				resultPage = magazinesPage;
 			}
@@ -94,6 +121,8 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 						                      + ", "
 						                      + request.getParameter("publisher")
 						                      + " to long");
+			} catch (ServletException | IOException ex) {
+				LOGGER.error(ex.getMessage());
 			}
 
 		}

@@ -76,7 +76,15 @@
                                 <fmt:message key="subscribed" bundle="${bundle}"/>
                             </button>
                         </c:if>
+                    </c:if>
 
+                    <%--User is admi--%>
+                    <c:if test="${sessionScope.authenticated != null &&
+                                  sessionScope.authenticated == true &&
+                                  sessionScope.role == 'ADMIN'}">
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/magazines/edit?id=${magazine.id}">
+                            <fmt:message key="edit" bundle="${bundle}"/>
+                        </a>
                     </c:if>
 
                     <%--User not logged in--%>

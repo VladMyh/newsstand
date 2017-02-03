@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 /**
  * This class is used to handle GET requests to the page admin used to add new magazines,
@@ -68,7 +69,7 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
                 Part filePart = request.getPart("image");
                 Long imageId = null;
 
-                if(filePart != null) {
+                if(filePart != null && !Paths.get(filePart.getSubmittedFileName()).getFileName().toString().isEmpty()) {
                     InputStream image = filePart.getInputStream();
                     imageId = imageService.createImage(image);
                 }

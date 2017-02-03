@@ -114,7 +114,7 @@
                         <fmt:message key="image" bundle="${bundle}"/>
                     </label>
                     <div class="col-md-4">
-                        <input type="file" id="image" name="image" required/>
+                        <input type="file" id="image" name="image"/>
                     </div>
                 </div>
 

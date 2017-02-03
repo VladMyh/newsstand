@@ -36,9 +36,10 @@
 
     <div class="col-md-2"></div>
 
-    <div class="col-md-8">
+    <div class="col-md-7">
 
-        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/magazines/update?id=${magazine.id}">
+        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/magazines/update?id=${magazine.id}"
+              enctype="multipart/form-data">
             <fieldset>
 
                 <legend><fmt:message key="editMagazine" bundle="${bundle}"/></legend>
@@ -112,6 +113,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <fmt:message key="image" bundle="${bundle}"/>
+                    </label>
+                    <div class="col-md-4">
+                        <input type="file" id="image" name="image"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-2">
                         <button id="submit" name="submit" type="submit" class="btn btn-primary">
@@ -133,7 +143,16 @@
 
     </div>
 
-    <div class="col-md-2"></div>
+    <div class="col-md-3">
+        <a href="#" class="thumbnail">
+            <c:if test="${magazine.imageId != 0}">
+                <img src="${pageContext.request.contextPath}/image?id=${magazine.imageId}"/>
+            </c:if>
+            <c:if test="${magazine.imageId == 0}">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97400&w=300&h=400"/>
+            </c:if>
+        </a>
+    </div>
 
 </div>
 <!-- /.container -->
