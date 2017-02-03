@@ -9,16 +9,19 @@ public class User implements Serializable{
     private String email;
     private String password;
     private UserType userType;
+    private String address;
 
     public User() {}
 
-    public User(Long id, String firstName, String lastName, String email, String password, UserType userType) {
+    public User(Long id, String firstName, String lastName, String email,
+                String password, UserType userType, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userType = userType;
+        this.address = address;
     }
 
     public Long getId() {
@@ -69,6 +72,14 @@ public class User implements Serializable{
         this.userType = userType;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,23 +87,24 @@ public class User implements Serializable{
 
         User user = (User) o;
 
-        if (id != user.id) return false;
+        if (!id.equals(user.id)) return false;
         if (!firstName.equals(user.firstName)) return false;
         if (!lastName.equals(user.lastName)) return false;
         if (!email.equals(user.email)) return false;
         if (!password.equals(user.password)) return false;
-        return userType == user.userType;
-
+        if (userType != user.userType) return false;
+        return address.equals(user.address);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + userType.hashCode();
+        result = 31 * result + address.hashCode();
         return result;
     }
 }

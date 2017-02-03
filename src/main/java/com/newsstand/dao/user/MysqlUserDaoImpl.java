@@ -57,6 +57,7 @@ public class MysqlUserDaoImpl implements UserDao{
 			statement.setString(3, user.getPassword());
 			statement.setString(4, user.getEmail());
 			statement.setLong(5, user.getUserType().ordinal() + 1);
+			statement.setString(6, user.getAddress());
 
 			int affectedRows = statement.executeUpdate();
 
@@ -93,7 +94,8 @@ public class MysqlUserDaoImpl implements UserDao{
 			statement.setString(3, user.getPassword());
 			statement.setString(4, user.getEmail());
 			statement.setLong(5, user.getUserType().ordinal() + 1);
-			statement.setLong(6, user.getId());
+			statement.setString(6, user.getAddress());
+			statement.setLong(7, user.getId());
 
 			boolean result = statement.execute();
 
@@ -190,15 +192,15 @@ public class MysqlUserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> findPageByUserType(UserType userType, Long offset, Long size) {
+	public List<User> findPageByUserType(UserType userType, Integer offset, Integer size) {
 		LOGGER.info("Getting page with offset " + offset + ", size " + size + " of userType " + userType.name());
 		List<User> res = new ArrayList<>();
 
 		try(Connection connection = connectionFactory.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(findPageByUserType);
 			statement.setLong(1, userType.ordinal() + 1);
-			statement.setLong(2, offset);
-			statement.setLong(3, size);
+			statement.setInt(2, offset);
+			statement.setInt(3, size);
 
 			ResultSet result = statement.executeQuery();
 
@@ -224,6 +226,7 @@ public class MysqlUserDaoImpl implements UserDao{
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
+				user.setAddress(resultSet.getString("address"));
             }
 		} catch (SQLException e) {
 			LOGGER.info(e.getMessage());
@@ -244,6 +247,7 @@ public class MysqlUserDaoImpl implements UserDao{
 				user.setPassword(resultSet.getString("password"));
 				user.setEmail(resultSet.getString("email"));
 				user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
+				user.setAddress(resultSet.getString("address"));
 
 				res.add(user);
 			}

@@ -51,7 +51,8 @@ public class RegisterCommand implements ServletCommand {
             resultPage = mainPage;
         }
         else if(request.getParameter("fname") == null && request.getParameter("lname") == null &&
-            request.getParameter("email") == null && request.getParameter("password") == null) {
+                request.getParameter("email") == null && request.getParameter("password") == null &&
+                request.getParameter("address") == null) {
             LOGGER.info("Returning registration page");
             return resultPage;
         }
@@ -63,6 +64,7 @@ public class RegisterCommand implements ServletCommand {
             user.setLastName(request.getParameter("lname"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(request.getParameter("password"));
+            user.setAddress(request.getParameter("address"));
             user.setUserType(UserType.USER);
 
             if(userService.registerUser(user)) {

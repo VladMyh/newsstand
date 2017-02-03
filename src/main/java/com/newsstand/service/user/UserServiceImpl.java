@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getPageByUserType(Long page, Long size, UserType userType) {
+    public List<User> getPageByUserType(Integer page, Integer size, UserType userType) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for user type " + userType.name());
 
         return userDao.findPageByUserType(userType, (page - 1) * size, size);

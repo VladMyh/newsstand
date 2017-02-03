@@ -62,5 +62,5 @@ public interface UserDao {
 	 * @param size     How much elements to take.
 	 * @return         List of users.
 	 */
-	List<User> findPageByUserType(UserType userType, Long offset, Long size);
+	List<User> findPageByUserType(UserType userType, Integer offset, Integer size);
 }

@@ -39,7 +39,7 @@ public interface UserService {
      * @param userType User type of the users to find.
      * @return         A list of users.
      */
-    List<User> getPageByUserType(Long page, Long size, UserType userType);
+    List<User> getPageByUserType(Integer page, Integer size, UserType userType);
 
     /**
      * This method finds user by email.

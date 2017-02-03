@@ -61,7 +61,7 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach items="${page}" var="user">
+                    <c:forEach items="${page.items}" var="user">
                         <tr>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
@@ -78,17 +78,17 @@
 
         <div class="row">
             <ul class="pager">
-                <c:if test="${pageNum > 1}">
+                <c:if test="${!page.first}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/users?p=${pageNum-1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/users?p=${page.number-1}&s=${page.size}">
                             <span aria-hidden="true">&larr;</span>
                         </a>
                     </li>
                 </c:if>
 
-                <c:if test="${currSize == pageSize}">
+                <c:if test="${!page.last}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/users?p=${pageNum+1}&s=${pageSize}">
+                        <a href="${pageContext.request.contextPath}/admin/users?p=${page.number+1}&s=${page.size}">
                             <span aria-hidden="true">&rarr;</span>
                         </a>
                     </li>

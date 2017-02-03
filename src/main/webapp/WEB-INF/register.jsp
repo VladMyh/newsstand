@@ -54,6 +54,10 @@
                             </div>
 
                             <div class="form-group">
+                                <input class="form-control" placeholder="<fmt:message key="address" bundle="${bundle}"/>" name="address" type="address" required>
+                            </div>
+
+                            <div class="form-group">
                                 <input class="form-control" placeholder="<fmt:message key="password" bundle="${bundle}"/>" name="password"
                                        id="password" type="password" required>
                             </div>

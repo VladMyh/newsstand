@@ -53,8 +53,12 @@
                     <li class="list-group-item text-muted" contenteditable="false">
                         <fmt:message key="account" bundle="${bundle}"/>
                     </li>
-                    <li class="list-group-item text-right" ng-show="userInfo.studentInfo.faculty !== null">
+                    <li class="list-group-item text-right">
                         <span class="pull-left"><strong class=""><fmt:message key="email" bundle="${bundle}"/></strong></span> ${user.email}
+                    </li>
+
+                    <li class="list-group-item text-right">
+                        <span class="pull-left"><strong class=""><fmt:message key="address" bundle="${bundle}"/></strong></span> ${user.address}
                     </li>
                 </ul>
 
