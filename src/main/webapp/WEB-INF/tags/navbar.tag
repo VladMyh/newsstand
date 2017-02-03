@@ -87,9 +87,11 @@
 
                 <%--User controlls--%>
                 <c:if test="${sessionScope.authenticated != null && sessionScope.authenticated == true}">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/account"><c:out value="${sessionScope.username}"/></a>
-                    </li>
+                    <c:if test="${sessionScope.role != 'ADMIN'}">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/account"><c:out value="${sessionScope.username}"/></a>
+                        </li>
+                    </c:if>
                     <li>
                         <a href="${pageContext.request.contextPath}/logout"><fmt:message key="signout" bundle="${bundle}"/></a>
                     </li>

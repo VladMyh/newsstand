@@ -55,7 +55,6 @@
             <thead>
             <tr>
                 <th><fmt:message key="title" bundle="${bundle}"/></th>
-                <th><fmt:message key="quantity" bundle="${bundle}"/></th>
                 <th><fmt:message key="price" bundle="${bundle}"/></th>
                 <th><fmt:message key="publisher" bundle="${bundle}"/></th>
                 <th><fmt:message key="category" bundle="${bundle}"/></th>
@@ -67,7 +66,6 @@
             <c:forEach items="${page.items}" var="magazine">
                 <tr>
                     <td>${magazine.title}</td>
-                    <td>${magazine.quantity}</td>
                     <td><p:price price="${magazine.price}"/></td>
                     <td>${magazine.category.name}</td>
                     <td>${magazine.publisher.title}</td>

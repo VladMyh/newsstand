@@ -64,9 +64,8 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 			resultPage = loginPage;
 		}
 		else if(request.getParameter("id") != null && request.getParameter("title") != null &&
-				request.getParameter("quantity") != null && request.getParameter("price") != null &&
-				request.getParameter("publisher") != null && request.getParameter("category") != null &&
-				request.getParameter("description") != null) {
+				request.getParameter("price") != null && request.getParameter("publisher") != null &&
+				request.getParameter("category") != null && request.getParameter("description") != null) {
 			try {
 				Long id = Long.parseLong(request.getParameter("id"));
 				Magazine oldMagazine = magazineService.findMagazineById(id);
@@ -98,10 +97,10 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 				magazine.setTitle(request.getParameter("title"));
 				magazine.setDescription(request.getParameter("description"));
 				magazine.setPrice(Float.parseFloat(request.getParameter("price")));
-				magazine.setQuantity(Long.parseLong(request.getParameter("quantity")));
 				magazine.setCategory(category);
 				magazine.setPublisher(publisher);
 				magazine.setImageId(imageId == null ? oldMagazine.getImageId() : imageId);
+				magazine.setEnabled(request.getParameter("enabled") != null);
 
 				magazineService.updateMagazine(magazine);
 

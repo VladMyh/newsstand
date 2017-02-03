@@ -8,22 +8,22 @@ public class Magazine implements Serializable{
     private Publisher publisher;
     private Category category;
     private Float price;
-    private Long quantity;
     private String description;
     private Long imageId;
+    private Boolean enabled;
 
     public Magazine() {}
 
     public Magazine(Long id, String title, Publisher publisher, Category category,
-                    Float price, Long quantity, String description, Long imageId) {
+                    Float price, String description, Long imageId, Boolean enabled) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
         this.category = category;
         this.price = price;
-        this.quantity = quantity;
         this.description = description;
         this.imageId = imageId;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -66,14 +66,6 @@ public class Magazine implements Serializable{
         this.price = price;
     }
 
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -90,6 +82,14 @@ public class Magazine implements Serializable{
         this.imageId = imageId;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,10 +102,9 @@ public class Magazine implements Serializable{
         if (!publisher.equals(magazine.publisher)) return false;
         if (!category.equals(magazine.category)) return false;
         if (!price.equals(magazine.price)) return false;
-        if (!quantity.equals(magazine.quantity)) return false;
-        if (description != null ? !description.equals(magazine.description) : magazine.description != null)
-            return false;
-        return imageId != null ? imageId.equals(magazine.imageId) : magazine.imageId == null;
+        if (!description.equals(magazine.description)) return false;
+        if (!imageId.equals(magazine.imageId)) return false;
+        return enabled.equals(magazine.enabled);
     }
 
     @Override
@@ -115,9 +114,9 @@ public class Magazine implements Serializable{
         result = 31 * result + publisher.hashCode();
         result = 31 * result + category.hashCode();
         result = 31 * result + price.hashCode();
-        result = 31 * result + quantity.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (imageId != null ? imageId.hashCode() : 0);
+        result = 31 * result + description.hashCode();
+        result = 31 * result + imageId.hashCode();
+        result = 31 * result + enabled.hashCode();
         return result;
     }
 }

@@ -56,15 +56,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="quantity">
-                        <fmt:message key="quantity" bundle="${bundle}"/>
-                    </label>
-                    <div class="col-md-4">
-                        <input id="quantity" name="quantity" class="form-control input-md" type="number" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label class="col-md-4 control-label" for="price">
                         <fmt:message key="price" bundle="${bundle}"/>
                     </label>
@@ -106,6 +97,16 @@
                     </label>
                     <div class="col-md-4">
                         <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="enabled">
+                        <fmt:message key="enabled" bundle="${bundle}"/>
+                    </label>
+                    <div class="col-md-4 checkbox">
+                        <input id="enabled" name="enabled" placeholder="" class="form-control input-md"
+                               type="checkbox" value="true">
                     </div>
                 </div>
 

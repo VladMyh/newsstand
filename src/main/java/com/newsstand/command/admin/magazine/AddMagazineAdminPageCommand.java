@@ -62,9 +62,9 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
             LOGGER.info("User not authorized");
             resultPage = loginPage;
         }
-        if(request.getParameter("title") != null && request.getParameter("quantity") != null &&
-            request.getParameter("price") != null && request.getParameter("publisher") != null &&
-            request.getParameter("category") != null && request.getParameter("description") != null) {
+        if(request.getParameter("title") != null && request.getParameter("price") != null &&
+           request.getParameter("publisher") != null && request.getParameter("category") != null &&
+           request.getParameter("description") != null) {
             try {
                 Part filePart = request.getPart("image");
                 Long imageId = null;
@@ -84,10 +84,10 @@ public class AddMagazineAdminPageCommand implements ServletCommand {
                 magazine.setTitle(request.getParameter("title"));
                 magazine.setDescription(request.getParameter("description"));
                 magazine.setPrice(Float.parseFloat(request.getParameter("price")));
-                magazine.setQuantity(Long.parseLong(request.getParameter("quantity")));
                 magazine.setCategory(category);
                 magazine.setPublisher(publisher);
                 magazine.setImageId(imageId);
+                magazine.setEnabled(request.getParameter("enabled") != null);
 
                 magazineService.createMagazine(magazine);
 

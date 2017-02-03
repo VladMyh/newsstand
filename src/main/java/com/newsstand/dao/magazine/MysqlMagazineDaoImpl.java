@@ -63,12 +63,12 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, magazine.getTitle());
-            statement.setLong(2, magazine.getQuantity());
-            statement.setBigDecimal(3, new BigDecimal(magazine.getPrice()));
-            statement.setLong(4, magazine.getPublisher().getId());
-            statement.setLong(5, magazine.getCategory().getId());
-            statement.setString(6, magazine.getDescription());
-            statement.setLong(7, magazine.getImageId());
+            statement.setBigDecimal(2, new BigDecimal(magazine.getPrice()));
+            statement.setLong(3, magazine.getPublisher().getId());
+            statement.setLong(4, magazine.getCategory().getId());
+            statement.setString(5, magazine.getDescription());
+            statement.setLong(6, magazine.getImageId());
+            statement.setBoolean(7, magazine.getEnabled());
 
             int affectedRows = statement.executeUpdate();
 
@@ -101,12 +101,12 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         try(Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(updateQuery);
             statement.setString(1, magazine.getTitle());
-            statement.setLong(2, magazine.getQuantity());
-            statement.setBigDecimal(3, new BigDecimal(magazine.getPrice()));
-            statement.setLong(4, magazine.getPublisher().getId());
-            statement.setLong(5, magazine.getCategory().getId());
-            statement.setString(6, magazine.getDescription());
-            statement.setLong(7, magazine.getImageId());
+            statement.setBigDecimal(2, new BigDecimal(magazine.getPrice()));
+            statement.setLong(3, magazine.getPublisher().getId());
+            statement.setLong(4, magazine.getCategory().getId());
+            statement.setString(5, magazine.getDescription());
+            statement.setLong(6, magazine.getImageId());
+            statement.setBoolean(7, magazine.getEnabled());
             statement.setLong(8, magazine.getId());
 
             boolean result = statement.execute();
@@ -164,12 +164,12 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
                 magazine = new Magazine();
                 magazine.setId(result.getLong("id"));
                 magazine.setTitle(result.getString("name"));
-                magazine.setQuantity(result.getLong("quantity"));
                 magazine.setPrice(result.getBigDecimal("price").floatValue());
                 magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
                 magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
                 magazine.setDescription(result.getString("description"));
                 magazine.setImageId(result.getLong("imageId"));
+                magazine.setEnabled(result.getBoolean("enabled"));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -270,12 +270,12 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
                 Magazine magazine = new Magazine();
                 magazine.setId(result.getLong("id"));
                 magazine.setTitle(result.getString("name"));
-                magazine.setQuantity(result.getLong("quantity"));
                 magazine.setPrice(result.getBigDecimal("price").floatValue());
                 magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
                 magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
                 magazine.setDescription(result.getString("description"));
                 magazine.setImageId(result.getLong("imageId"));
+                magazine.setEnabled(result.getBoolean("enabled"));
 
                 res.add(magazine);
             }

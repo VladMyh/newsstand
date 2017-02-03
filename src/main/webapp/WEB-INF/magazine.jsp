@@ -63,7 +63,8 @@
                     <%--User logged in--%>
                     <c:if test="${sessionScope.authenticated != null &&
                                   sessionScope.authenticated == true &&
-                                  sessionScope.role == 'USER'}">
+                                  sessionScope.role == 'USER' &&
+                                  magazine.enabled == true}">
                         <c:if test="${!isSubscribed}">
                             <a class="btn btn-primary" href="${pageContext.request.contextPath}/subscribe?id=${magazine.id}">
                                 <fmt:message key="subscribe" bundle="${bundle}"/>
@@ -71,24 +72,33 @@
                         </c:if>
 
                         <c:if test="${isSubscribed}">
-                            <button class="btn btn-primary" disabled="disabled">
+                            <button class="btn btn-success" disabled="disabled">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                 <fmt:message key="subscribed" bundle="${bundle}"/>
                             </button>
                         </c:if>
                     </c:if>
 
-                    <%--User is admi--%>
+                    <c:if test="${magazine.enabled == false}">
+                        <button class="btn btn-danger" disabled="disabled">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <fmt:message key="disabled" bundle="${bundle}"/>
+                        </button>
+                    </c:if>
+
+                    <%--User is admin--%>
                     <c:if test="${sessionScope.authenticated != null &&
                                   sessionScope.authenticated == true &&
                                   sessionScope.role == 'ADMIN'}">
                         <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/magazines/edit?id=${magazine.id}">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                             <fmt:message key="edit" bundle="${bundle}"/>
                         </a>
                     </c:if>
 
                     <%--User not logged in--%>
-                    <c:if test="${sessionScope.authenticated == null}">
+                    <c:if test="${sessionScope.authenticated == null &&
+                                  magazine.enabled == true}">
                         <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">
                             <fmt:message key="subscribe" bundle="${bundle}"/>
                         </a>

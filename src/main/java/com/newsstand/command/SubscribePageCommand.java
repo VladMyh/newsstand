@@ -66,7 +66,7 @@ public class SubscribePageCommand implements ServletCommand {
                 Magazine magazine = magazineService.findMagazineById(magazineId);
                 User user = userService.findUserByEmail(request.getSession().getAttribute("email").toString());
 
-                if(magazine != null && subscriptionType != null) {
+                if(magazine != null && magazine.getEnabled() && subscriptionType != null) {
                     Subscription subscription = new Subscription();
 
                     subscription.setMagazine(magazine);
