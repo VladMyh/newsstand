@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * This class is used to handle user logout, by invalidating session.
  */
-public class LogoutController implements ServletCommand{
-    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+public class LogoutCommand implements ServletCommand{
+    private static final Logger LOGGER = Logger.getLogger(GetLoginPageCommand.class);
 
     private static CategoryService categoryService;
     private static MagazineService magazineService;
 
     private static String mainPage;
 
-    public LogoutController(){
-        LOGGER.info("Initializing LogoutController");
+    public LogoutCommand(){
+        LOGGER.info("Initializing LogoutCommand");
 
         categoryService = CategoryServiceImpl.getInstance();
         magazineService = MagazineServiceImpl.getInstance();

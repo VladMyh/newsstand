@@ -1,39 +1,44 @@
-package com.newsstand.command.admin.category;
+package com.newsstand.command.admin.magazine;
 
 import com.newsstand.command.ServletCommand;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
+import com.newsstand.service.publisher.PublisherService;
+import com.newsstand.service.publisher.PublisherServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is used to handle GET requests to delete category.
+ * This class is used to handle GET requests to the admin page used to add new magazine.
  */
-public class DeleteCategoryAdminCommand implements ServletCommand{
-    private static final Logger LOGGER = Logger.getLogger(CategoriesAdminPageCommand.class);
+public class GetAddMagazineAdminPageCommand implements ServletCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(GetAddMagazineAdminPageCommand.class);
+
+    private static PublisherService publisherService;
     private static CategoryService categoryService;
 
-    private static String categoriesPage;
+    private static String addMagazinePage;
     private static String loginPage;
 
-    public DeleteCategoryAdminCommand(){
-        LOGGER.info("Initializing DeleteCategoryAdminCommand");
+    public GetAddMagazineAdminPageCommand(){
+        LOGGER.info("Initializing GetAddMagazineAdminPageCommand");
 
+        publisherService = PublisherServiceImpl.getInstance();
         categoryService = CategoryServiceImpl.getInstance();
 
         MappingProperties properties = MappingProperties.getInstance();
-        categoriesPage = properties.getProperty("adminCategoriesPage");
+        addMagazinePage = properties.getProperty("adminAddMagazinePage");
         loginPage = properties.getProperty("loginPage");
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Executing command");
-        String resultPage = categoriesPage;
+        String resultPage = addMagazinePage;
 
         if(request.getSession().getAttribute("authenticated") != null &&
             request.getSession().getAttribute("authenticated").equals(true) &&
@@ -41,16 +46,9 @@ public class DeleteCategoryAdminCommand implements ServletCommand{
             LOGGER.info("User not authorized");
             resultPage = loginPage;
         }
-        else if(request.getParameter("id") != null) {
-            try {
-                Long id = Long.parseLong(request.getParameter("id"));
-
-                request.setAttribute("deletionSuccess", categoryService.deleteCategoryById(id));
-                request.setAttribute("categories", categoryService.findAll());
-            }
-            catch (NumberFormatException ex) {
-                LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");
-            }
+        else {
+            request.setAttribute("publishers", publisherService.findAll());
+            request.setAttribute("categories", categoryService.findAll());
         }
 
         return resultPage;

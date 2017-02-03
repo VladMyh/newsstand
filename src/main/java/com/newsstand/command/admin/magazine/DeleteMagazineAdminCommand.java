@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * This class is used to handle POST requests to delete magazines.
+ * This class is used to handle GET requests to delete magazines.
  */
 public class DeleteMagazineAdminCommand implements ServletCommand {
 	private static final Logger LOGGER = Logger.getLogger(DeleteMagazineAdminCommand.class);

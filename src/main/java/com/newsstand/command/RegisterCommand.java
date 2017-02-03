@@ -15,66 +15,59 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is used to handle GET requests to get user registration page,
- * and POST requests to register user.
+ * This class is used to handle POST requests to register user.
  */
 public class RegisterCommand implements ServletCommand {
 
-    private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);
+	private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);
 
-    private static UserService userService;
-    private static CategoryService categoryService;
-    private static MagazineService magazineService;
+	private static UserService userService;
+	private static CategoryService categoryService;
+	private static MagazineService magazineService;
 
-    private static String registerPage;
-    private static String mainPage;
+	private static String registerPage;
+	private static String mainPage;
 
-    public RegisterCommand(){
-        LOGGER.info("Initializing RegisterCommand");
+	public RegisterCommand(){
+		LOGGER.info("Initializing RegisterCommand");
 
-        userService = UserServiceImpl.getInstance();
-        categoryService = CategoryServiceImpl.getInstance();
-        magazineService = MagazineServiceImpl.getInstance();
+		userService = UserServiceImpl.getInstance();
+		categoryService = CategoryServiceImpl.getInstance();
+		magazineService = MagazineServiceImpl.getInstance();
 
-        MappingProperties properties = MappingProperties.getInstance();
-        registerPage = properties.getProperty("registerPage");
-        mainPage = properties.getProperty("mainPage");
-    }
+		MappingProperties properties = MappingProperties.getInstance();
+		registerPage = properties.getProperty("registerPage");
+		mainPage = properties.getProperty("mainPage");
+	}
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("Executing command");
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		LOGGER.info("Executing command");
 
-        String resultPage = registerPage;
+		String resultPage = registerPage;
 
-        if(request.getSession().getAttribute("authenticated") != null &&
-            request.getSession().getAttribute("authenticated").equals(true)) {
-            resultPage = mainPage;
-        }
-        else if(request.getParameter("fname") == null && request.getParameter("lname") == null &&
-                request.getParameter("email") == null && request.getParameter("password") == null &&
-                request.getParameter("address") == null) {
-            LOGGER.info("Returning registration page");
-            return resultPage;
-        }
-        else if(userService.checkEmailAvailability(request.getParameter("email"))) {
-            LOGGER.info("New user registration");
+		if(request.getParameter("fname") != null && request.getParameter("lname") != null &&
+			request.getParameter("email") != null && request.getParameter("password") != null &&
+			request.getParameter("address") != null &&
+			userService.checkEmailAvailability(request.getParameter("email"))){
 
-            User user = new User();
-            user.setFirstName(request.getParameter("fname"));
-            user.setLastName(request.getParameter("lname"));
-            user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
-            user.setAddress(request.getParameter("address"));
-            user.setUserType(UserType.USER);
+			LOGGER.info("New user registration");
 
-            if(userService.registerUser(user)) {
-                request.setAttribute("categories", categoryService.findAll());
-                request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
+			User user = new User();
+			user.setFirstName(request.getParameter("fname"));
+			user.setLastName(request.getParameter("lname"));
+			user.setEmail(request.getParameter("email"));
+			user.setPassword(request.getParameter("password"));
+			user.setAddress(request.getParameter("address"));
+			user.setUserType(UserType.USER);
 
-                resultPage = mainPage;
-            }
-        }
+			if(userService.registerUser(user)) {
+				request.setAttribute("categories", categoryService.findAll());
+				request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
-        return resultPage;
-    }
+				resultPage = mainPage;
+			}
+		}
+
+		return resultPage;
+	}
 }

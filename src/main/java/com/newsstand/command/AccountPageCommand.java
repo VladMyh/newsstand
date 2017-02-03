@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class is used to handle GET requests to the user account page.
+ */
 public class AccountPageCommand implements ServletCommand {
 
-	private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+	private static final Logger LOGGER = Logger.getLogger(GetLoginPageCommand.class);
 
 	private static UserService userService;
 	private static SubscriptionService subscriptionService;

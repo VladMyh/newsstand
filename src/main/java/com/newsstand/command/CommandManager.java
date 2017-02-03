@@ -5,7 +5,8 @@ import com.newsstand.command.admin.category.*;
 import com.newsstand.command.admin.magazine.*;
 import com.newsstand.command.admin.publisher.*;
 import com.newsstand.command.admin.subscription.SubscriptionsAdminPageCommand;
-import com.newsstand.command.admin.user.AddAdminPageCommand;
+import com.newsstand.command.admin.user.AddAdminAdminCommand;
+import com.newsstand.command.admin.user.GetAddAdminPageCommand;
 import com.newsstand.command.admin.user.AdminsAdminPageCommand;
 import com.newsstand.command.admin.user.UsersAdminPageCommand;
 import com.newsstand.properties.MappingProperties;
@@ -15,83 +16,137 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
- * This is a helper class that is used to work with servlet commands.
+ * This is a helper class that is used to work with servlet getCommands.
  *
- * It handles mapping of the url paths to the commands.
+ * It handles mapping of the url paths to the getCommands.
  */
 public class CommandManager {
 
     private static final Logger LOGGER = Logger.getLogger(CommandManager.class);
 
-    private HashMap<String, ServletCommand> commands;
+    private HashMap<String, ServletCommand> getCommands;
+    private HashMap<String, ServletCommand> postCommands;
     private static String errorPage;
 
     public CommandManager(){
         LOGGER.info("Initializing CommandManager");
 
-        commands = new HashMap<>();
+        getCommands = new HashMap<>();
+        postCommands = new HashMap<>();
 
-        commands.put("/", new MainPageCommand());
-        commands.put("/login", new LoginCommand());
-        commands.put("/logout", new LogoutController());
-        commands.put("/register", new RegisterCommand());
-        commands.put("/magazine", new MagazinePageCommand());
-        commands.put("/category", new CategoryPageCommand());
-        commands.put("/admin/dashboard", new AdminPageCommand());
-        commands.put("/subscribe", new SubscribePageCommand());
-        commands.put("/account", new AccountPageCommand());
-        commands.put("/image", new ImageCommand());
+        //===================GET commands===================
+
+        getCommands.put("/", new MainPageCommand());
+        getCommands.put("/login", new GetLoginPageCommand());
+        getCommands.put("/logout", new LogoutCommand());
+        getCommands.put("/register", new GetRegisterPageCommand());
+        getCommands.put("/magazine", new MagazinePageCommand());
+        getCommands.put("/category", new CategoryPageCommand());
+        getCommands.put("/admin/dashboard", new AdminPageCommand());
+        getCommands.put("/subscribe", new GetSubscribePageCommand());
+        getCommands.put("/account", new AccountPageCommand());
+        getCommands.put("/image", new ImageCommand());
 
         //admin categories
-        commands.put("/admin/categories", new CategoriesAdminPageCommand());
-        commands.put("/admin/categories/add", new AddCategoryAdminPageCommand());
-        commands.put("/admin/categories/delete", new DeleteCategoryAdminCommand());
-        commands.put("/admin/categories/update", new UpdateCategoryAdminCommand());
-        commands.put("/admin/categories/edit", new EditCategoryAdminPageCommand());
+        getCommands.put("/admin/categories", new CategoriesAdminPageCommand());
+        getCommands.put("/admin/categories/add", new AddCategoryAdminPageCommand());
+        getCommands.put("/admin/categories/delete", new DeleteCategoryAdminCommand());
+        getCommands.put("/admin/categories/edit", new EditCategoryAdminPageCommand());
 
         //admin publishers
-        commands.put("/admin/publishers", new PublishersAdminPageCommand());
-        commands.put("/admin/publishers/edit", new EditPublisherAdminPageCommand());
-        commands.put("/admin/publishers/add", new AddPublisherAdminPageCommand());
-        commands.put("/admin/publishers/delete", new DeletePublisherAdminCommand());
-        commands.put("/admin/publishers/update", new UpdatePublisherAdminCommand());
+        getCommands.put("/admin/publishers", new PublishersAdminPageCommand());
+        getCommands.put("/admin/publishers/edit", new EditPublisherAdminPageCommand());
+        getCommands.put("/admin/publishers/add", new AddPublisherAdminPageCommand());
+        getCommands.put("/admin/publishers/delete", new DeletePublisherAdminCommand());
 
         //admin users
-        commands.put("/admin/users", new UsersAdminPageCommand());
-        commands.put("/admin/admins", new AdminsAdminPageCommand());
-        commands.put("/admin/admins/add", new AddAdminPageCommand());
+        getCommands.put("/admin/users", new UsersAdminPageCommand());
+        getCommands.put("/admin/admins", new AdminsAdminPageCommand());
+        getCommands.put("/admin/admins/add", new GetAddAdminPageCommand());
 
         //admin magazines
-        commands.put("/admin/magazines", new MagazinesAdminPageCommand());
-        commands.put("/admin/magazines/add", new AddMagazineAdminPageCommand());
-        commands.put("/admin/magazines/edit", new EditMagazineAdminPageCommand());
-        commands.put("/admin/magazines/update", new UpdateMagazineAdminCommand());
-        commands.put("/admin/magazines/delete", new DeleteMagazineAdminCommand());
+        getCommands.put("/admin/magazines", new MagazinesAdminPageCommand());
+        getCommands.put("/admin/magazines/add", new GetAddMagazineAdminPageCommand());
+        getCommands.put("/admin/magazines/edit", new EditMagazineAdminPageCommand());
+        getCommands.put("/admin/magazines/delete", new DeleteMagazineAdminCommand());
 
         //admin subscriptions
-        commands.put("/admin/subscriptions", new SubscriptionsAdminPageCommand());
+        getCommands.put("/admin/subscriptions", new SubscriptionsAdminPageCommand());
+
+
+        //===================POST commands===================
+
+        postCommands.put("/login", new LoginCommand());
+        postCommands.put("/register", new RegisterCommand());
+        postCommands.put("/subscribe", new SubscribeCommand());
+
+        //admin categories
+        postCommands.put("/admin/categories/add", new AddCategoryAdminCommand());
+        postCommands.put("/admin/categories/update", new UpdateCategoryAdminCommand());
+
+        //admin publishers
+        postCommands.put("/admin/publishers/add", new AddPublisgerAdminCommand());
+        postCommands.put("/admin/publishers/update", new UpdatePublisherAdminCommand());
+
+        //admin users
+        postCommands.put("/admin/admins/add", new AddAdminAdminCommand());
+
+        //admin magazines
+        postCommands.put("/admin/magazines/add", new AddMagazineAdminCommand());
+        postCommands.put("/admin/magazines/update", new UpdateMagazineAdminCommand());
+
+
 
         MappingProperties properties = MappingProperties.getInstance();
         errorPage = properties.getProperty("errorPage");
     }
 
     /**
-     * This method is used to get a command instance based on a request.
+     * This method is used to get a command instance mapped to http get method, based on a request.
      *
      * @param request http request from servlet.
      * @return        A servlet command instance.
      */
-    public ServletCommand getCommand(HttpServletRequest request) {
-        String command = request.getRequestURI().substring(request.getContextPath().length());
-        if(command.endsWith("/")) {
-            command = command.substring(0, command.length() - 1);
-        }
+    public ServletCommand getGetCommand(HttpServletRequest request) {
+        String command = getMappting(request);
         LOGGER.info("Getting command " + command);
 
-        if(commands.get(command) == null) {
-            return commands.get("/");
+        if(getCommands.get(command) == null) {
+            return getCommands.get("/");
         }
 
-        return commands.get(command);
+        return getCommands.get(command);
+    }
+
+    /**
+     * This method is used to get a command instance mapped to http post method, based on a request.
+     *
+     * @param request http request from servlet.
+     * @return        A servlet command instance.
+     */
+    public ServletCommand getPostCommand(HttpServletRequest request) {
+        String command = getMappting(request);
+        LOGGER.info("Getting command " + command);
+
+        if(postCommands.get(command) == null) {
+            return getCommands.get("/");
+        }
+
+        return postCommands.get(command);
+    }
+
+    /**
+     * This is a helper method to get command mapping from uri.
+     *
+     * @param request http request from servlet.
+     * @return        Command mapping.
+     */
+    public String getMappting(HttpServletRequest request) {
+        String mapping = request.getRequestURI().substring(request.getContextPath().length());
+        if(mapping.endsWith("/")) {
+            mapping = mapping.substring(0, mapping.length() - 1);
+        }
+
+        return mapping;
     }
 }

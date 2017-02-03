@@ -33,8 +33,6 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 	private static final Logger LOGGER = Logger.getLogger(UpdateMagazineAdminCommand.class);
 
 	private static MagazineService magazineService;
-	private static PublisherService publisherService;
-	private static CategoryService categoryService;
 	private static ImageService imageService;
 
 	private static String magazinesPage;
@@ -44,8 +42,6 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 		LOGGER.info("Initializing UpdateMagazineAdminCommand");
 
 		magazineService = MagazineServiceImpl.getInstance();
-		publisherService = PublisherServiceImpl.getInstance();
-		categoryService = CategoryServiceImpl.getInstance();
 		imageService = ImageServiceImpl.getInstance();
 
 		MappingProperties properties = MappingProperties.getInstance();

@@ -17,72 +17,63 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
- * This class is used to handle GET requests to the login page,
- * and POST requests to authenticate user.
+ * This class is used to handle POST requests to authenticate users.
  */
-public class LoginCommand implements ServletCommand{
-    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+public class LoginCommand implements ServletCommand {
+	private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 
-    private static UserService userService;
-    private static CategoryService categoryService;
-    private static MagazineService magazineService;
+	private static UserService userService;
+	private static CategoryService categoryService;
+	private static MagazineService magazineService;
 
-    private static String loginPage;
-    private static String mainPage;
-    private static String adminPage;
+	private static String loginPage;
+	private static String mainPage;
+	private static String adminPage;
 
-    public LoginCommand(){
-        LOGGER.info("Initializing LoginCommand");
+	public LoginCommand(){
+		LOGGER.info("Initializing LoginCommand");
 
-        userService = UserServiceImpl.getInstance();
-        categoryService = CategoryServiceImpl.getInstance();
-        magazineService = MagazineServiceImpl.getInstance();
+		userService = UserServiceImpl.getInstance();
+		categoryService = CategoryServiceImpl.getInstance();
+		magazineService = MagazineServiceImpl.getInstance();
 
-        MappingProperties properties = MappingProperties.getInstance();
-        loginPage = properties.getProperty("loginPage");
-        mainPage = properties.getProperty("mainPage");
-        adminPage = properties.getProperty("adminDashboardPage");
-    }
+		MappingProperties properties = MappingProperties.getInstance();
+		loginPage = properties.getProperty("loginPage");
+		mainPage = properties.getProperty("mainPage");
+		adminPage = properties.getProperty("adminDashboardPage");
+	}
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("Executing command");
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		LOGGER.info("Executing command");
 
-        String resultPage = loginPage;
+		String resultPage = loginPage;
 
-        if(request.getSession().getAttribute("authenticated") != null &&
-            request.getSession().getAttribute("authenticated").equals(true)) {
-            resultPage = mainPage;
-        }
-        else if(request.getParameter("email") == null && request.getParameter("password") == null) {
-            LOGGER.info("Returning login page");
-            return resultPage;
-        }
-        else {
-            User user = userService.getUserByCredentials(request.getParameter("email"),
-                                                         request.getParameter("password"));
+		if (request.getParameter("email") != null && request.getParameter("password") != null) {
+			User user = userService.getUserByCredentials(request.getParameter("email"),
+					                                     request.getParameter("password"));
 
-            if (user != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("email", user.getEmail());
-                session.setAttribute("username", user.getFirstName() + " " + user.getLastName());
-                session.setAttribute("authenticated", true);
-                session.setAttribute("role", user.getUserType().name());
+			if (user != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("email", user.getEmail());
+				session.setAttribute("username", user.getFirstName() + " " + user.getLastName());
+				session.setAttribute("authenticated", true);
+				session.setAttribute("role", user.getUserType().name());
 
-                if(Objects.equals(user.getUserType(), UserType.ADMIN)) {
-                    resultPage = adminPage;
-                }
-                else {
-                    request.setAttribute("categories", categoryService.findAll());
-                    request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
+				if(Objects.equals(user.getUserType(), UserType.ADMIN)) {
+					resultPage = adminPage;
+				}
+				else {
+					request.setAttribute("categories", categoryService.findAll());
+					request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
-                    resultPage = mainPage;
-                }
-            }
-            else {
-                request.setAttribute("loginSuccess", false);
-            }
-        }
+					resultPage = mainPage;
+				}
+			}
+			else {
+				request.setAttribute("loginSuccess", false);
+			}
+		}
 
-        return resultPage;
-    }
+		return resultPage;
+	}
 }

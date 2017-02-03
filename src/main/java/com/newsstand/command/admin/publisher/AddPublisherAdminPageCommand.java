@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is used to handle GET requests to the page to add new publisher,
- * and POST requests to create new publisher
+ * This class is used to handle GET requests to the page to add new publisher.
  */
 public class AddPublisherAdminPageCommand implements ServletCommand {
     private static final Logger LOGGER = Logger.getLogger(AddPublisherAdminPageCommand.class);
@@ -42,14 +41,6 @@ public class AddPublisherAdminPageCommand implements ServletCommand {
             !request.getSession().getAttribute("role").equals(UserType.ADMIN.name())) {
             LOGGER.info("User not authorized");
             resultPage = loginPage;
-        }
-        else if(request.getParameter("title") != null) {
-            Publisher publisher = new Publisher();
-            publisher.setTitle(request.getParameter("title"));
-
-            publisher = publisherService.createPublisher(publisher);
-
-            request.setAttribute("success", publisher != null);
         }
 
         return resultPage;

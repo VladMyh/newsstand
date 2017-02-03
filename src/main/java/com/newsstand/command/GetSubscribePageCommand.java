@@ -20,9 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.Calendar;
 
-public class SubscribePageCommand implements ServletCommand {
+/**
+ * This class is used to handle GET requests to the subscription page.
+ */
+public class GetSubscribePageCommand implements ServletCommand {
 
-    private static final Logger LOGGER = Logger.getLogger(SubscribePageCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(GetSubscribePageCommand.class);
 
     private static MagazineService magazineService;
     private static SubscriptionTypeService subscriptionTypeService;
@@ -34,8 +37,8 @@ public class SubscribePageCommand implements ServletCommand {
     private static String loginPage;
     private static String subscriptionSuccessPage;
 
-    public SubscribePageCommand(){
-        LOGGER.info("Initializing SubscribePageCommand");
+    public GetSubscribePageCommand(){
+        LOGGER.info("Initializing GetSubscribePageCommand");
 
         magazineService = MagazineServiceImpl.getInstance();
         subscriptionTypeService = SubscriptionTypeServiceImpl.getInstance();
@@ -56,50 +59,6 @@ public class SubscribePageCommand implements ServletCommand {
         if(request.getSession().getAttribute("authenticated") == null &&
            request.getSession().getAttribute("authenticated").equals(true)) {
             resultPage = loginPage;
-        }
-        else if(request.getParameter("id") != null && request.getParameter("type") != null) {
-            try {
-                Long subTypeId = Long.parseLong(request.getParameter("type"));
-                Long magazineId = Long.parseLong(request.getParameter("id"));
-
-                SubscriptionType subscriptionType = subscriptionTypeService.findSubscriptionTypeById(subTypeId);
-                Magazine magazine = magazineService.findMagazineById(magazineId);
-                User user = userService.findUserByEmail(request.getSession().getAttribute("email").toString());
-
-                if(magazine != null && magazine.getEnabled() && subscriptionType != null) {
-                    Subscription subscription = new Subscription();
-
-                    subscription.setMagazine(magazine);
-                    subscription.setType(subscriptionType);
-                    subscription.setPrice(magazine.getPrice() * subscriptionType.getPriceMultiplier());
-                    subscription.setUser(user);
-
-                    Date startDate = new Date(Calendar.getInstance().getTimeInMillis());
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(startDate);
-                    calendar.add(Calendar.MONTH, subscriptionType.getDurationInMonth());
-                    Date endDate = new Date(calendar.getTimeInMillis());
-
-                    subscription.setStartDate(startDate);
-                    subscription.setEndDate(endDate);
-
-                    subscriptionService.createSubscription(subscription);
-
-                    resultPage = subscriptionSuccessPage;
-                }
-                else {
-                    LOGGER.info("Couldn't find magazine or subscriptionType by ids " + magazine
-                                                                                     + ", "
-                                                                                     + subTypeId);
-                }
-
-            }
-            catch (NumberFormatException ex) {
-                LOGGER.info("Couldn't parse " + request.getParameter("id")
-                                              + ", "
-                                              + request.getParameter("type")
-                                              + " to long");
-            }
         }
         else if(request.getParameter("id") != null) {
             try {

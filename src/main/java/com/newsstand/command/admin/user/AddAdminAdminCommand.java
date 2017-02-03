@@ -12,37 +12,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is used to handle GET and POST requests to create admin.
+ * This class is used to handle POST requests to create admin.
  */
-public class AddAdminPageCommand implements ServletCommand {
-	private static final Logger LOGGER = Logger.getLogger(AddAdminPageCommand.class);
+public class AddAdminAdminCommand implements ServletCommand {
+
+	private static final Logger LOGGER = Logger.getLogger(AddAdminAdminCommand.class);
 
 	private static UserService userService;
 
 	private static String addAdminPage;
-	private static String loginPage;
 
-	public AddAdminPageCommand(){
-		LOGGER.info("Initializing AddAdminPageCommand");
+	public AddAdminAdminCommand(){
+		LOGGER.info("Initializing AddAdminAdminCommand");
 
 		userService = UserServiceImpl.getInstance();
 
 		MappingProperties properties = MappingProperties.getInstance();
 		addAdminPage = properties.getProperty("adminAddAdminPage");
-		loginPage = properties.getProperty("loginPage");
 	}
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.info("Executing command");
 		String resultPage = addAdminPage;
 
-		if(request.getSession().getAttribute("authenticated") != null &&
-				request.getSession().getAttribute("authenticated").equals(true) &&
-				!request.getSession().getAttribute("role").equals(UserType.ADMIN.name())) {
-			LOGGER.info("User not authorized");
-			resultPage = loginPage;
-		}
-		else if(request.getParameter("fname") != null && request.getParameter("lname") != null &&
+		if(request.getParameter("fname") != null && request.getParameter("lname") != null &&
 				request.getParameter("email") != null && request.getParameter("password") != null &&
 				userService.checkEmailAvailability(request.getParameter("email"))) {
 			User user = new User();
