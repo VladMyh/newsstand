@@ -21,7 +21,7 @@
     <fmt:setBundle basename="localization" var="bundle"/>
     <%----%>
 
-    <title>Newsstand - <fmt:message key="admin" bundle="${bundle}"/> - <fmt:message key="addPublisher" bundle="${bundle}"/></title>
+    <title>Newsstand - <fmt:message key="admin" bundle="${bundle}"/> - <fmt:message key="addAdmin" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,21 +39,42 @@
     <div class="col-md-8">
 
         <c:if test="${success != null && success == true}">
-            <div class="alert alert-success" role="alert"><fmt:message key="publisherCreated" bundle="${bundle}"/></div>
+            <div class="alert alert-success" role="alert"><fmt:message key="adminCreated" bundle="${bundle}"/></div>
         </c:if>
         <c:if test="${success != null && success == false}">
-            <div class="alert alert-danger" role="alert"><fmt:message key="publisherExists" bundle="${bundle}"/></div>
+            <div class="alert alert-danger" role="alert"><fmt:message key="adminExists" bundle="${bundle}"/></div>
         </c:if>
 
-        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/publishers/add">
+        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/admin/admins/add">
             <fieldset>
 
-                <legend><fmt:message key="addPublisher" bundle="${bundle}"/></legend>
+                <legend><fmt:message key="addAdmin" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title"><fmt:message key="title" bundle="${bundle}"/></label>
+                    <label class="col-md-4 control-label" for="fname"><fmt:message key="firstName" bundle="${bundle}"/></label>
                     <div class="col-md-4">
-                        <input id="title" name="title" class="form-control input-md" type="text" required>
+                        <input id="fname" name="fname" class="form-control input-md" type="text" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="lname"><fmt:message key="lastName" bundle="${bundle}"/></label>
+                    <div class="col-md-4">
+                        <input id="lname" name="lname" class="form-control input-md" type="text" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="email"><fmt:message key="email" bundle="${bundle}"/></label>
+                    <div class="col-md-4">
+                        <input id="email" name="email" class="form-control input-md" type="email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="password"><fmt:message key="password" bundle="${bundle}"/></label>
+                    <div class="col-md-4">
+                        <input id="password" name="password" class="form-control input-md" type="password" required>
                     </div>
                 </div>
 
@@ -68,7 +89,7 @@
             </fieldset>
         </form>
 
-        <a class='btn btn-default' href="${pageContext.request.contextPath}/admin/publishers">
+        <a class='btn btn-default' href="${pageContext.request.contextPath}/admin/admins?p=1&s=10">
             <span class="glyphicon glyphicon-chevron-left"></span> <fmt:message key="back" bundle="${bundle}"/></a>
 
     </div>

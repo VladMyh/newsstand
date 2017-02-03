@@ -5,6 +5,7 @@ import com.newsstand.command.admin.category.*;
 import com.newsstand.command.admin.magazine.*;
 import com.newsstand.command.admin.publisher.*;
 import com.newsstand.command.admin.subscription.SubscriptionsAdminPageCommand;
+import com.newsstand.command.admin.user.AddAdminPageCommand;
 import com.newsstand.command.admin.user.AdminsAdminPageCommand;
 import com.newsstand.command.admin.user.UsersAdminPageCommand;
 import com.newsstand.properties.MappingProperties;
@@ -58,6 +59,7 @@ public class CommandManager {
         //admin users
         commands.put("/admin/users", new UsersAdminPageCommand());
         commands.put("/admin/admins", new AdminsAdminPageCommand());
+        commands.put("/admin/admins/add", new AddAdminPageCommand());
 
         //admin magazines
         commands.put("/admin/magazines", new MagazinesAdminPageCommand());

@@ -49,13 +49,7 @@ public class AddPublisherAdminPageCommand implements ServletCommand {
 
             publisher = publisherService.createPublisher(publisher);
 
-            if(publisher == null) {
-                request.setAttribute("success", false);
-
-            }
-            else {
-                request.setAttribute("success", true);
-            }
+            request.setAttribute("success", publisher != null);
         }
 
         return resultPage;

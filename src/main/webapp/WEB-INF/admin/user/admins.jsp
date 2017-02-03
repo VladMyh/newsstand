@@ -95,6 +95,10 @@
                 </c:if>
             </ul>
         </div>
+
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/admins/add" role="button">
+            <fmt:message key="add" bundle="${bundle}"/>
+        </a>
     </div>
 
     <div class="col-md-1"></div>
