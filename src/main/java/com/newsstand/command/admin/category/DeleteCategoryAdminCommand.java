@@ -42,10 +42,15 @@ public class DeleteCategoryAdminCommand implements ServletCommand{
             resultPage = loginPage;
         }
         else if(request.getParameter("id") != null) {
-            Long id = Long.parseLong(request.getParameter("id"));
+            try {
+                Long id = Long.parseLong(request.getParameter("id"));
 
-            request.setAttribute("deletionSuccess", categoryService.deleteCategoryById(id));
-            request.setAttribute("categories", categoryService.findAll());
+                request.setAttribute("deletionSuccess", categoryService.deleteCategoryById(id));
+                request.setAttribute("categories", categoryService.findAll());
+            }
+            catch (NumberFormatException ex) {
+                LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");
+            }
         }
 
         return resultPage;

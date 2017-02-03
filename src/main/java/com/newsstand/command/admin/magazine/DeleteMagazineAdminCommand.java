@@ -6,6 +6,7 @@ import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,14 +45,18 @@ public class DeleteMagazineAdminCommand implements ServletCommand {
 			resultPage = loginPage;
 		}
 		else if(request.getParameter("id") != null) {
-			Long id = Long.parseLong(request.getParameter("id"));
+			try {
+				Long id = Long.parseLong(request.getParameter("id"));
 
-			request.setAttribute("deletionSuccess", magazineService.deleteMagazineById(id));
-			List<Magazine> page = magazineService.getPage(1, 10);
-			request.setAttribute("page", page);
-			request.setAttribute("pageNum", 1L);
-			request.setAttribute("pageSize", 10L);
-			request.setAttribute("currSize", page.size());
+				request.setAttribute("deletionSuccess", magazineService.deleteMagazineById(id));
+				List<Magazine> items = magazineService.getPage(1, 10);
+				Page<Magazine> page = new Page<>(items, 1, 10);
+
+				request.setAttribute("page", page);
+			}
+			catch (NumberFormatException ex) {
+				LOGGER.info("Couldn't parse " + request.getParameter("id") + " to long");
+			}
 		}
 
 		return resultPage;
