@@ -29,9 +29,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" method="get" action="${pageContext.request.contextPath}/search">
+                    <input type="hidden" name="p" value="1"/>
+                    <input type="hidden" name="s" value="10"/>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="<fmt:message key="search" bundle="${bundle}"/>">
+                        <input type="text" class="form-control" name="q" placeholder="<fmt:message key="search" bundle="${bundle}"/>">
                     </div>
                     <button type="submit" class="btn btn-default"><fmt:message key="search" bundle="${bundle}"/></button>
                 </form>

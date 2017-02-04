@@ -92,4 +92,11 @@ public class MagazineServiceImpl implements MagazineService {
 
         return magazineDao.deleteMagazineById(id);
     }
+
+    @Override
+    public List<Magazine> getPageByName(String query, Integer page, Integer size) {
+        LOGGER.info("Getting page by query " + query + " number " + page + ", of size " + size );
+
+        return magazineDao.findPageByNameQuery(query, (page - 1) * size, size);
+    }
 }

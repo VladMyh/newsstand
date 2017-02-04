@@ -46,6 +46,7 @@ public class CommandManager {
         getCommands.put("/subscribe", new GetSubscribePageCommand());
         getCommands.put("/account", new AccountPageCommand());
         getCommands.put("/image", new ImageCommand());
+        getCommands.put("/search", new GetSearchPageCommand());
 
         //admin categories
         getCommands.put("/admin/categories", new CategoriesAdminPageCommand());

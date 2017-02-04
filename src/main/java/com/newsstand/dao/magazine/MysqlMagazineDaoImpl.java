@@ -29,6 +29,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
     private static String findPageByCategoryQuery;
     private static String findPageByPublisherQuery;
     private static String findPage;
+    private static String findPageByName;
 
     private MysqlMagazineDaoImpl() {
         LOGGER.info("Initializing MysqlMagazineDaoImpl");
@@ -44,6 +45,7 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
         findPageByCategoryQuery = properties.getProperty("findPageByCategory");
         findPageByPublisherQuery = properties.getProperty("findPageByPublisher");
         findPage = properties.getProperty("findPage");
+        findPageByName = properties.getProperty("findPageByNameSerach");
 
         categoryDao = MysqlCategoryDaoImpl.getInstance();
         publisherDao = MysqlPublisherDaoImpl.getInstance();
@@ -250,6 +252,29 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             PreparedStatement statement = connection.prepareStatement(findPage);
             statement.setInt(1, offset);
             statement.setInt(2, size);
+
+            ResultSet result = statement.executeQuery();
+
+            res = getMagazines(result);
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Magazine> findPageByNameQuery(String query, Integer offset, Integer size) {
+        LOGGER.info("Getting page by query " + query + ", with offset " + offset + ", size " + size);
+
+        List<Magazine> res = new ArrayList<>();
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(findPageByName);
+            statement.setString(1, "%" + query + "%");
+            statement.setInt(2, offset);
+            statement.setInt(3, size);
 
             ResultSet result = statement.executeQuery();
 

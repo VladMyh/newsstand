@@ -73,4 +73,14 @@ public interface MagazineDao {
      * @return       List of magazines.
      */
     List<Magazine> findPage(Integer offset, Integer size);
+
+    /**
+     * This methods finds page from all magazines by name.
+     *
+     * @param query  Search query.
+     * @param offset Element to start from.
+     * @param size   How much elements to take.
+     * @return       List of magazines.
+     */
+    List<Magazine> findPageByNameQuery(String query, Integer offset, Integer size);
 }

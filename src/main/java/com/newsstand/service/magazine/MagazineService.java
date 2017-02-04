@@ -73,4 +73,14 @@ public interface MagazineService {
      * @return   True if magazine deleted successfully, otherwise false.
      */
     boolean deleteMagazineById(Long id);
+
+    /**
+     * This methods finds page from all magazines by name.
+     *
+     * @param query Search query.
+     * @param page  Number of the page, starts from 1.
+     * @param size  Size of the page.
+     * @return      List of magazines.
+     */
+    List<Magazine> getPageByName(String query, Integer page, Integer size);
 }

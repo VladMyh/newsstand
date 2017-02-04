@@ -22,7 +22,7 @@
     <fmt:setBundle basename="localization" var="bundle"/>
     <%----%>
 
-    <title>Newsstand - ${category.name}</title>
+    <title>Newsstand - <fmt:message key="search" bundle="${bundle}"/></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -50,8 +50,10 @@
 
             <div class="row">
 
+                <h2><fmt:message key="search" bundle="${bundle}"/> "${query}"</h2>
+
                 <c:if test="${page.currentSize == 0}">
-                    <h1><fmt:message key="nothing" bundle="${bundle}"/></h1>
+                    <h3><fmt:message key="nothing" bundle="${bundle}"/></h3>
                 </c:if>
 
                 <c:forEach items="${page.items}" var="magazine">
@@ -78,19 +80,19 @@
             <div class="row">
                 <ul class="pager">
                     <c:if test="${!page.first}">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${page.number-1}&s=${page.size}">
-                            <span aria-hidden="true">&larr;</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/search?q=${query}&p=${page.number-1}&s=${page.size}">
+                                <span aria-hidden="true">&larr;</span>
+                            </a>
+                        </li>
                     </c:if>
 
                     <c:if test="${!page.last}">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/category?catId=${category.id}&p=${page.number+1}&s=${page.size}">
-                            <span aria-hidden="true">&rarr;</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/search?q=${query}&p=${page.number+1}&s=${page.size}">
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </li>
                     </c:if>
                 </ul>
             </div>

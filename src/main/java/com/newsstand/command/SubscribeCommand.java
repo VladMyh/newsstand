@@ -80,7 +80,8 @@ public class SubscribeCommand implements ServletCommand {
 					resultPage = subscriptionSuccessPage;
 				}
 				else {
-					LOGGER.info("Couldn't find magazine or subscriptionType by ids " + magazine
+					LOGGER.info("Couldn't find magazine or subscriptionType by ids "
+							+ magazine
 							+ ", "
 							+ subTypeId);
 				}
