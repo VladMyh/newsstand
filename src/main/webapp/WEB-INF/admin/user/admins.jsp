@@ -67,8 +67,8 @@
                         <td>${user.lastName}</td>
                         <td>${user.email}</td>
                         <td>
-                            <a class='btn btn-info btn-xs' href="#">
-                                <span class="glyphicon glyphicon-edit"></span> <fmt:message key="edit" bundle="${bundle}"/></a>
+                            <a class='btn btn-info btn-xs' href="${pageContext.request.contextPath}/admin/user?id=${user.id}">
+                                <span class="glyphicon glyphicon-edit"></span> <fmt:message key="view" bundle="${bundle}"/></a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -49,4 +49,12 @@ public interface UserService {
      * @return      User found by email, otherwise null.
      */
     User findUserByEmail(String email);
+
+    /**
+     * This method finds user by id.
+     *
+     * @param id Id of user to find.
+     * @return   User found by id, otherwise null;
+     */
+    User findUserById(Long id);
 }

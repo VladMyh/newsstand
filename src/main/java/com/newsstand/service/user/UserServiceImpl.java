@@ -65,4 +65,11 @@ public class UserServiceImpl implements UserService {
 
         return userDao.findUserByEmail(email);
     }
+
+    @Override
+    public User findUserById(Long id) {
+        LOGGER.info("Finding user by id " + id);
+
+        return userDao.findUserById(id);
+    }
 }

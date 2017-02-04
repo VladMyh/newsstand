@@ -5,10 +5,7 @@ import com.newsstand.command.admin.category.*;
 import com.newsstand.command.admin.magazine.*;
 import com.newsstand.command.admin.publisher.*;
 import com.newsstand.command.admin.subscription.SubscriptionsAdminPageCommand;
-import com.newsstand.command.admin.user.AddAdminAdminCommand;
-import com.newsstand.command.admin.user.GetAddAdminPageCommand;
-import com.newsstand.command.admin.user.AdminsAdminPageCommand;
-import com.newsstand.command.admin.user.UsersAdminPageCommand;
+import com.newsstand.command.admin.user.*;
 import com.newsstand.properties.MappingProperties;
 import org.apache.log4j.Logger;
 
@@ -64,6 +61,7 @@ public class CommandManager {
         getCommands.put("/admin/users", new UsersAdminPageCommand());
         getCommands.put("/admin/admins", new AdminsAdminPageCommand());
         getCommands.put("/admin/admins/add", new GetAddAdminPageCommand());
+        getCommands.put("/admin/user", new GetUserInfoAdminCommand());
 
         //admin magazines
         getCommands.put("/admin/magazines", new MagazinesAdminPageCommand());
@@ -73,7 +71,6 @@ public class CommandManager {
 
         //admin subscriptions
         getCommands.put("/admin/subscriptions", new SubscriptionsAdminPageCommand());
-
 
         //===================POST commands===================
 
@@ -95,7 +92,6 @@ public class CommandManager {
         //admin magazines
         postCommands.put("/admin/magazines/add", new AddMagazineAdminCommand());
         postCommands.put("/admin/magazines/update", new UpdateMagazineAdminCommand());
-
 
 
         MappingProperties properties = MappingProperties.getInstance();
