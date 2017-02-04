@@ -47,7 +47,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false"><fmt:message key="admin" bundle="${bundle}"/> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/magazines?p=1&s=10">
                                     <fmt:message key="magazines" bundle="${bundle}"/>

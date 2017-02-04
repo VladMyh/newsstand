@@ -2,6 +2,7 @@ package com.newsstand.dao.user;
 
 import com.newsstand.connection.ConnectionFactory;
 import com.newsstand.model.user.User;
+import com.newsstand.model.user.UserBuilder;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
@@ -219,14 +220,14 @@ public class MysqlUserDaoImpl implements UserDao{
 
 		try {
 			if(resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setFirstName(resultSet.getString("firstName"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setPassword(resultSet.getString("password"));
-                user.setEmail(resultSet.getString("email"));
-                user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
-				user.setAddress(resultSet.getString("address"));
+				user = new UserBuilder().setId(resultSet.getLong("id"))
+						                .setFirstName(resultSet.getString("firstName"))
+						                .setLastName(resultSet.getString("lastName"))
+						                .setEmail(resultSet.getString("email"))
+						                .setPassword(resultSet.getString("password"))
+						                .setAddress(resultSet.getString("address"))
+						                .setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1])
+						                .build();
             }
 		} catch (SQLException e) {
 			LOGGER.info(e.getMessage());
@@ -240,14 +241,14 @@ public class MysqlUserDaoImpl implements UserDao{
 
 		try {
 			while (resultSet.next()) {
-				User user = new User();
-				user.setId(resultSet.getLong("id"));
-				user.setFirstName(resultSet.getString("firstName"));
-				user.setLastName(resultSet.getString("lastName"));
-				user.setPassword(resultSet.getString("password"));
-				user.setEmail(resultSet.getString("email"));
-				user.setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1]);
-				user.setAddress(resultSet.getString("address"));
+				User user = user = new UserBuilder().setId(resultSet.getLong("id"))
+						                            .setFirstName(resultSet.getString("firstName"))
+						                            .setLastName(resultSet.getString("lastName"))
+						                            .setEmail(resultSet.getString("email"))
+						                            .setPassword(resultSet.getString("password"))
+						                            .setAddress(resultSet.getString("address"))
+						                            .setUserType(UserType.values()[resultSet.getInt("userTypeId") - 1])
+						                            .build();
 
 				res.add(user);
 			}

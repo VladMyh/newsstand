@@ -1,6 +1,7 @@
 package com.newsstand.command;
 
 import com.newsstand.model.user.User;
+import com.newsstand.model.user.UserBuilder;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
@@ -52,13 +53,13 @@ public class RegisterCommand implements ServletCommand {
 
 			LOGGER.info("New user registration");
 
-			User user = new User();
-			user.setFirstName(request.getParameter("fname"));
-			user.setLastName(request.getParameter("lname"));
-			user.setEmail(request.getParameter("email"));
-			user.setPassword(request.getParameter("password"));
-			user.setAddress(request.getParameter("address"));
-			user.setUserType(UserType.USER);
+			User user = new UserBuilder().setFirstName(request.getParameter("fname"))
+					                     .setLastName(request.getParameter("lname"))
+					                     .setEmail(request.getParameter("email"))
+					                     .setPassword(request.getParameter("password"))
+					                     .setAddress(request.getParameter("address"))
+					                     .setUserType(UserType.USER)
+					                     .build();
 
 			if(userService.registerUser(user)) {
 				request.setAttribute("categories", categoryService.findAll());

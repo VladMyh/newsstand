@@ -28,7 +28,6 @@ public class LoginCommand implements ServletCommand {
 
 	private static String loginPage;
 	private static String mainPage;
-	private static String adminPage;
 
 	public LoginCommand(){
 		LOGGER.info("Initializing LoginCommand");
@@ -40,7 +39,6 @@ public class LoginCommand implements ServletCommand {
 		MappingProperties properties = MappingProperties.getInstance();
 		loginPage = properties.getProperty("loginPage");
 		mainPage = properties.getProperty("mainPage");
-		adminPage = properties.getProperty("adminDashboardPage");
 	}
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -59,15 +57,10 @@ public class LoginCommand implements ServletCommand {
 				session.setAttribute("authenticated", true);
 				session.setAttribute("role", user.getUserType().name());
 
-				if(Objects.equals(user.getUserType(), UserType.ADMIN)) {
-					resultPage = adminPage;
-				}
-				else {
-					request.setAttribute("categories", categoryService.findAll());
-					request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
+				request.setAttribute("categories", categoryService.findAll());
+				request.setAttribute("latestMagazines", magazineService.findLatestAdded(6));
 
-					resultPage = mainPage;
-				}
+				resultPage = mainPage;
 			}
 			else {
 				request.setAttribute("loginSuccess", false);

@@ -2,6 +2,7 @@ package com.newsstand.command.admin.user;
 
 import com.newsstand.command.ServletCommand;
 import com.newsstand.model.user.User;
+import com.newsstand.model.user.UserBuilder;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.user.UserService;
@@ -38,13 +39,14 @@ public class AddAdminAdminCommand implements ServletCommand {
 		if(request.getParameter("fname") != null && request.getParameter("lname") != null &&
 				request.getParameter("email") != null && request.getParameter("password") != null &&
 				userService.checkEmailAvailability(request.getParameter("email"))) {
-			User user = new User();
-			user.setFirstName(request.getParameter("fname"));
-			user.setLastName(request.getParameter("lname"));
-			user.setEmail(request.getParameter("email"));
-			user.setPassword(request.getParameter("password"));
-			user.setUserType(UserType.ADMIN);
-			user.setAddress("");
+
+			User user = new UserBuilder().setFirstName(request.getParameter("fname"))
+										 .setLastName(request.getParameter("lname"))
+					                     .setEmail(request.getParameter("email"))
+					                     .setPassword(request.getParameter("password"))
+					                     .setAddress("")
+					                     .setUserType(UserType.ADMIN)
+					                     .build();
 
 			request.setAttribute("success", userService.registerUser(user));
 		}
