@@ -4,6 +4,7 @@ import com.newsstand.connection.ConnectionFactory;
 import com.newsstand.dao.category.MysqlCategoryDaoImpl;
 import com.newsstand.dao.publisher.MysqlPublisherDaoImpl;
 import com.newsstand.model.magazine.Magazine;
+import com.newsstand.model.magazine.MagazineBuilder;
 import com.newsstand.properties.MysqlQueryProperties;
 import org.apache.log4j.Logger;
 
@@ -163,15 +164,15 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             ResultSet result = statement.executeQuery();
 
             if(result.next()) {
-                magazine = new Magazine();
-                magazine.setId(result.getLong("id"));
-                magazine.setTitle(result.getString("name"));
-                magazine.setPrice(result.getBigDecimal("price").floatValue());
-                magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
-                magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
-                magazine.setDescription(result.getString("description"));
-                magazine.setImageId(result.getLong("imageId"));
-                magazine.setEnabled(result.getBoolean("enabled"));
+                magazine = new MagazineBuilder().setId(result.getLong("id"))
+                                                .setTitle(result.getString("name"))
+                                                .setDescription(result.getString("description"))
+                                                .setPrice(result.getBigDecimal("price").floatValue())
+                                                .setCategory(categoryDao.findCategoryById(result.getLong("categoryId")))
+                                                .setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")))
+                                                .setImageId(result.getLong("imageId"))
+                                                .setEnabled(result.getBoolean("enabled"))
+                                                .build();
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -292,15 +293,15 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
 
         try {
             while (result.next()) {
-                Magazine magazine = new Magazine();
-                magazine.setId(result.getLong("id"));
-                magazine.setTitle(result.getString("name"));
-                magazine.setPrice(result.getBigDecimal("price").floatValue());
-                magazine.setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")));
-                magazine.setCategory(categoryDao.findCategoryById(result.getLong("categoryId")));
-                magazine.setDescription(result.getString("description"));
-                magazine.setImageId(result.getLong("imageId"));
-                magazine.setEnabled(result.getBoolean("enabled"));
+                Magazine magazine = new MagazineBuilder().setId(result.getLong("id"))
+                                                         .setTitle(result.getString("name"))
+                                                         .setDescription(result.getString("description"))
+                                                         .setPrice(result.getBigDecimal("price").floatValue())
+                                                         .setCategory(categoryDao.findCategoryById(result.getLong("categoryId")))
+                                                         .setPublisher(publisherDao.findPublisherById(result.getLong("publisherId")))
+                                                         .setImageId(result.getLong("imageId"))
+                                                         .setEnabled(result.getBoolean("enabled"))
+                                                         .build();
 
                 res.add(magazine);
             }

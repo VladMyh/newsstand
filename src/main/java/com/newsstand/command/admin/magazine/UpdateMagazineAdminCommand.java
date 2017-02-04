@@ -3,6 +3,7 @@ package com.newsstand.command.admin.magazine;
 import com.newsstand.command.ServletCommand;
 import com.newsstand.model.magazine.Category;
 import com.newsstand.model.magazine.Magazine;
+import com.newsstand.model.magazine.MagazineBuilder;
 import com.newsstand.model.magazine.Publisher;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
@@ -88,15 +89,15 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 					}
 				}
 
-				Magazine magazine = new Magazine();
-				magazine.setId(id);
-				magazine.setTitle(request.getParameter("title"));
-				magazine.setDescription(request.getParameter("description"));
-				magazine.setPrice(Float.parseFloat(request.getParameter("price")));
-				magazine.setCategory(category);
-				magazine.setPublisher(publisher);
-				magazine.setImageId(imageId == null ? oldMagazine.getImageId() : imageId);
-				magazine.setEnabled(request.getParameter("enabled") != null);
+				Magazine magazine = new MagazineBuilder().setId(id)
+						                                 .setTitle(request.getParameter("title"))
+						                                 .setDescription(request.getParameter("description"))
+						                                 .setPrice(Float.parseFloat(request.getParameter("price")))
+						                                 .setCategory(category)
+						                                 .setPublisher(publisher)
+						                                 .setImageId(imageId == null ? oldMagazine.getImageId() : imageId)
+						                                 .setEnabled(request.getParameter("enabled") != null)
+						                                 .build();
 
 				magazineService.updateMagazine(magazine);
 
