@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav">
                 <form class="navbar-form navbar-left" role="search" method="get" action="${pageContext.request.contextPath}/search">
                     <input type="hidden" name="p" value="1"/>
-                    <input type="hidden" name="s" value="10"/>
+                    <input type="hidden" name="s" value="9"/>
                     <div class="form-group">
                         <input type="text" class="form-control" name="q" placeholder="<fmt:message key="search" bundle="${bundle}"/>">
                     </div>

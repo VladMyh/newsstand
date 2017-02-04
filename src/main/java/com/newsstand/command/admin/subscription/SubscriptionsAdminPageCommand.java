@@ -38,8 +38,7 @@ public class SubscriptionsAdminPageCommand implements ServletCommand {
 			Integer pageNum = Integer.parseInt(request.getParameter("p"));
 			Integer size = Integer.parseInt(request.getParameter("s"));
 
-			List<Subscription> items = subscriptionService.getPage(pageNum, size);
-			Page<Subscription> page = new Page<>(items, pageNum, size);
+			Page<Subscription> page = subscriptionService.getPage(pageNum, size);
 
 			request.setAttribute("page", page);
 		}

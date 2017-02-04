@@ -2,6 +2,7 @@ package com.newsstand.service.user;
 
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
+import com.newsstand.util.Page;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public interface UserService {
      * @param userType User type of the users to find.
      * @return         A list of users.
      */
-    List<User> getPageByUserType(Integer page, Integer size, UserType userType);
+    Page<User> getPageByUserType(Integer page, Integer size, UserType userType);
 
     /**
      * This method finds user by email.

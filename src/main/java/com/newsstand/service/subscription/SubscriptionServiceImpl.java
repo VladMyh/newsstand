@@ -5,6 +5,7 @@ import com.newsstand.dao.subscription.SubscriptionDao;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -51,10 +52,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public List<Subscription> getPage(Integer page, Integer size) {
+	public Page<Subscription> getPage(Integer page, Integer size) {
 		LOGGER.info("Getting page number " + page + ", of size " + size );
 
-		return subscriptionDao.findPage((page - 1) * size, size);
+		List<Subscription> items = subscriptionDao.findPage((page - 1) * size, size);
+		return new Page<>(items, page, size);
 	}
 
 }

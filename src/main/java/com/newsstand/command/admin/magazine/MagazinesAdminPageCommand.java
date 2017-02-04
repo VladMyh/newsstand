@@ -38,8 +38,7 @@ public class MagazinesAdminPageCommand implements ServletCommand {
             Integer pageNum = Integer.parseInt(request.getParameter("p"));
             Integer size = Integer.parseInt(request.getParameter("s"));
 
-            List<Magazine> items = magazineService.getPage(pageNum, size);
-            Page<Magazine> page = new Page<>(items, pageNum, size);
+            Page<Magazine> page = magazineService.getPage(pageNum, size);
 
             request.setAttribute("page", page);
         }

@@ -47,8 +47,7 @@ public class GetSearchPageCommand implements ServletCommand {
 				Integer pageNum = Integer.parseInt(request.getParameter("p"));
 				Integer size = Integer.parseInt(request.getParameter("s"));
 
-				List<Magazine> items = magazineService.getPageByName(query, pageNum, size);
-				Page<Magazine> page = new Page<>(items, pageNum, size);
+				Page<Magazine> page = magazineService.getPageByName(query, pageNum, size);
 
 				request.setAttribute("categories", categoryService.findAll());
 				request.setAttribute("page", page);

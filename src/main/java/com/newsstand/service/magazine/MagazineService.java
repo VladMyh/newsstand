@@ -1,6 +1,7 @@
 package com.newsstand.service.magazine;
 
 import com.newsstand.model.magazine.Magazine;
+import com.newsstand.util.Page;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface MagazineService {
      * @param categoryId Id of the category to filter magazines.
      * @return           A list of magazines.
      */
-    List<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId);
+    Page<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId);
 
     /**
      * This method returns a page of magazines with publisher id.
@@ -39,7 +40,7 @@ public interface MagazineService {
      * @param publisherId Id of the publisher to filter magazines.
      * @return            A list of magazines.
      */
-    List<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId);
+    Page<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId);
 
     /**
      * This method returns a page of all magazines.
@@ -48,7 +49,7 @@ public interface MagazineService {
      * @param size Size of the page.
      * @return     A list of magazines.
      */
-    List<Magazine> getPage(Integer page, Integer size);
+    Page<Magazine> getPage(Integer page, Integer size);
 
     /**
      * This method creates new magazine.
@@ -82,5 +83,5 @@ public interface MagazineService {
      * @param size  Size of the page.
      * @return      List of magazines.
      */
-    List<Magazine> getPageByName(String query, Integer page, Integer size);
+    Page<Magazine> getPageByName(String query, Integer page, Integer size);
 }

@@ -51,8 +51,7 @@ public class DeleteMagazineAdminCommand implements ServletCommand {
 				Long id = Long.parseLong(request.getParameter("id"));
 
 				request.setAttribute("deletionSuccess", magazineService.deleteMagazineById(id));
-				List<Magazine> items = magazineService.getPage(1, 10);
-				Page<Magazine> page = new Page<>(items, 1, 10);
+				Page<Magazine> page = magazineService.getPage(1, 10);
 
 				request.setAttribute("page", page);
 			}

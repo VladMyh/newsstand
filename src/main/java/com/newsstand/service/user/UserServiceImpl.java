@@ -4,6 +4,7 @@ import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.dao.user.UserDao;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -51,10 +52,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getPageByUserType(Integer page, Integer size, UserType userType) {
+    public Page<User> getPageByUserType(Integer page, Integer size, UserType userType) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for user type " + userType.name());
 
-        return userDao.findPageByUserType(userType, (page - 1) * size, size);
+        List<User> items =  userDao.findPageByUserType(userType, (page - 1) * size, size);
+        return new Page<>(items, page, size);
     }
 
     @Override

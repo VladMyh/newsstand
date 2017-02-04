@@ -39,8 +39,7 @@ public class UsersAdminPageCommand implements ServletCommand {
             Integer pageNum = Integer.parseInt(request.getParameter("p"));
             Integer size = Integer.parseInt(request.getParameter("s"));
 
-            List<User> items = userService.getPageByUserType(pageNum, size, UserType.USER);
-            Page<User> page = new Page<>(items, pageNum, size);
+            Page<User> page = userService.getPageByUserType(pageNum, size, UserType.USER);
 
             request.setAttribute("page", page);
         }

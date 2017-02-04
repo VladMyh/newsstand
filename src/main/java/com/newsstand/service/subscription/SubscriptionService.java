@@ -3,6 +3,7 @@ package com.newsstand.service.subscription;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
+import com.newsstand.util.Page;
 
 import java.util.List;
 
@@ -40,5 +41,5 @@ public interface SubscriptionService {
 	 * @param size Size of the page.
 	 * @return     A list of subscriptions.
 	 */
-	List<Subscription> getPage(Integer page, Integer size);
+	Page<Subscription> getPage(Integer page, Integer size);
 }

@@ -5,6 +5,7 @@ import com.newsstand.dao.image.MysqlImageDaoImpl;
 import com.newsstand.dao.magazine.MagazineDao;
 import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Magazine;
+import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -46,24 +47,27 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public List<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId) {
+    public Page<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for category id " + categoryId);
 
-        return magazineDao.findPageByCategory(categoryId, (page - 1) * size, size);
+        List<Magazine> items = magazineDao.findPageByCategory(categoryId, (page - 1) * size, size);
+        return new Page<>(items, page, size);
     }
 
     @Override
-    public List<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId) {
+    public Page<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for publisher id " + publisherId);
 
-        return magazineDao.findPageByPublisher(publisherId, (page - 1) * size, size);
+        List<Magazine> items = magazineDao.findPageByPublisher(publisherId, (page - 1) * size, size);
+        return new Page<>(items, page, size);
     }
 
     @Override
-    public List<Magazine> getPage(Integer page, Integer size) {
+    public Page<Magazine> getPage(Integer page, Integer size) {
         LOGGER.info("Getting page number " + page + ", of size " + size );
 
-        return magazineDao.findPage((page - 1) * size, size);
+        List<Magazine> items = magazineDao.findPage((page - 1) * size, size);
+        return new Page<>(items, page, size);
     }
 
     @Override
@@ -94,9 +98,10 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public List<Magazine> getPageByName(String query, Integer page, Integer size) {
+    public Page<Magazine> getPageByName(String query, Integer page, Integer size) {
         LOGGER.info("Getting page by query " + query + " number " + page + ", of size " + size );
 
-        return magazineDao.findPageByNameQuery(query, (page - 1) * size, size);
+        List<Magazine> items = magazineDao.findPageByNameQuery(query, (page - 1) * size, size);
+        return new Page<>(items, page, size);
     }
 }
