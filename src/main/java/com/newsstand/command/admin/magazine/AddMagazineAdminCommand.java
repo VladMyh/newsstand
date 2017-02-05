@@ -89,6 +89,8 @@ public class AddMagazineAdminCommand implements ServletCommand {
 
 				magazineService.createMagazine(magazine);
 
+				request.setAttribute("publishers", publisherService.findAll());
+				request.setAttribute("categories", categoryService.findAll());
 			}
 			catch (NumberFormatException ex) {
 				LOGGER.info("Couldn't parse " + request.getParameter("id")

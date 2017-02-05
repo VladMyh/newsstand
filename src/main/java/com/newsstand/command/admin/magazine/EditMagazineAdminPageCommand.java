@@ -30,7 +30,7 @@ public class EditMagazineAdminPageCommand implements ServletCommand {
 	private static CategoryService categoryService;
 
 	private static String editMagazinePage;
-	private static String magazinedPage;
+	private static String magazinePage;
 	private static String loginPage;
 
 	public EditMagazineAdminPageCommand(){
@@ -43,7 +43,7 @@ public class EditMagazineAdminPageCommand implements ServletCommand {
 
 		MappingProperties properties = MappingProperties.getInstance();
 		editMagazinePage = properties.getProperty("adminEditMagazinePage");
-		magazinedPage = properties.getProperty("adminMagazinesPage");
+		magazinePage = properties.getProperty("adminMagazinesPage");
 		loginPage = properties.getProperty("loginPage");
 	}
 
@@ -69,7 +69,7 @@ public class EditMagazineAdminPageCommand implements ServletCommand {
 					request.setAttribute("publishers", publisherService.findAll());
 				}
 				else {
-					resultPage = magazinedPage;
+					resultPage = magazinePage;
 				}
 			}
 			catch (NumberFormatException ex) {
