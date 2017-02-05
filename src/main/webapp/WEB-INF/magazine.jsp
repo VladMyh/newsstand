@@ -54,12 +54,15 @@
                     <h4 class="pull-right"><p:price price="${magazine.price}"/></h4>
                     <h3>${magazine.title}</h3>
 
-                    <p><b><fmt:message key="publisher" bundle="${bundle}"/>: </b><a href="#">${magazine.publisher.title}</a></p>
+                    <p>
+                        <b><fmt:message key="publisher" bundle="${bundle}"/>: </b><a>${magazine.publisher.title}</a>
+                    </p>
                     <p>
                         <b><fmt:message key="category" bundle="${bundle}"/>: </b>
                         <a href="${pageContext.request.contextPath}/category?catId=${magazine.category.id}&p=1&s=6">${magazine.category.name}</a>
                     </p>
 
+                    <div class="text-right">
                     <%--User logged in--%>
                     <c:if test="${sessionScope.authenticated != null &&
                                   sessionScope.authenticated == true &&
@@ -99,11 +102,13 @@
                     <%--User not logged in--%>
                     <c:if test="${sessionScope.authenticated == null &&
                                   magazine.enabled == true}">
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">
+                        <a class="btn btn-primary " href="${pageContext.request.contextPath}/login">
                             <fmt:message key="subscribe" bundle="${bundle}"/>
                         </a>
                     </c:if>
+                    </div>
 
+                    <div>
                     <hr>
                     <h5><b><fmt:message key="description" bundle="${bundle}"/></b></h5>
 
@@ -113,6 +118,7 @@
                     <c:if test="${magazine.description == ''}">
                         <p><fmt:message key="noDescription" bundle="${bundle}"/></p>
                     </c:if>
+                    </div>
                 </div>
             </div>
 

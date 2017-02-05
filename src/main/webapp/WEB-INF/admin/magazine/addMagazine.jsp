@@ -46,30 +46,30 @@
                 <legend><fmt:message key="addMagazine" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">
+                    <label class="col-md-3 control-label" for="title">
                         <fmt:message key="title" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="title" name="title" placeholder="title" class="form-control input-md" type="text" required>
 
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="price">
+                    <label class="col-md-3 control-label" for="price">
                         <fmt:message key="price" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="price" name="price" placeholder="" class="form-control input-md" type="number"
                                step="0.01" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="publisher">
+                    <label class="col-md-3 control-label" for="publisher">
                         <fmt:message key="publisher" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <select id="publisher" name="publisher" class="form-control">
                             <c:forEach items="${publishers}" var="publisher">
                                 <option value="${publisher.id}">${publisher.title}</option>
@@ -79,10 +79,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="category">
+                    <label class="col-md-3 control-label" for="category">
                         <fmt:message key="category" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <select id="category" name="category" class="form-control">
                             <c:forEach items="${categories}" var="category">
                                 <option value="${category.id}">${category.name}</option>
@@ -92,35 +92,35 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="description">
+                    <label class="col-md-3 control-label" for="description">
                         <fmt:message key="description" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
-                        <textarea class="form-control" id="description" name="description" maxlength="300"></textarea>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="description" name="description" maxlength="300" cols="5"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="enabled">
+                    <label class="col-md-3 control-label" for="enabled">
                         <fmt:message key="enabled" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-8 checkbox">
                         <input id="enabled" name="enabled" placeholder="" class="form-control input-md"
                                type="checkbox" value="true">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label">
+                    <label class="col-md-3 control-label">
                         <fmt:message key="image" bundle="${bundle}"/>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input type="file" id="image" name="image"/>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label"></label>
+                    <label class="col-md-3 control-label"></label>
                     <div class="col-md-4">
                         <button id="submit" name="submit" type="submit" class="btn btn-primary">
                             <fmt:message key="add" bundle="${bundle}"/>
