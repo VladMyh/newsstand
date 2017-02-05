@@ -51,14 +51,14 @@
                 <legend><fmt:message key="addPublisher" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title"><fmt:message key="title" bundle="${bundle}"/></label>
-                    <div class="col-md-4">
+                    <label class="col-md-3 control-label" for="title"><fmt:message key="title" bundle="${bundle}"/></label>
+                    <div class="col-md-6">
                         <input id="title" name="title" class="form-control input-md" type="text" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-4"></div>
+                    <div class="col-md-3"></div>
                     <div class="col-md-4">
                         <button id="addbutton" name="addbutton" class="btn btn-primary"
                                 type="submit"><fmt:message key="add" bundle="${bundle}"/></button>

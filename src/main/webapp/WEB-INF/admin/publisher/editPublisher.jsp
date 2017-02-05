@@ -44,15 +44,15 @@
                 <legend> <fmt:message key="editPublisher" bundle="${bundle}"/></legend>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title"> <fmt:message key="title" bundle="${bundle}"/></label>
-                    <div class="col-md-4">
+                    <label class="col-md-3 control-label" for="title"> <fmt:message key="title" bundle="${bundle}"/></label>
+                    <div class="col-md-6">
                         <input id="title" name="title" class="form-control input-md" type="text"
                                value="${publisher.title}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-4"></div>
+                    <div class="col-md-3"></div>
                     <div class="col-md-2">
                         <button id="updatebutton" name="addbutton" class="btn btn-primary"
                                 type="submit"> <fmt:message key="update" bundle="${bundle}"/></button>

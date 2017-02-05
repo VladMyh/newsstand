@@ -51,6 +51,12 @@
 
         <h1><fmt:message key="magazines" bundle="${bundle}"/></h1>
 
+        <div class="pull-right">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/magazines/add" role="button">
+                <fmt:message key="add" bundle="${bundle}"/>
+            </a>
+        </div>
+
         <table class="table">
             <thead>
             <tr>
@@ -97,11 +103,7 @@
                 </c:if>
             </ul>
         </div>
-
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/magazines/add" role="button">
-            <fmt:message key="add" bundle="${bundle}"/>
-        </a>
-    </div>
+    </h1>
 
     <div class="col-md-2"></div>
 

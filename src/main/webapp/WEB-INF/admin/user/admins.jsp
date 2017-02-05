@@ -45,6 +45,12 @@
 
         <h1><fmt:message key="admins" bundle="${bundle}"/></h1>
 
+        <div class="pull-right">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/admins/add" role="button">
+                <fmt:message key="add" bundle="${bundle}"/>
+            </a>
+        </div>
+
         <c:if test="${currSize == 0}">
             <h1><fmt:message key="nothing" bundle="${bundle}"/></h1>
         </c:if>
@@ -90,10 +96,6 @@
                 </c:if>
             </ul>
         </div>
-
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/admins/add" role="button">
-            <fmt:message key="add" bundle="${bundle}"/>
-        </a>
     </div>
 
     <div class="col-md-1"></div>

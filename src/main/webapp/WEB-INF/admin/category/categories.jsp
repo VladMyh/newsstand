@@ -50,6 +50,12 @@
 
         <h1><fmt:message key="categories" bundle="${bundle}"/></h1>
 
+        <div class="pull-right">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/categories/add" role="button">
+                <fmt:message key="add" bundle="${bundle}"/>
+            </a>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -70,10 +76,6 @@
                 </c:forEach>
             </tbody>
         </table>
-
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/categories/add" role="button">
-            <fmt:message key="add" bundle="${bundle}"/>
-        </a>
     </div>
 
     <div class="col-md-2"></div>
