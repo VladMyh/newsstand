@@ -6,9 +6,6 @@ import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
 import com.newsstand.dao.subscription.MysqlSubscriptionTypeDao;
 import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.magazine.Magazine;
-import com.newsstand.model.subscription.Subscription;
-import com.newsstand.model.subscription.SubscriptionType;
-import com.newsstand.model.user.User;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
@@ -22,8 +19,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.util.Calendar;
 
 /**
  * This class is used to handle GET requests to the subscription page.

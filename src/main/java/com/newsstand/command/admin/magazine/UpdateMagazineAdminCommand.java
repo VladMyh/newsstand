@@ -9,14 +9,10 @@ import com.newsstand.model.magazine.MagazineBuilder;
 import com.newsstand.model.magazine.Publisher;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
-import com.newsstand.service.category.CategoryService;
-import com.newsstand.service.category.CategoryServiceImpl;
 import com.newsstand.service.image.ImageService;
 import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
-import com.newsstand.service.publisher.PublisherService;
-import com.newsstand.service.publisher.PublisherServiceImpl;
 import com.newsstand.util.Page;
 import org.apache.log4j.Logger;
 
@@ -27,7 +23,6 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * This class is used to handle POST requests to update magazine.

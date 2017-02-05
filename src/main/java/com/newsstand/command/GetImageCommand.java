@@ -4,8 +4,6 @@ import com.newsstand.dao.image.MysqlImageDaoImpl;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.image.ImageService;
 import com.newsstand.service.image.ImageServiceImpl;
-import com.newsstand.service.magazine.MagazineService;
-import com.newsstand.service.magazine.MagazineServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +13,16 @@ import java.io.IOException;
 /**
  * This class is used to handle GET requests to retrieve images.
  */
-public class ImageCommand implements ServletCommand {
+public class GetImageCommand implements ServletCommand {
 
-	private static final Logger LOGGER = Logger.getLogger(ImageCommand.class);
+	private static final Logger LOGGER = Logger.getLogger(GetImageCommand.class);
 
 	private static ImageService imageService;
 
 	private static String errorpage;
 
-	public ImageCommand(){
-		LOGGER.info("Initializing ImageCommand");
+	public GetImageCommand(){
+		LOGGER.info("Initializing GetImageCommand");
 
 		imageService = new ImageServiceImpl(MysqlImageDaoImpl.getInstance());
 

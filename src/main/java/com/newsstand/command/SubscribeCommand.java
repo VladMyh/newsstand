@@ -25,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.Calendar;
 
+/**
+ * This class is used to handle POST requests to subscribe user to the magazine.
+ */
 public class SubscribeCommand implements ServletCommand {
 
 	private static final Logger LOGGER = Logger.getLogger(SubscribeCommand.class);

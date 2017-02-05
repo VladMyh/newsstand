@@ -1,6 +1,5 @@
 package com.newsstand.command;
 
-import com.newsstand.command.admin.AdminPageCommand;
 import com.newsstand.command.admin.category.*;
 import com.newsstand.command.admin.magazine.*;
 import com.newsstand.command.admin.publisher.*;
@@ -13,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
- * This is a helper class that is used to work with servlet getCommands.
+ * This is a helper class that is used to work with servlet commands.
  *
- * It handles mapping of the url paths to the getCommands.
+ * It handles mapping of the url paths to the commands.
  */
 public class CommandManager {
 
@@ -33,16 +32,15 @@ public class CommandManager {
 
         //===================GET commands===================
 
-        getCommands.put("/", new MainPageCommand());
+        getCommands.put("/", new GetMainPageCommand());
         getCommands.put("/login", new GetLoginPageCommand());
         getCommands.put("/logout", new LogoutCommand());
         getCommands.put("/register", new GetRegisterPageCommand());
-        getCommands.put("/magazine", new MagazinePageCommand());
-        getCommands.put("/category", new CategoryPageCommand());
-        getCommands.put("/admin/dashboard", new AdminPageCommand());
+        getCommands.put("/magazine", new GetMagazinePageCommand());
+        getCommands.put("/category", new GetCategoryPageCommand());
         getCommands.put("/subscribe", new GetSubscribePageCommand());
-        getCommands.put("/account", new AccountPageCommand());
-        getCommands.put("/image", new ImageCommand());
+        getCommands.put("/account", new GetAccountPageCommand());
+        getCommands.put("/image", new GetImageCommand());
         getCommands.put("/search", new GetSearchPageCommand());
 
         //admin categories

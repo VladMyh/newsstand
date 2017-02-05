@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is used to handle user logout, by invalidating session.
+ * This class is used to handle GET requests to user logout.
  */
 public class LogoutCommand implements ServletCommand{
     private static final Logger LOGGER = Logger.getLogger(GetLoginPageCommand.class);

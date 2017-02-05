@@ -32,7 +32,6 @@ public class MappingProperties {
         catch (IOException e) {
             LOGGER.error(e.getMessage());
         }
-        //TODO: close inpurstream
     }
 
     public static synchronized MappingProperties getInstance() {

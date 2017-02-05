@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * This class is used to handle GET requests to the page used to view a single magazine.
  */
-public class MagazinePageCommand implements ServletCommand {
+public class GetMagazinePageCommand implements ServletCommand {
 
-    private static final Logger LOGGER = Logger.getLogger(MagazinePageCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(GetMagazinePageCommand.class);
 
     private static CategoryService categoryService;
     private static MagazineService magazineService;
@@ -36,8 +36,8 @@ public class MagazinePageCommand implements ServletCommand {
     private static String magazinePage;
     private static String errorPage;
 
-    public MagazinePageCommand(){
-        LOGGER.info("Initializing MainPageCommand");
+    public GetMagazinePageCommand(){
+        LOGGER.info("Initializing GetMagazinePageCommand");
 
         categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
         magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),

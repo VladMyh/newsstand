@@ -15,15 +15,14 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * This class is used to handle GET requests to the page to view all the magazines
  * of the particular category.
  */
-public class CategoryPageCommand implements ServletCommand {
+public class GetCategoryPageCommand implements ServletCommand {
 
-    private static final Logger LOGGER = Logger.getLogger(CategoryPageCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(GetCategoryPageCommand.class);
 
     private static CategoryService categoryService;
     private static MagazineService magazineService;
@@ -31,8 +30,8 @@ public class CategoryPageCommand implements ServletCommand {
     private static String categoryPage;
     private static String errorPage;
 
-    public CategoryPageCommand(){
-        LOGGER.info("Initializing CategoryPageCommand");
+    public GetCategoryPageCommand(){
+        LOGGER.info("Initializing GetCategoryPageCommand");
 
         categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
         magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),

@@ -16,17 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * This class is used to handle GET requests to the main page.
  */
-public class MainPageCommand implements ServletCommand {
+public class GetMainPageCommand implements ServletCommand {
 
-    private static final Logger LOGGER = Logger.getLogger(MainPageCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(GetMainPageCommand.class);
 
     private static CategoryService categoryService;
     private static MagazineService magazineService;
 
     private static String page;
 
-    public MainPageCommand(){
-        LOGGER.info("Initializing MainPageCommand");
+    public GetMainPageCommand(){
+        LOGGER.info("Initializing GetMainPageCommand");
 
         categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
         magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),

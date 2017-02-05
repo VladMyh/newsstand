@@ -6,8 +6,6 @@ import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
-import com.newsstand.service.image.ImageService;
-import com.newsstand.service.image.ImageServiceImpl;
 import com.newsstand.service.magazine.MagazineService;
 import com.newsstand.service.magazine.MagazineServiceImpl;
 import com.newsstand.util.Page;
@@ -15,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * This class is used to handle GET requests to delete magazines.

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * This class is used to handle GET requests to the user account page.
  */
-public class AccountPageCommand implements ServletCommand {
+public class GetAccountPageCommand implements ServletCommand {
 
 	private static final Logger LOGGER = Logger.getLogger(GetLoginPageCommand.class);
 
@@ -28,8 +28,8 @@ public class AccountPageCommand implements ServletCommand {
 	private static String mainPage;
 	private static String accountPage;
 
-	public AccountPageCommand(){
-		LOGGER.info("Initializing AccountPageCommand");
+	public GetAccountPageCommand(){
+		LOGGER.info("Initializing GetAccountPageCommand");
 
 		userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
 		subscriptionService = new SubscriptionServiceImpl(MysqlSubscriptionDaoImpl.getInstance());

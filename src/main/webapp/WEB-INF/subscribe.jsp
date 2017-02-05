@@ -51,7 +51,7 @@
                     <h4><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                         <fmt:message key="details" bundle="${bundle}"/></h4>
 
-                    <p>${mazagine.title}</p>
+                    <p><fmt:message key="magazine" bundle="${bundle}"/>: ${magazine.title}<label></label></p>
                     <p><fmt:message key="perMonth" bundle="${bundle}"/>: <label id="basePrice"><p:price price="${magazine.price}"/></label></p>
                     <hr>
                     <p><fmt:message key="total" bundle="${bundle}"/>: <label id="price"><p:price price="${magazine.price}"/></label></p>
