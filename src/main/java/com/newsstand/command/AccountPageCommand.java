@@ -1,5 +1,7 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
+import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
 import com.newsstand.properties.MappingProperties;
@@ -29,8 +31,8 @@ public class AccountPageCommand implements ServletCommand {
 	public AccountPageCommand(){
 		LOGGER.info("Initializing AccountPageCommand");
 
-		userService = UserServiceImpl.getInstance();
-		subscriptionService = SubscriptionServiceImpl.getInstance();
+		userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
+		subscriptionService = new SubscriptionServiceImpl(MysqlSubscriptionDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		mainPage = properties.getProperty("mainPage");

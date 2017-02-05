@@ -10,25 +10,21 @@ public class ImageServiceImpl implements ImageService {
 
 	private static final Logger LOGGER = Logger.getLogger(ImageServiceImpl.class);
 
-	private static ImageServiceImpl INSTANCE;
-	private static ImageDao imageDao;
+	private ImageDao imageDao;
 
-	private ImageServiceImpl() {
+	public ImageServiceImpl(ImageDao imageDao) {
 		LOGGER.info("Initializing ImageServiceImpl");
 
-		imageDao = MysqlImageDaoImpl.getInstance();
-	}
-
-	public static ImageServiceImpl getInstance() {
-		if(INSTANCE == null) {
-			INSTANCE = new ImageServiceImpl();
-		}
-		return INSTANCE;
+		this.imageDao = imageDao;
 	}
 
 	@Override
 	public byte[] findImageById(Long id) {
 		LOGGER.info("Finding magazine image by id " + id);
+
+		if(id == null) {
+			return null;
+		}
 
 		return imageDao.findImageById(id);
 	}
@@ -37,12 +33,20 @@ public class ImageServiceImpl implements ImageService {
 	public Long createImage(InputStream image) {
 		LOGGER.info("Creating new image");
 
+		if(image == null) {
+			return null;
+		}
+
 		return imageDao.createImage(image);
 	}
 
 	@Override
 	public boolean deleteImageById(Long id) {
 		LOGGER.info("Deleting image by id " + id);
+
+		if(id == null) {
+			return false;
+		}
 
 		return imageDao.deleteImageById(id);
 	}

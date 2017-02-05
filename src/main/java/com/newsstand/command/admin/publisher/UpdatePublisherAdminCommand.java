@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.publisher;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.publisher.MysqlPublisherDaoImpl;
 import com.newsstand.model.magazine.Publisher;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
@@ -25,7 +26,7 @@ public class UpdatePublisherAdminCommand implements ServletCommand {
     public UpdatePublisherAdminCommand(){
         LOGGER.info("Initializing UpdatePublisherAdminCommand");
 
-        publisherService = PublisherServiceImpl.getInstance();
+        publisherService = new PublisherServiceImpl(MysqlPublisherDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         publishersPage = properties.getProperty("adminPublishersPage");

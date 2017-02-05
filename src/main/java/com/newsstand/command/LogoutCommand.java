@@ -1,5 +1,8 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
@@ -24,8 +27,9 @@ public class LogoutCommand implements ServletCommand{
     public LogoutCommand(){
         LOGGER.info("Initializing LogoutCommand");
 
-        categoryService = CategoryServiceImpl.getInstance();
-        magazineService = MagazineServiceImpl.getInstance();
+        categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
+        magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+                                                  MysqlImageDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         mainPage = properties.getProperty("mainPage");

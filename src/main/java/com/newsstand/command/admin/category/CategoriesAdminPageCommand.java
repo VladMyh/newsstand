@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.category;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
 import com.newsstand.service.category.CategoryServiceImpl;
@@ -22,7 +23,7 @@ public class CategoriesAdminPageCommand implements ServletCommand {
     public CategoriesAdminPageCommand(){
         LOGGER.info("Initializing CategoriesAdminPageCommand");
 
-        categoryService = CategoryServiceImpl.getInstance();
+        categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         page = properties.getProperty("adminCategoriesPage");

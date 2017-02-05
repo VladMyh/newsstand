@@ -1,5 +1,9 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
+import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserBuilder;
 import com.newsstand.model.user.UserType;
@@ -32,9 +36,10 @@ public class RegisterCommand implements ServletCommand {
 	public RegisterCommand(){
 		LOGGER.info("Initializing RegisterCommand");
 
-		userService = UserServiceImpl.getInstance();
-		categoryService = CategoryServiceImpl.getInstance();
-		magazineService = MagazineServiceImpl.getInstance();
+		userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
+		categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
+		magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+				                                  MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		registerPage = properties.getProperty("registerPage");

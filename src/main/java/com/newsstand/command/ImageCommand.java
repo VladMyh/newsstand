@@ -1,5 +1,6 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.image.MysqlImageDaoImpl;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.image.ImageService;
 import com.newsstand.service.image.ImageServiceImpl;
@@ -25,7 +26,7 @@ public class ImageCommand implements ServletCommand {
 	public ImageCommand(){
 		LOGGER.info("Initializing ImageCommand");
 
-		imageService = ImageServiceImpl.getInstance();
+		imageService = new ImageServiceImpl(MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		errorpage = properties.getProperty("error404Page");

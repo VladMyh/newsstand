@@ -11,31 +11,29 @@ public class PublisherServiceImpl implements PublisherService {
 
     private static final Logger LOGGER = Logger.getLogger(PublisherServiceImpl.class);
 
-    private static PublisherServiceImpl INSTANCE;
-    private static PublisherDao publisherDao;
+    private PublisherDao publisherDao;
 
-    private PublisherServiceImpl() {
+    public PublisherServiceImpl(PublisherDao publisherDao) {
         LOGGER.info("Initializing PublisherServiceImpl");
 
-        publisherDao = MysqlPublisherDaoImpl.getInstance();
-    }
-
-    public static PublisherServiceImpl getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new PublisherServiceImpl();
-        }
-        return INSTANCE;
+        this.publisherDao = publisherDao;
     }
 
     @Override
     public List<Publisher> findAll() {
         LOGGER.info("Getting all publishers");
+
         return publisherDao.findAll();
     }
 
     @Override
     public Publisher findPublisherById(Long id) {
         LOGGER.info("Getting publisher by id " + id);
+
+        if(id == null) {
+            return null;
+        }
+
         return publisherDao.findPublisherById(id);
     }
 
@@ -53,12 +51,19 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public boolean deletePublisherById(Long id) {
         LOGGER.info("Deleting publisher by id " + id);
-        return publisherDao.deletePublisherById(id);
+
+        return id != null && publisherDao.deletePublisherById(id);
+
     }
 
     @Override
     public Publisher updatePublisher(Publisher publisher) {
         LOGGER.info("Updating publisher by id " + publisher.getId());
+
+        if(publisher == null) {
+            return null;
+        }
+
         return publisherDao.updatePublisher(publisher);
     }
 }

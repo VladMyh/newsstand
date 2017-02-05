@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.user;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserBuilder;
 import com.newsstand.model.user.UserType;
@@ -26,7 +27,7 @@ public class AddAdminAdminCommand implements ServletCommand {
 	public AddAdminAdminCommand(){
 		LOGGER.info("Initializing AddAdminAdminCommand");
 
-		userService = UserServiceImpl.getInstance();
+		userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		addAdminPage = properties.getProperty("adminAddAdminPage");

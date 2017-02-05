@@ -1,5 +1,10 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
+import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
+import com.newsstand.dao.subscription.MysqlSubscriptionTypeDao;
+import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.subscription.SubscriptionType;
@@ -40,10 +45,11 @@ public class GetSubscribePageCommand implements ServletCommand {
     public GetSubscribePageCommand(){
         LOGGER.info("Initializing GetSubscribePageCommand");
 
-        magazineService = MagazineServiceImpl.getInstance();
-        subscriptionTypeService = SubscriptionTypeServiceImpl.getInstance();
-        subscriptionService = SubscriptionServiceImpl.getInstance();
-        userService = UserServiceImpl.getInstance();
+        magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+                                                  MysqlImageDaoImpl.getInstance());
+        subscriptionTypeService = new SubscriptionTypeServiceImpl(MysqlSubscriptionTypeDao.getInstance());
+        subscriptionService = new SubscriptionServiceImpl(MysqlSubscriptionDaoImpl.getInstance());
+        userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         subscribePage = properties.getProperty("subscribePage");

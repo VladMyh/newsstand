@@ -1,6 +1,5 @@
 package com.newsstand.service.user;
 
-import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.dao.user.UserDao;
 import com.newsstand.model.user.User;
 import com.newsstand.model.user.UserType;
@@ -13,25 +12,21 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
-    private static UserServiceImpl INSTANCE;
-    private static UserDao userDao;
+    private UserDao userDao;
 
-    private UserServiceImpl() {
+    public UserServiceImpl(UserDao userDao) {
         LOGGER.info("Initializing UserServiceImpl");
 
-        userDao = MysqlUserDaoImpl.getInstance();
-    }
-
-    public static UserServiceImpl getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new UserServiceImpl();
-        }
-        return INSTANCE;
+        this.userDao = userDao;
     }
 
     @Override
     public boolean checkEmailAvailability(String email) {
         LOGGER.info("Checking availability of email");
+
+        if(email == null) {
+            return false;
+        }
 
         User user = userDao.findUserByEmail(email);
         return user == null;
@@ -41,12 +36,17 @@ public class UserServiceImpl implements UserService {
     public boolean registerUser(User user) {
         LOGGER.info("New user registration");
 
-        return userDao.createUser(user).getId() != null;
+        return user != null && userDao.createUser(user).getId() != null;
+
     }
 
     @Override
     public User getUserByCredentials(String email, String password) {
         LOGGER.info("Getting user by credentials");
+
+        if(email == null || password == null) {
+            return null;
+        }
 
         return userDao.findUserByEmailAndPassword(email, password);
     }
@@ -54,6 +54,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> getPageByUserType(Integer page, Integer size, UserType userType) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for user type " + userType.name());
+
+        if(page == null || size == null || page < 1 || size < 1) {
+            return null;
+        }
 
         List<User> items =  userDao.findPageByUserType(userType, (page - 1) * size, size);
         return new Page<>(items, page, size);
@@ -63,12 +67,20 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         LOGGER.info("Finding user by email " + email);
 
+        if(email == null) {
+            return null;
+        }
+
         return userDao.findUserByEmail(email);
     }
 
     @Override
     public User findUserById(Long id) {
         LOGGER.info("Finding user by id " + id);
+
+        if(id == null) {
+            return null;
+        }
 
         return userDao.findUserById(id);
     }

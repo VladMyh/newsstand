@@ -14,25 +14,21 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	private static final Logger LOGGER = Logger.getLogger(SubscriptionServiceImpl.class);
 
-	private static SubscriptionServiceImpl INSTANCE;
-	private static SubscriptionDao subscriptionDao;
+	private  SubscriptionDao subscriptionDao;
 
-	private SubscriptionServiceImpl() {
+	public SubscriptionServiceImpl(SubscriptionDao subscriptionDao) {
 		LOGGER.info("Initializing SubscriptionServiceImpl");
 
-		subscriptionDao = MysqlSubscriptionDaoImpl.getInstance();
-	}
-
-	public static SubscriptionServiceImpl getInstance() {
-		if(INSTANCE == null) {
-			INSTANCE = new SubscriptionServiceImpl();
-		}
-		return INSTANCE;
+		this.subscriptionDao = subscriptionDao;
 	}
 
 	@Override
 	public Subscription createSubscription(Subscription subscription) {
 		LOGGER.info("Creating new subscription");
+
+		if(subscription == null) {
+			return null;
+		}
 
 		return subscriptionDao.createSubscription(subscription);
 	}
@@ -41,6 +37,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public boolean checkIfUserSubscribed(User user, Magazine magazine) {
 		LOGGER.info("Checking if user is subscribed to magazine");
 
+		if(user == null || magazine == null) {
+			return false;
+		}
+
 		return subscriptionDao.checkIfUserSubscribed(user.getId(), magazine.getId());
 	}
 
@@ -48,12 +48,20 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public List<Subscription> getUserSubscriptions(Long userId) {
 		LOGGER.info("Finding subscription by user id " + userId);
 
+		if(userId == null) {
+			return null;
+		}
+
 		return subscriptionDao.findSubscriptionsByUserId(userId);
 	}
 
 	@Override
 	public Page<Subscription> getPage(Integer page, Integer size) {
 		LOGGER.info("Getting page number " + page + ", of size " + size );
+
+		if(page == null || size == null || page < 1 || size < 1) {
+			return null;
+		}
 
 		List<Subscription> items = subscriptionDao.findPage((page - 1) * size, size);
 		return new Page<>(items, page, size);

@@ -1,6 +1,8 @@
 package com.newsstand.command.admin.user;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
+import com.newsstand.dao.user.MysqlUserDaoImpl;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.model.user.User;
 import com.newsstand.properties.MappingProperties;
@@ -27,8 +29,8 @@ public class GetUserInfoAdminCommand implements ServletCommand {
 	public GetUserInfoAdminCommand(){
 		LOGGER.info("Initializing GetUserInfoAdminCommand");
 
-		userService = UserServiceImpl.getInstance();
-		subscriptionService = SubscriptionServiceImpl.getInstance();
+		userService = new UserServiceImpl(MysqlUserDaoImpl.getInstance());
+		subscriptionService = new SubscriptionServiceImpl(MysqlSubscriptionDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		usersPage = properties.getProperty("adminUsersPage");

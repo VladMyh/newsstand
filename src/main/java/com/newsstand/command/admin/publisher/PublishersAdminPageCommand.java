@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.publisher;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.publisher.MysqlPublisherDaoImpl;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.publisher.PublisherService;
 import com.newsstand.service.publisher.PublisherServiceImpl;
@@ -22,7 +23,7 @@ public class PublishersAdminPageCommand implements ServletCommand {
     public PublishersAdminPageCommand(){
         LOGGER.info("Initializing PublishersAdminPageCommand");
 
-        publisherService = PublisherServiceImpl.getInstance();
+        publisherService = new PublisherServiceImpl(MysqlPublisherDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         page = properties.getProperty("adminPublishersPage");

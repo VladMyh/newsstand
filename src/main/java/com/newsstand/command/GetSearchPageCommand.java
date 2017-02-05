@@ -1,5 +1,8 @@
 package com.newsstand.command;
 
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.category.CategoryService;
@@ -26,8 +29,9 @@ public class GetSearchPageCommand implements ServletCommand {
 	public GetSearchPageCommand(){
 		LOGGER.info("Initializing GetSearchPageCommand");
 
-		categoryService = CategoryServiceImpl.getInstance();
-		magazineService = MagazineServiceImpl.getInstance();
+		categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
+		magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+				                                  MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		magazinesPage = properties.getProperty("searchMagazinesPage");

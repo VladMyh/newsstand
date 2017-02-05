@@ -1,6 +1,8 @@
 package com.newsstand.command.admin.magazine;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
@@ -29,7 +31,8 @@ public class DeleteMagazineAdminCommand implements ServletCommand {
 	public DeleteMagazineAdminCommand(){
 		LOGGER.info("Initializing DeleteMagazineAdminCommand");
 
-		magazineService = MagazineServiceImpl.getInstance();
+		magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+				                                  MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		magazinesPage = properties.getProperty("adminMagazinesPage");

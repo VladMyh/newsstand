@@ -1,6 +1,10 @@
 package com.newsstand.command.admin.magazine;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
+import com.newsstand.dao.publisher.MysqlPublisherDaoImpl;
 import com.newsstand.model.magazine.Category;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.magazine.MagazineBuilder;
@@ -41,10 +45,11 @@ public class AddMagazineAdminCommand implements ServletCommand {
 	public AddMagazineAdminCommand(){
 		LOGGER.info("Initializing AddMagazineAdminCommand");
 
-		magazineService = MagazineServiceImpl.getInstance();
-		publisherService = PublisherServiceImpl.getInstance();
-		categoryService = CategoryServiceImpl.getInstance();
-		imageService = ImageServiceImpl.getInstance();
+		magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+				                                  MysqlImageDaoImpl.getInstance());
+		publisherService = new PublisherServiceImpl(MysqlPublisherDaoImpl.getInstance());
+		categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
+		imageService = new ImageServiceImpl(MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		addMagazinePage = properties.getProperty("adminAddMagazinePage");

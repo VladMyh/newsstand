@@ -1,6 +1,8 @@
 package com.newsstand.command.admin.magazine;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.image.MysqlImageDaoImpl;
+import com.newsstand.dao.magazine.MysqlMagazineDaoImpl;
 import com.newsstand.model.magazine.Category;
 import com.newsstand.model.magazine.Magazine;
 import com.newsstand.model.magazine.MagazineBuilder;
@@ -42,8 +44,9 @@ public class UpdateMagazineAdminCommand implements ServletCommand {
 	public UpdateMagazineAdminCommand(){
 		LOGGER.info("Initializing UpdateMagazineAdminCommand");
 
-		magazineService = MagazineServiceImpl.getInstance();
-		imageService = ImageServiceImpl.getInstance();
+		magazineService = new MagazineServiceImpl(MysqlMagazineDaoImpl.getInstance(),
+				                                  MysqlImageDaoImpl.getInstance());
+		imageService = new ImageServiceImpl(MysqlImageDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		magazinesPage = properties.getProperty("adminMagazinesPage");

@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.subscription;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.subscription.MysqlSubscriptionDaoImpl;
 import com.newsstand.model.subscription.Subscription;
 import com.newsstand.properties.MappingProperties;
 import com.newsstand.service.subscription.SubscriptionService;
@@ -25,7 +26,7 @@ public class SubscriptionsAdminPageCommand implements ServletCommand {
 	public SubscriptionsAdminPageCommand(){
 		LOGGER.info("Initializing SubscriptionsAdminPageCommand");
 
-		subscriptionService = SubscriptionServiceImpl.getInstance();
+		subscriptionService = new SubscriptionServiceImpl(MysqlSubscriptionDaoImpl.getInstance());
 
 		MappingProperties properties = MappingProperties.getInstance();
 		page = properties.getProperty("adminSubscriptionPage");

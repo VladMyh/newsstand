@@ -1,6 +1,7 @@
 package com.newsstand.command.admin.category;
 
 import com.newsstand.command.ServletCommand;
+import com.newsstand.dao.category.MysqlCategoryDaoImpl;
 import com.newsstand.model.magazine.Category;
 import com.newsstand.model.user.UserType;
 import com.newsstand.properties.MappingProperties;
@@ -26,7 +27,7 @@ public class EditCategoryAdminPageCommand implements ServletCommand {
     public EditCategoryAdminPageCommand(){
         LOGGER.info("Initializing EditCategoryAdminPageCommand");
 
-        categoryService = CategoryServiceImpl.getInstance();
+        categoryService = new CategoryServiceImpl(MysqlCategoryDaoImpl.getInstance());
 
         MappingProperties properties = MappingProperties.getInstance();
         editCategoryPage = properties.getProperty("adminEditCategoryPage");

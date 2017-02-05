@@ -1,6 +1,7 @@
 package com.newsstand.service.subscription;
 
 import com.newsstand.dao.subscription.MysqlSubscriptionTypeDao;
+import com.newsstand.dao.subscription.SubscriptionDao;
 import com.newsstand.dao.subscription.SubscriptionTypeDao;
 import com.newsstand.model.subscription.SubscriptionType;
 import org.apache.log4j.Logger;
@@ -11,20 +12,12 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
 	private static final Logger LOGGER = Logger.getLogger(SubscriptionTypeServiceImpl.class);
 
-	private static SubscriptionTypeServiceImpl INSTANCE;
-	private static SubscriptionTypeDao subscriptionTypeDao;
+	private SubscriptionTypeDao subscriptionTypeDao;
 
-	private SubscriptionTypeServiceImpl() {
+	public SubscriptionTypeServiceImpl(SubscriptionTypeDao subscriptionDao) {
 		LOGGER.info("Initializing SubscriptionTypeServiceImpl");
 
-		subscriptionTypeDao = MysqlSubscriptionTypeDao.getInstance();
-	}
-
-	public static SubscriptionTypeServiceImpl getInstance() {
-		if(INSTANCE == null) {
-			INSTANCE = new SubscriptionTypeServiceImpl();
-		}
-		return INSTANCE;
+		this.subscriptionTypeDao = subscriptionDao;
 	}
 
 	@Override
@@ -37,6 +30,10 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 	@Override
 	public SubscriptionType findSubscriptionTypeById(Long id) {
 		LOGGER.info("Finding subscription type by id " + id);
+
+		if(id == null) {
+			return null;
+		}
 
 		return subscriptionTypeDao.findSubscriptionTypeById(id);
 	}

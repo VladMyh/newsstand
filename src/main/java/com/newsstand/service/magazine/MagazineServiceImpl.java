@@ -14,27 +14,23 @@ public class MagazineServiceImpl implements MagazineService {
 
     private static final Logger LOGGER = Logger.getLogger(MagazineServiceImpl.class);
 
-    private static MagazineServiceImpl INSTANCE;
-    private static MagazineDao magazineDao;
-    private static ImageDao imageDao;
+    private MagazineDao magazineDao;
+    private ImageDao imageDao;
 
-    private MagazineServiceImpl() {
+    public MagazineServiceImpl(MagazineDao magazineDao, ImageDao imageDao) {
         LOGGER.info("Initializing MagazineServiceImpl");
 
-        magazineDao = MysqlMagazineDaoImpl.getInstance();
-        imageDao = MysqlImageDaoImpl.getInstance();
-    }
-
-    public static MagazineServiceImpl getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new MagazineServiceImpl();
-        }
-        return INSTANCE;
+        this.magazineDao = magazineDao;
+        this.imageDao = imageDao;
     }
 
     @Override
     public Magazine findMagazineById(Long id) {
         LOGGER.info("Finding magazine by id " + id);
+
+        if(id == null) {
+            return null;
+        }
 
         return magazineDao.findMagazineById(id);
     }
@@ -43,12 +39,20 @@ public class MagazineServiceImpl implements MagazineService {
     public List<Magazine> findLatestAdded(Integer limit) {
         LOGGER.info("Finding " + limit + " latest magazines");
 
+        if(limit == null) {
+            return null;
+        }
+
         return magazineDao.findLastNMagazines(limit);
     }
 
     @Override
     public Page<Magazine> getPageByCategoryId(Integer page, Integer size, Long categoryId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for category id " + categoryId);
+
+        if(page == null || size == null || categoryId == null || page < 1 || size < 1) {
+            return null;
+        }
 
         List<Magazine> items = magazineDao.findPageByCategory(categoryId, (page - 1) * size, size);
         return new Page<>(items, page, size);
@@ -58,6 +62,10 @@ public class MagazineServiceImpl implements MagazineService {
     public Page<Magazine> getPageByPublisherId(Integer page, Integer size, Long publisherId) {
         LOGGER.info("Getting page number " + page + ", of size " + size + ", for publisher id " + publisherId);
 
+        if(page == null || size == null || publisherId == null || page < 1 || size < 1) {
+            return null;
+        }
+
         List<Magazine> items = magazineDao.findPageByPublisher(publisherId, (page - 1) * size, size);
         return new Page<>(items, page, size);
     }
@@ -65,6 +73,10 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     public Page<Magazine> getPage(Integer page, Integer size) {
         LOGGER.info("Getting page number " + page + ", of size " + size );
+
+        if(page == null || size == null || page < 1 || size < 1) {
+            return null;
+        }
 
         List<Magazine> items = magazineDao.findPage((page - 1) * size, size);
         return new Page<>(items, page, size);
@@ -74,6 +86,10 @@ public class MagazineServiceImpl implements MagazineService {
     public Magazine createMagazine(Magazine magazine) {
         LOGGER.info("Creating new magazine");
 
+        if(magazine == null) {
+            return null;
+        }
+
         return magazineDao.createMagazine(magazine);
     }
 
@@ -81,12 +97,20 @@ public class MagazineServiceImpl implements MagazineService {
     public Magazine updateMagazine(Magazine magazine) {
         LOGGER.info("Updating magazine");
 
+        if(magazine == null) {
+            return null;
+        }
+
         return magazineDao.updateMagazine(magazine);
     }
 
     @Override
     public boolean deleteMagazineById(Long id) {
         LOGGER.info("Deleting magazine by id " + id);
+
+        if(id == null) {
+            return false;
+        }
 
         Magazine magazine = magazineDao.findMagazineById(id);
 
@@ -100,6 +124,10 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     public Page<Magazine> getPageByName(String query, Integer page, Integer size) {
         LOGGER.info("Getting page by query " + query + " number " + page + ", of size " + size );
+
+        if(page == null || size == null || query == null || page < 1 || size < 1) {
+            return null;
+        }
 
         List<Magazine> items = magazineDao.findPageByNameQuery(query, (page - 1) * size, size);
         return new Page<>(items, page, size);

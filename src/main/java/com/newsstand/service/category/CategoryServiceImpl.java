@@ -11,20 +11,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
 
-    private static CategoryServiceImpl INSTANCE;
-    private static CategoryDao categoryDao;
+    private  CategoryDao categoryDao;
 
-    private CategoryServiceImpl() {
+    public CategoryServiceImpl(CategoryDao categoryDao) {
         LOGGER.info("Initializing CategoryServiceImpl");
 
-        categoryDao = MysqlCategoryDaoImpl.getInstance();
-    }
-
-    public static CategoryServiceImpl getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new CategoryServiceImpl();
-        }
-        return INSTANCE;
+        this.categoryDao = categoryDao;
     }
 
     @Override
@@ -37,6 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findCategoryById(Long id) {
         LOGGER.info("Finding category by id " + id);
+
+        if(id == null) {
+            return null;
+        }
 
         return categoryDao.findCategoryById(id);
     }
@@ -56,12 +52,20 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean deleteCategoryById(Long id) {
         LOGGER.info("Deleting category with id " + id);
 
+        if(id == null) {
+            return false;
+        }
+
         return categoryDao.deleteCategoryById(id);
     }
 
     @Override
     public Category updateCategory(Category category) {
         LOGGER.info("Updating category with id " + category.getId());
+
+        if(category == null) {
+            return null;
+        }
 
         return categoryDao.updateCategory(category);
     }
