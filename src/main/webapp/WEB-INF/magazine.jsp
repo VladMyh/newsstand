@@ -106,7 +106,13 @@
 
                     <hr>
                     <h5><b><fmt:message key="description" bundle="${bundle}"/></b></h5>
-                    <p>${magazine.description}</p>
+
+                    <c:if test="${magazine.description != ''}">
+                        <p>${magazine.description}</p>
+                    </c:if>
+                    <c:if test="${magazine.description == ''}">
+                        <p><fmt:message key="noDescription" bundle="${bundle}"/></p>
+                    </c:if>
                 </div>
             </div>
 

@@ -98,7 +98,7 @@
                         <fmt:message key="description" bundle="${bundle}"/>
                     </label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="description" name="description">${magazine.description}</textarea>
+                        <textarea class="form-control" id="description" name="description" maxlength="300>${magazine.description}</textarea>
                     </div>
                 </div>
 

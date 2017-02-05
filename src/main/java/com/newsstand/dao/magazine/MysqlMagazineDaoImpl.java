@@ -70,7 +70,14 @@ public class MysqlMagazineDaoImpl implements MagazineDao {
             statement.setLong(3, magazine.getPublisher().getId());
             statement.setLong(4, magazine.getCategory().getId());
             statement.setString(5, magazine.getDescription());
-            statement.setLong(6, magazine.getImageId());
+
+            if(magazine.getImageId() == null) {
+                statement.setNull(6, Types.INTEGER);
+            }
+            else {
+                statement.setLong(6, magazine.getImageId());
+            }
+
             statement.setBoolean(7, magazine.getEnabled());
 
             int affectedRows = statement.executeUpdate();

@@ -53,16 +53,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/admin/subscriptions?p=1&s=10">
-                                    <fmt:message key="subscriptions" bundle="${bundle}"/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/admin/users?p=1&s=10">
-                                    <fmt:message key="users" bundle="${bundle}"/>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="${pageContext.request.contextPath}/admin/publishers">
                                     <fmt:message key="publishers" bundle="${bundle}"/>
                                 </a>
@@ -70,6 +60,18 @@
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/categories">
                                     <fmt:message key="categories" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/subscriptions?p=1&s=10">
+                                    <fmt:message key="subscriptions" bundle="${bundle}"/>
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/users?p=1&s=10">
+                                    <fmt:message key="users" bundle="${bundle}"/>
                                 </a>
                             </li>
                         </ul>
